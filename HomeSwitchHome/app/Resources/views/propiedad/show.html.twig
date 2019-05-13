@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Propiedad</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ propiedad.id }}</td>
+            </tr>
+            <tr>
+                <th>Titulo</th>
+                <td>{{ propiedad.titulo }}</td>
+            </tr>
+            <tr>
+                <th>Descripcion</th>
+                <td>{{ propiedad.descripcion }}</td>
+            </tr>
+            <tr>
+                <th>Pais</th>
+                <td>{{ propiedad.pais }}</td>
+            </tr>
+            <tr>
+                <th>Provincia</th>
+                <td>{{ propiedad.provincia }}</td>
+            </tr>
+            <tr>
+                <th>Localidad</th>
+                <td>{{ propiedad.localidad }}</td>
+            </tr>
+            <tr>
+                <th>Domicilio</th>
+                <td>{{ propiedad.domicilio }}</td>
+            </tr>
+            <tr>
+                <th>Foto</th>
+                <td>{{ propiedad.foto }}</td>
+            </tr>
+            <tr>
+                <th>Precio</th>
+                <td>{{ propiedad.precio }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('propiedad_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('propiedad_edit', { 'id': propiedad.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
