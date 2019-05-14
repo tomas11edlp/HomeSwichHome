@@ -58,10 +58,13 @@ class __TwigTemplate_37689f28e27c87f146402ef6480953b1117470d6736464624e81c4c525c
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "body"));
 
         // line 4
-        echo "<div class=\"content-fluid\">
-    <div class=\"row\">
-        <h3>Hot Sales</h3>
+        echo "<br>
+<div class=\"container\">
+    <div class=\"row justify-content-center align-items-center\">
+        <h3>Hot Sales Destacados </h3><span class=\"ml-2\"><u> ver todos</u></span>
     </div>
+</div>
+<div class=\"container-fluid\">
     <div class=\"row justify-content-center\">
         <div class=\"col-10\">
             <div id=\"carouselExampleControls\" class=\"carousel slide\" data-ride=\"carousel\">
@@ -101,7 +104,7 @@ class __TwigTemplate_37689f28e27c87f146402ef6480953b1117470d6736464624e81c4c525c
 
     }
 
-    // line 40
+    // line 43
     public function block_stylesheets($context, array $blocks = [])
     {
         $__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e = $this->env->getExtension("Symfony\\Bundle\\WebProfilerBundle\\Twig\\WebProfilerExtension");
@@ -110,7 +113,7 @@ class __TwigTemplate_37689f28e27c87f146402ef6480953b1117470d6736464624e81c4c525c
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->env->getExtension("Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension");
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "stylesheets"));
 
-        // line 41
+        // line 44
         echo "    ";
         $this->displayParentBlock("stylesheets", $context, $blocks);
         echo "
@@ -136,7 +139,7 @@ class __TwigTemplate_37689f28e27c87f146402ef6480953b1117470d6736464624e81c4c525c
 
     public function getDebugInfo()
     {
-        return array (  114 => 41,  105 => 40,  61 => 4,  52 => 3,  30 => 1,);
+        return array (  117 => 44,  108 => 43,  61 => 4,  52 => 3,  30 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -152,10 +155,13 @@ class __TwigTemplate_37689f28e27c87f146402ef6480953b1117470d6736464624e81c4c525c
         return new Source("{% extends 'base.html.twig' %}
 
 {% block body %}
-<div class=\"content-fluid\">
-    <div class=\"row\">
-        <h3>Hot Sales</h3>
+<br>
+<div class=\"container\">
+    <div class=\"row justify-content-center align-items-center\">
+        <h3>Hot Sales Destacados </h3><span class=\"ml-2\"><u> ver todos</u></span>
     </div>
+</div>
+<div class=\"container-fluid\">
     <div class=\"row justify-content-center\">
         <div class=\"col-10\">
             <div id=\"carouselExampleControls\" class=\"carousel slide\" data-ride=\"carousel\">
