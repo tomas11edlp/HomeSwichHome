@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Propiedads list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titulo</th>
+                <th>Descripcion</th>
+                <th>Pais</th>
+                <th>Provincia</th>
+                <th>Localidad</th>
+                <th>Domicilio</th>
+                <th>Foto</th>
+                <th>Precio</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for propiedad in propiedads %}
+            <tr>
+                <td><a href="{{ path('propiedad_show', { 'id': propiedad.id }) }}">{{ propiedad.id }}</a></td>
+                <td>{{ propiedad.titulo }}</td>
+                <td>{{ propiedad.descripcion }}</td>
+                <td>{{ propiedad.pais }}</td>
+                <td>{{ propiedad.provincia }}</td>
+                <td>{{ propiedad.localidad }}</td>
+                <td>{{ propiedad.domicilio }}</td>
+                <td>{{ propiedad.foto }}</td>
+                <td>{{ propiedad.precio }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('propiedad_show', { 'id': propiedad.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('propiedad_edit', { 'id': propiedad.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('propiedad_new') }}">Create a new propiedad</a>
+        </li>
+    </ul>
+{% endblock %}
