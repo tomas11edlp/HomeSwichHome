@@ -160,6 +160,49 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
 
         }
 
+        elseif (0 === strpos($pathinfo, '/usuario')) {
+            // usuario_index
+            if ('/usuario' === $trimmedPathinfo) {
+                $ret = array (  '_controller' => 'AppBundle\\Controller\\UsuarioController::indexAction',  '_route' => 'usuario_index',);
+                if ('/' === substr($pathinfo, -1)) {
+                    // no-op
+                } elseif ('GET' !== $canonicalMethod) {
+                    goto not_usuario_index;
+                } else {
+                    return array_replace($ret, $this->redirect($rawPathinfo.'/', 'usuario_index'));
+                }
+
+                return $ret;
+            }
+            not_usuario_index:
+
+            // login_emulado_admin
+            if ('/usuario/login_emulado/admin' === $pathinfo) {
+                return array (  '_controller' => 'AppBundle\\Controller\\UsuarioController::loginEmuladoAction',  '_route' => 'login_emulado_admin',);
+            }
+
+            // usuario_new
+            if ('/usuario/new' === $pathinfo) {
+                return array (  '_controller' => 'AppBundle\\Controller\\UsuarioController::newAction',  '_route' => 'usuario_new',);
+            }
+
+            // usuario_show
+            if (preg_match('#^/usuario/(?P<id>[^/]++)$#sD', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, ['_route' => 'usuario_show']), array (  '_controller' => 'AppBundle\\Controller\\UsuarioController::showAction',));
+            }
+
+            // usuario_edit
+            if (preg_match('#^/usuario/(?P<id>[^/]++)/edit$#sD', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, ['_route' => 'usuario_edit']), array (  '_controller' => 'AppBundle\\Controller\\UsuarioController::editAction',));
+            }
+
+            // usuario_delete
+            if (preg_match('#^/usuario/(?P<id>[^/]++)$#sD', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, ['_route' => 'usuario_delete']), array (  '_controller' => 'AppBundle\\Controller\\UsuarioController::deleteAction',));
+            }
+
+        }
+
         if ('/' === $pathinfo && !$allow) {
             throw new Symfony\Component\Routing\Exception\NoConfigurationException();
         }

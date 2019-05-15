@@ -24,20 +24,22 @@ use Twig\Token;
  *      This text becomes uppercase
  *   {% endfilter %}
  *
- * @final
+ * @deprecated since Twig 2.9, to be removed in 3.0 (use the "apply" tag instead)
  */
-class FilterTokenParser extends AbstractTokenParser
+final class FilterTokenParser extends AbstractTokenParser
 {
     public function parse(Token $token)
     {
+        @trigger_error('The "filter" tag is deprecated since Twig 2.9, use the "apply" tag instead.', E_USER_DEPRECATED);
+
         $name = $this->parser->getVarName();
         $ref = new BlockReferenceExpression(new ConstantExpression($name, $token->getLine()), null, $token->getLine(), $this->getTag());
 
         $filter = $this->parser->getExpressionParser()->parseFilterExpressionRaw($ref, $this->getTag());
-        $this->parser->getStream()->expect(Token::BLOCK_END_TYPE);
+        $this->parser->getStream()->expect(/* Token::BLOCK_END_TYPE */ 3);
 
         $body = $this->parser->subparse([$this, 'decideBlockEnd'], true);
-        $this->parser->getStream()->expect(Token::BLOCK_END_TYPE);
+        $this->parser->getStream()->expect(/* Token::BLOCK_END_TYPE */ 3);
 
         $block = new BlockNode($name, $body, $token->getLine());
         $this->parser->setBlock($name, $block);

@@ -13,6 +13,11 @@
         {% block header %}
             {% include 'header.html.twig' %}
         {% endblock %}
+            <div class="container mt-2">
+                <div class="row justify-content-center">
+                    {% include 'mensajes.html.twig' %}
+                </div>
+            </div>
         {% block body %}
         {% endblock %}
         {% block footer %}
@@ -23,6 +28,13 @@
             <script src="{{ asset('libs/bootstrap/js/bootstrap.min.js') }}"></script>
             <script src="{{ asset('libs/bootadmin/js/bootstrap.bundle.min.js') }}"></script>
             <script src="{{ asset('libs/bootadmin/js/bootadmin.min.js') }}"></script>
+
+            <script type="text/javascript">
+                $(document).ready(function(){
+                    $("form").attr('novalidate', 'novalidate');
+                    $("form").attr('autocomplete', "off");
+                });
+            </script>
         {% endblock %}
     </body>
 </html>
