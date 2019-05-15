@@ -1,0 +1,11 @@
+<div id="footer" class="bg-secondary">
+    <div class="container-fluid">
+        <div class="row justify-content-end align-items-center">
+        	{% if not app.session.has('user') and not app.session.has('useradmin') %}
+	            <div class="col-3 text-center">
+	                <a class="text-light" href="{{path('login_emulado', {'tipo':'A'} )}}">Ingreso Administracion</a>
+	            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

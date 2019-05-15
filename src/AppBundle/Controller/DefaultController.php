@@ -19,4 +19,21 @@ class DefaultController extends Controller
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
         ]);
     }
+
+    /**
+     * @Route("/clearsession", name="clearsession")
+     */
+    public function clearSessionAction(Request $request)
+    {
+        $session = $this->get('session');
+
+        $session->remove('user');
+        $session->remove('useradmin');
+        $session->clear();
+        $session->getFlashBag()->add('success', 'Sesi&oacute;n finalizada. Hasta pronto!');
+
+        return $this->redirectToRoute('homepage');
+    }
 }
+
+

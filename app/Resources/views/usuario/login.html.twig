@@ -1,5 +1,12 @@
 {% extends 'base.html.twig' %}
 
+{% block javascripts %}
+    {{parent()}}
+    <script type="text/javascript">
+        $('#btnIngresar').hide();
+    </script>
+{% endblock %}
+
 {% block body %}
 <div class="container mt-4">
     <div class="row justify-content-center">

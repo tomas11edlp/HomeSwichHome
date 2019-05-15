@@ -16,6 +16,7 @@ class UsuarioLoginType extends AbstractType
     {
         $builder
             ->add('email', null, array(
+                'label'=>'Nombre de usuario o Email',
                 'attr' => array(
                     'class' => 'form-control',
                 ),

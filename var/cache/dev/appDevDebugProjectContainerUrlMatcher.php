@@ -122,6 +122,11 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
         }
         not_homepage:
 
+        // clearsession
+        if ('/clearsession' === $pathinfo) {
+            return array (  '_controller' => 'AppBundle\\Controller\\DefaultController::clearSessionAction',  '_route' => 'clearsession',);
+        }
+
         if (0 === strpos($pathinfo, '/propiedad')) {
             // propiedad_index
             if ('/propiedad' === $trimmedPathinfo) {
@@ -176,9 +181,9 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
             }
             not_usuario_index:
 
-            // login_emulado_admin
-            if ('/usuario/login_emulado/admin' === $pathinfo) {
-                return array (  '_controller' => 'AppBundle\\Controller\\UsuarioController::loginEmuladoAction',  '_route' => 'login_emulado_admin',);
+            // login_emulado
+            if (0 === strpos($pathinfo, '/usuario/login_emulado') && preg_match('#^/usuario/login_emulado/(?P<tipo>[^/]++)$#sD', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, ['_route' => 'login_emulado']), array (  '_controller' => 'AppBundle\\Controller\\UsuarioController::loginEmuladoAction',));
             }
 
             // usuario_new

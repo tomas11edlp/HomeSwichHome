@@ -37,10 +37,10 @@ class UsuarioController extends Controller
     /**
      * Lists all usuario entities.
      *
-     * @Route("/login_emulado/admin", name="login_emulado_admin")
+     * @Route("/login_emulado/{tipo}", name="login_emulado")
      * @Method("GET")
      */
-    public function loginEmuladoAction(Request $request)
+    public function loginEmuladoAction(Request $request, $tipo)
     {
         $session = $this->get('session');
         $usuario = new Usuario;
@@ -48,16 +48,22 @@ class UsuarioController extends Controller
         $form = $this->createForm('AppBundle\Form\UsuarioLoginType', $usuario);
         $form->handleRequest($request);
 
-        if($session->has('user')){
+        if($session->has('user') or $session->has('useradmin')){
             $session->getFlashBag()->add('danger', 'Ya hay una sesi&oacute;n iniciada');
             return $this->redirectToRoute('homepage');
         }
         if ( $form->isSubmitted() && $form->isValid() ) {
 
-            $session->set('user', $form->get('email')->getData());
+            if ($tipo == 'A') {
+                $session->set('useradmin', $form->get('email')->getData());
+                $session->getFlashBag()->add('success', 'Ingreso admin exitoso. Bienvenido!');
+                return $this->redirectToRoute('homepage');
+            }else{
+                $session->set('user', $form->get('email')->getData());
+                $session->getFlashBag()->add('success', 'Ingreso exitoso. Bienvenido!');
+                return $this->redirectToRoute('homepage');
+            }
 
-            $session->getFlashBag()->add('success', 'Ingreso exitoso. Bienvenido');
-            return $this->redirectToRoute('homepage');
         }
 
         return $this->render('usuario/login.html.twig', array(
