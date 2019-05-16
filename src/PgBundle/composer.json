@@ -1,0 +1,24 @@
+{
+	"name": "agusmoita/mottapg-bundle",
+	"description": "A paginator bundle for Symfony 3",
+	"homepage": "https://github.com/agusmoita/MottaPgBundle",
+	"type": "symfony-bundle",
+	"version": "2.0.1",
+	"authors": [
+		{
+			"name": "Augusto Moita",
+			"email": "a94moita@outlook.com",
+			"homepage": "https://github.com/agusmoita",
+			"role": "developer"
+		}
+	],
+	"keywords": ["symfony", "paginator", "pagination", "pdf", "excel", "export", "massaction"],
+	"license": "MIT",
+	"require": {
+		"whiteoctober/tcpdf-bundle": "*"
+	},
+	"autoload": {
+        "psr-0": { "MottaPgBundle": "" }
+    },
+    "target-dir": "MottaPgBundle"
+}

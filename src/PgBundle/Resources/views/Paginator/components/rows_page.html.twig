@@ -1,0 +1,14 @@
+{% if paginator.filterTheme == 'inline' %}
+	<div class="col text-right align-self-end small {{ paginator.hide.rowsPerPage ? 'invisible' : '' }}">
+	    {{ form_label(paginator.form.rowsPerPage, null) }}
+	    {{ form_widget(paginator.form.rowsPerPage, { 'attr': {'class': 'btn btn-outline-secondary btn-navbar btn-sm'} }) }}
+	</div>
+{% else %}
+	<div class="col-sm-4 text-right {{ paginator.hide.rowsPerPage ? 'invisible' : '' }}">
+	    {{ form_label(paginator.form.rowsPerPage, null) }}
+	    {{ form_widget(paginator.form.rowsPerPage, { 'attr': {'class': 'btn btn-outline-secondary btn-navbar btn-sm'} }) }}
+	</div>
+{% endif %}
+
+
+{# <div class="col align-self-end {{ paginator.exports|length == 0 ? 'col-sm-offset-2' : '' }} small {{ paginator.hide.rowsPerPage ? 'invisible' : '' }}"> #}

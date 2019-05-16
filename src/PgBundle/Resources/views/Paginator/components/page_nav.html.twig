@@ -1,0 +1,43 @@
+{% if paginator.filterTheme == 'inline' %}
+    <div class="col text-center">
+        <div class="page-nav {{ ( paginator.totalPages <= 1 and not paginator.hide.pageNav ) ? '' : '' }}">
+            <button class="btn btn-outline-secondary btn-navbar btn-sm" id="firstPage-{{ paginator.id }}" type="button" title="{{ 'First page'|trans }}">
+                <<
+            </button>
+            <button class="btn btn-outline-secondary btn-navbar btn-sm"  id="prevPage-{{ paginator.id }}" type="button" title="{{'Previous page'|trans}}">
+                <
+            </button>
+            <span class="btn btn-outline-secondary btn-navbar btn-sm">
+                <span id="actualPage-{{ paginator.id }}">{{ paginator.form.vars.value.page }}</span> {{ 'of'|trans }} <span id="totalPages-{{ paginator.id }}">{{ paginator.totalPages }}</span> {{ form_row(paginator.form.page) }}
+            </span>
+            <button class="btn btn-outline-secondary btn-navbar btn-sm" id="nextPage-{{ paginator.id }}" type="button" title="{{ 'Next page'|trans }}">
+                >
+            </button>
+            <button class="btn btn-outline-secondary btn-navbar btn-sm" id="lastPage-{{ paginator.id }}" type="button" title="{{ 'Last page'|trans }}">
+                >>
+            </button>
+        </div>
+    </div>
+    {{ form_row(paginator.form.clean) }}
+{% else %}
+    <div class="col-sm-4 text-center">
+        <div class="page-nav {{ ( paginator.totalPages <= 1 and not paginator.hide.pageNav ) ? '' : '' }}">
+            <button class="btn btn-outline-secondary btn-navbar btn-sm" id="firstPage-{{ paginator.id }}" type="button" title="{{ 'First page'|trans }}">
+                <<
+            </button>
+            <button class="btn btn-outline-secondary btn-navbar btn-sm"  id="prevPage-{{ paginator.id }}" type="button" title="{{'Previous page'|trans}}">
+                <
+            </button>
+            <span class="btn btn-outline-secondary btn-navbar btn-sm">
+                <span id="actualPage-{{ paginator.id }}">{{ paginator.form.vars.value.page }}</span> {{ 'of'|trans }} <span id="totalPages-{{ paginator.id }}">{{ paginator.totalPages }}</span> {{ form_row(paginator.form.page) }}
+            </span>
+            <button class="btn btn-outline-secondary btn-navbar btn-sm" id="nextPage-{{ paginator.id }}" type="button" title="{{ 'Next page'|trans }}">
+                >
+            </button>
+            <button class="btn btn-outline-secondary btn-navbar btn-sm" id="lastPage-{{ paginator.id }}" type="button" title="{{ 'Last page'|trans }}">
+                >>
+            </button>
+        </div>
+    </div>
+    {{ form_row(paginator.form.clean) }}
+{% endif %}

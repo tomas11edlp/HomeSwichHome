@@ -1,0 +1,47 @@
+services:
+    pg.form_remember:
+        class: PgBundle\Util\Paginator\FormRemember
+        arguments: ["@session", "@request_stack"]
+
+    pg.query_helper:
+        abstract: true
+        class: PgBundle\Util\QueryHelper\QueryHelper
+        arguments: ["@doctrine"]
+
+    pg.dql_query_helper:
+        class: PgBundle\Util\QueryHelper\DqlQueryHelper
+        parent: "pg.query_helper"
+
+    pg.sql_query_helper:
+        class: PgBundle\Util\QueryHelper\SqlQueryHelper
+        parent: "pg.query_helper"
+
+    pg.massaction:
+        class: PgBundle\Util\MassAction\MassAction
+        shared: false
+        arguments: ["@http_kernel"]
+        public: true
+
+    pg.export:
+        abstract: true
+        class: PgBundle\Util\Export\Export
+        shared: false
+        public: true
+
+    pg.export.excel:
+        class: PgBundle\Util\Export\ExcelExport
+        parent: "pg.export"
+        shared: false
+        public: true
+
+    pg.export.pdf:
+        class: PgBundle\Util\Export\PdfExport
+        parent: pg.export
+        shared: false
+        arguments: ["@?white_october.tcpdf"]
+        public: true
+
+    pg.pg:
+        class: PgBundle\Util\Paginator\Paginator
+        public: true
+        arguments: ["@service_container", "@pg.form_remember", "@pg.dql_query_helper", "@pg.sql_query_helper"]

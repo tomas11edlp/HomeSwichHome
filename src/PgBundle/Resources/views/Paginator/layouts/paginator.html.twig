@@ -1,0 +1,24 @@
+{% extends '@Pg/Paginator/layouts/paginator_baseinline.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% include '@Pg/Paginator/components/js_init.html.twig' %}
+    <script type="text/javascript">
+        var pgroute = ""
+        function pgsubmit(btnSort = false) {
+
+            if (btnSort) {
+                var content = true
+                    ? '<i class="fa fa-spinner fa-spin"></i>'
+                    : '<i class="fa fa-search"></i>'
+
+                $('#sort-'+form).html(content)
+
+            } else {
+                loaderButton();
+            }
+            $('#'+form).submit()
+        }
+    </script>
+    {% include '@Pg/Paginator/components/js.html.twig' %}
+{% endblock %}

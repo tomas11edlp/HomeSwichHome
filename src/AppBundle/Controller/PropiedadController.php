@@ -22,13 +22,23 @@ class PropiedadController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $propiedads = $em->getRepository('AppBundle:Propiedad')->findAll();
-
-        return $this->render('propiedad/index.html.twig', array(
-            'propiedads' => $propiedads,
-        ));
+        return $this->get('pg.pg')
+            // ->setOrder(
+            //     array('Nombre' => 'nombre',
+            //         'Nivel' => 'nivel'
+            //     , 'Padre' => 'padre'),
+            //     'nivel',
+            //     'asc'
+            // )
+            ->noRemember(true)
+            // ->setFilter(FilterCategoriasType::class)
+            // ->setFiltersTheme('inline')
+            ->setRowsPerPage(15, array(15, 30, 45))
+            ->showRowsAtFirst()
+            ->setFiltersTheme('inline')
+            ->setBaseLayout('admin_base')
+            ->setView('propiedad/index.html.twig')
+            ->paginate('AppBundle:Propiedad');
     }
 
     /**

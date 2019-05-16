@@ -75,52 +75,60 @@ class __TwigTemplate_529df4ee626d8db6fa9fd475e089aed1f870cb5cdc9bf16c03236fef819
             if (twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 21, $this->source); })()), "session", [], "any", false, false, false, 21), "has", [0 => "user"], "method", false, false, false, 21)) {
                 // line 22
                 echo "                        <div class=\"btn-group\">
-                            <button class=\"btn btn-secondary btn-sm dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">
+                            <button class=\"btn btn-outline-light btn-sm dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">
                                 <i class=\"fas fa-user\"> </i> ";
                 // line 24
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 24, $this->source); })()), "session", [], "any", false, false, false, 24), "get", [0 => "user"], "method", false, false, false, 24), "html", null, true);
                 echo "
                             </button>
-                            <div class=\"dropdown-menu text-center\" style='margin-left:-20px'>
+                            <div class=\"dropdown-menu text-center\" style='margin-left:-60px'>
                             Some action
                                 <div class=\"dropdown-divider\"></div>
-                                    <a class=\"dropdown-item text-danger\" href=\"";
+                                <a class=\"dropdown-item text-danger\" href=\"";
                 // line 29
                 echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("clearsession");
                 echo "\">Cerrar Sesi&oacute;n</a>
-                                </div>
                             </div>
+                        </div>
                     ";
             } elseif (twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source,             // line 32
 (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 32, $this->source); })()), "session", [], "any", false, false, false, 32), "has", [0 => "useradmin"], "method", false, false, false, 32)) {
                 // line 33
                 echo "                        <div class=\"btn-group\">
-                            <button class=\"btn btn-secondary btn-sm dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">
-                            <i></i>";
+                            <button class=\"btn btn-outline-light btn-sm dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">
+                                <i class=\"fas fa-user\"> </i> ";
                 // line 35
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 35, $this->source); })()), "session", [], "any", false, false, false, 35), "get", [0 => "useradmin"], "method", false, false, false, 35), "html", null, true);
                 echo "
                             </button>
-                            <div class=\"dropdown-menu\">
-                            ...
+                            <div class=\"dropdown-menu text-center\" style='margin-left:-60px'>
+                                <a href=\"";
+                // line 38
+                echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("adminpage");
+                echo "\">Administraci&oacute;n</a>
+                                <div class=\"dropdown-divider\"></div>
+                                <a class=\"dropdown-item text-danger\" href=\"";
+                // line 40
+                echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("clearsession");
+                echo "\">Cerrar Sesi&oacute;n</a>
                             </div>
                         </div>
                     ";
             }
-            // line 42
+            // line 44
             echo "                </li>
             ";
         } else {
-            // line 44
+            // line 46
             echo "                <li id=\"btnIngresar\" class=\"nav-item\">
                     <a href=\"";
-            // line 45
+            // line 47
             echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("login_emulado", ["tipo" => "C"]);
             echo "\" class=\"nav-link\"><i class=\"fas fa-fingerprint\"></i> Ingresar</a>
                 </li>
             ";
         }
-        // line 48
+        // line 50
         echo "        </ul>
     </div>
 </nav>";
@@ -144,7 +152,7 @@ class __TwigTemplate_529df4ee626d8db6fa9fd475e089aed1f870cb5cdc9bf16c03236fef819
 
     public function getDebugInfo()
     {
-        return array (  124 => 48,  118 => 45,  115 => 44,  111 => 42,  101 => 35,  97 => 33,  95 => 32,  89 => 29,  81 => 24,  77 => 22,  75 => 21,  72 => 20,  70 => 19,  53 => 5,  49 => 4,  45 => 3,  41 => 1,);
+        return array (  132 => 50,  126 => 47,  123 => 46,  119 => 44,  112 => 40,  107 => 38,  101 => 35,  97 => 33,  95 => 32,  89 => 29,  81 => 24,  77 => 22,  75 => 21,  72 => 20,  70 => 19,  53 => 5,  49 => 4,  45 => 3,  41 => 1,);
     }
 
     public function getSourceContext()
@@ -171,22 +179,24 @@ class __TwigTemplate_529df4ee626d8db6fa9fd475e089aed1f870cb5cdc9bf16c03236fef819
                 <li class=\"nav-item\">
                     {% if app.session.has('user') %}
                         <div class=\"btn-group\">
-                            <button class=\"btn btn-secondary btn-sm dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">
+                            <button class=\"btn btn-outline-light btn-sm dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">
                                 <i class=\"fas fa-user\"> </i> {{app.session.get('user')}}
                             </button>
-                            <div class=\"dropdown-menu text-center\" style='margin-left:-20px'>
+                            <div class=\"dropdown-menu text-center\" style='margin-left:-60px'>
                             Some action
                                 <div class=\"dropdown-divider\"></div>
-                                    <a class=\"dropdown-item text-danger\" href=\"{{path('clearsession')}}\">Cerrar Sesi&oacute;n</a>
-                                </div>
+                                <a class=\"dropdown-item text-danger\" href=\"{{path('clearsession')}}\">Cerrar Sesi&oacute;n</a>
                             </div>
+                        </div>
                     {% elseif app.session.has('useradmin') %}
                         <div class=\"btn-group\">
-                            <button class=\"btn btn-secondary btn-sm dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">
-                            <i></i>{{app.session.get('useradmin')}}
+                            <button class=\"btn btn-outline-light btn-sm dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">
+                                <i class=\"fas fa-user\"> </i> {{app.session.get('useradmin')}}
                             </button>
-                            <div class=\"dropdown-menu\">
-                            ...
+                            <div class=\"dropdown-menu text-center\" style='margin-left:-60px'>
+                                <a href=\"{{path('adminpage')}}\">Administraci&oacute;n</a>
+                                <div class=\"dropdown-divider\"></div>
+                                <a class=\"dropdown-item text-danger\" href=\"{{path('clearsession')}}\">Cerrar Sesi&oacute;n</a>
                             </div>
                         </div>
                     {% endif %}

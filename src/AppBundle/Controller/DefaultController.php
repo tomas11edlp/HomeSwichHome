@@ -21,6 +21,22 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/administracion", name="adminpage")
+     */
+    public function indexAdminAction(Request $request)
+    {
+        $user = $this->get('session')->get('useradmin');
+
+        if($user){
+        // replace this example code with whatever you need
+            return $this->render('default/admin_index.html.twig');
+        }else{
+            $session->getFlashBag()->add('danger', 'No tiene acceso.');
+            return $this->redirectToRoute('homepage');   
+        }
+    }
+
+    /**
      * @Route("/clearsession", name="clearsession")
      */
     public function clearSessionAction(Request $request)

@@ -16,6 +16,7 @@
       <parameter key="SwiftmailerBundle">Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle</parameter>
       <parameter key="DoctrineBundle">Doctrine\Bundle\DoctrineBundle\DoctrineBundle</parameter>
       <parameter key="SensioFrameworkExtraBundle">Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle</parameter>
+      <parameter key="PgBundle">PgBundle\PgBundle</parameter>
       <parameter key="AppBundle">AppBundle\AppBundle</parameter>
       <parameter key="DebugBundle">Symfony\Bundle\DebugBundle\DebugBundle</parameter>
       <parameter key="WebProfilerBundle">Symfony\Bundle\WebProfilerBundle\WebProfilerBundle</parameter>
@@ -59,6 +60,11 @@
         <parameter key="path">/var/www/html/HomeSwichHome/vendor/sensio/framework-extra-bundle</parameter>
         <parameter key="namespace">Sensio\Bundle\FrameworkExtraBundle</parameter>
       </parameter>
+      <parameter key="PgBundle" type="collection">
+        <parameter key="parent">null</parameter>
+        <parameter key="path">/var/www/html/HomeSwichHome/src/PgBundle</parameter>
+        <parameter key="namespace">PgBundle</parameter>
+      </parameter>
       <parameter key="AppBundle" type="collection">
         <parameter key="parent">null</parameter>
         <parameter key="path">/var/www/html/HomeSwichHome/src/AppBundle</parameter>
@@ -96,7 +102,7 @@
     <parameter key="container.dumper.inline_class_loader">true</parameter>
     <parameter key="database_host">127.0.0.1</parameter>
     <parameter key="database_port">null</parameter>
-    <parameter key="database_name">symfony</parameter>
+    <parameter key="database_name">HomeSwitchHome</parameter>
     <parameter key="database_user">admin</parameter>
     <parameter key="database_password">admin</parameter>
     <parameter key="mailer_transport">smtp</parameter>
@@ -104,13 +110,13 @@
     <parameter key="mailer_user">null</parameter>
     <parameter key="mailer_password">null</parameter>
     <parameter key="secret">ThisTokenIsNotSoSecretChangeIt</parameter>
-    <parameter key="locale">en</parameter>
+    <parameter key="locale">es</parameter>
     <parameter key="fragment.renderer.hinclude.global_template"></parameter>
     <parameter key="fragment.path">/_fragment</parameter>
     <parameter key="kernel.secret">ThisTokenIsNotSoSecretChangeIt</parameter>
     <parameter key="kernel.http_method_override">true</parameter>
     <parameter key="kernel.trusted_hosts" type="collection"/>
-    <parameter key="kernel.default_locale">en</parameter>
+    <parameter key="kernel.default_locale">es</parameter>
     <parameter key="templating.helper.code.file_link_format">null</parameter>
     <parameter key="debug.file_link_format">null</parameter>
     <parameter key="session.metadata.storage_key">_sf2_meta</parameter>
@@ -557,7 +563,7 @@
       <tag name="container.hot_path"/>
       <tag name="container.hot_path"/>
       <argument type="service" id="request_stack"/>
-      <argument>en</argument>
+      <argument>es</argument>
       <argument type="service" id="router.default" on-invalid="ignore"/>
     </service>
     <service id="validate_request_listener" class="Symfony\Component\HttpKernel\EventListener\ValidateRequestListener">
@@ -2699,6 +2705,14 @@
         <argument>!Doctrine</argument>
       </call>
       <call method="addPath">
+        <argument>/var/www/html/HomeSwichHome/src/PgBundle/Resources/views</argument>
+        <argument>Pg</argument>
+      </call>
+      <call method="addPath">
+        <argument>/var/www/html/HomeSwichHome/src/PgBundle/Resources/views</argument>
+        <argument>!Pg</argument>
+      </call>
+      <call method="addPath">
         <argument>/var/www/html/HomeSwichHome/vendor/symfony/symfony/src/Symfony/Bundle/DebugBundle/Resources/views</argument>
         <argument>Debug</argument>
       </call>
@@ -3130,7 +3144,7 @@
         <argument key="driver">pdo_mysql</argument>
         <argument key="host">127.0.0.1</argument>
         <argument key="port">null</argument>
-        <argument key="dbname">symfony</argument>
+        <argument key="dbname">HomeSwitchHome</argument>
         <argument key="user">admin</argument>
         <argument key="password">admin</argument>
         <argument key="charset">UTF8</argument>
@@ -3445,6 +3459,42 @@
     </service>
     <service id="framework_extra_bundle.argument_name_convertor" class="Sensio\Bundle\FrameworkExtraBundle\Request\ArgumentNameConverter" public="false">
       <argument type="service" id="argument_metadata_factory"/>
+    </service>
+    <service id="pg.form_remember" class="PgBundle\Util\Paginator\FormRemember">
+      <argument type="service" id="session"/>
+      <argument type="service" id="request_stack"/>
+    </service>
+    <service id="pg.query_helper" class="PgBundle\Util\QueryHelper\QueryHelper" abstract="true">
+      <argument type="service" id="doctrine"/>
+    </service>
+    <service id="pg.dql_query_helper" class="PgBundle\Util\QueryHelper\DqlQueryHelper">
+      <argument type="service" id="doctrine"/>
+    </service>
+    <service id="pg.sql_query_helper" class="PgBundle\Util\QueryHelper\SqlQueryHelper">
+      <argument type="service" id="doctrine"/>
+    </service>
+    <service id="pg.massaction" class="PgBundle\Util\MassAction\MassAction" shared="false" public="true">
+      <argument type="service" id="http_kernel"/>
+    </service>
+    <service id="pg.export" class="PgBundle\Util\Export\Export" shared="false" public="true" abstract="true"/>
+    <service id="pg.export.excel" class="PgBundle\Util\Export\ExcelExport" shared="false" public="true"/>
+    <service id="pg.export.pdf" class="PgBundle\Util\Export\PdfExport" shared="false" public="true">
+      <argument>null</argument>
+    </service>
+    <service id="pg.pg" class="PgBundle\Util\Paginator\Paginator" public="true">
+      <argument type="service" id="service_container"/>
+      <argument type="service" id="pg.form_remember"/>
+      <argument type="service" id="pg.dql_query_helper"/>
+      <argument type="service" id="pg.sql_query_helper"/>
+      <call method="setConfig">
+        <argument>panel</argument>
+        <argument>base</argument>
+        <argument>open</argument>
+        <argument>false</argument>
+        <argument>true</argument>
+        <argument>false</argument>
+        <argument>false</argument>
+      </call>
     </service>
     <service id="twig.extension.dump" class="Symfony\Bridge\Twig\Extension\DumpExtension" public="false">
       <tag name="twig.extension"/>

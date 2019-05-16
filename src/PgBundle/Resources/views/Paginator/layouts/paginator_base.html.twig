@@ -1,0 +1,63 @@
+{% extends paginator.layout ~ '.html.twig' %}
+
+{% form_theme paginator.form 'form_div_layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% include '@Pg/Paginator/components/css.html.twig' %}
+{% endblock %}
+
+{% block body %}
+    {#{% include '@MottaPg/Paginator/components/mass_error.html.twig' %}#}
+	{% block headPage %}
+    {% endblock %}
+    <div class="row">
+        <div class="col-xs-12">
+			{% block title %}{% endblock %}
+        </div>
+    </div>
+	<div id="list">
+	    <form action="" method="POST" id="{{ paginator.id }}">
+
+	        <div id="table-container-{{ paginator.id }}" class="{{ paginator.hide.list ? 'invisible' : '' }} {% block table_class %}{% endblock %}" style="margin-left:2vh; margin-right:5vh;">
+                <div class="row">
+                	<div class="col-xs-12">
+						<div class="col-lg-3" style=" border: 1px solid #dae2e6; padding-top: 20px;">
+							{% include '@Pg/Paginator/components/header.html.twig' %}
+							<br>
+							{% block pg_header %}
+								{# {% if paginator.form.filters is defined and paginator.form.filters|length > 0 %} #}
+									{# FILTROS POR IZQUIERDA #}
+									{% block paginator_left_filters %} 
+
+									{% endblock %}
+
+									{% set filters = paginator.form.filters %}
+									{% block filtersPanel %}
+										{% include '@Pg/Paginator/components/filter_'~ paginator.filterTheme ~'.html.twig' %}
+									{% endblock %}
+								{# {% endif %} #}
+								<div class="row">
+									<div class="col-md-12 panel-group text-right">
+										{% block buttons %}{% endblock %}
+									</div>
+								</div>
+							{% endblock %}
+						</div>
+						<div class="col-lg-9">
+							<br/>
+							{% block list %}{% endblock %}
+							{% block pg_footer %}{% endblock %}
+							<hr  style="clear: both;">
+							<div class="col-sm-12">
+								{% include '@Pg/Paginator/components/footer.html.twig' %}
+							</div>
+						</div>
+					</div>
+				</div>
+	        </div>
+	        {{ form_row(paginator.form._token) }}
+	    </form>
+	</div>
+
+{% endblock %}

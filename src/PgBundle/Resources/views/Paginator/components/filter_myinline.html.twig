@@ -1,0 +1,22 @@
+<div id="filters-{{ paginator.id }}">
+	<div class="row">
+        {% set hidden_categoria = null %}
+        {% for f in filters %}
+            {% if f.vars.id != 'mottapgbundle_paginatorformtype_filters_categoria' %}
+			<div class="col-sm-6" style="margin-bottom: 10px;">
+				{{ form_widget(f, {"attr": {"class": "form-control upper"} } ) }}
+			</div>
+            {% else %}
+                {% set hidden_categoria = f %}
+            {% endif %}
+		{% endfor %}
+		<div class="col-sm-6">
+			<button class="btn btn-info" id="search-{{ paginator.id }}" type="button" title="{{ 'Search'|trans }}">
+	            {{ 'Search'|trans }}
+	        </button>
+	        {#<button class="btn btn-default" id="clean-{{ paginator.id }}" type="button" title="{{ 'Clean'|trans }}">
+	            {{ 'Clean'|trans }}
+	        </button>#}
+		</div>
+	</div>
+</div>

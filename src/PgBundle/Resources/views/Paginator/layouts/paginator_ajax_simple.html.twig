@@ -1,0 +1,278 @@
+{% extends 'PgBundle:Paginator/layouts/paginator_simple.html.twig' %}
+
+{% block ownJsEnd %}
+    {{ parent() }}
+    <script type="text/javascript">
+        var form = "{{ paginator.id }}"
+        var pageForm = "{{ paginator.form.page.vars.id }}"
+        var pageVal = "{{ paginator.form.vars.value.page }}"
+        var totalPages = "{{ paginator.totalPages }}"
+        var totalRows = "{{ paginator.totalRows }}"
+        var cantForm = "{{ paginator.form.rowsPerPage.vars.id }}"
+        var orderByForm = "{{ paginator.form.orderBy.vars.id }}"
+        var orderByVal = "{{ paginator.form.vars.value.orderBy }}"
+        var directionForm = "{{ paginator.form.direction.vars.id }}"
+        var directionVal = "{{ paginator.form.vars.value.direction }}"
+        var massIdsForm = "{{ paginator.form.massIds.vars.id }}"
+        var massIdsVal = "{{ paginator.form.vars.value.massIds }}"
+        var massAllForm = "{{ paginator.form.massAll.vars.id }}"
+        var massAllVal = "{{ paginator.form.vars.value.massAll }}"
+        var showPageNav = "{{ paginator.hide.pageNav }}"
+        var cleanForm = "{{ paginator.form.clean.vars.id }}"
+        var cleanVal = false
+        var hide = "{{ paginator.hide.list }}"
+
+        $("#"+form+" #"+cleanForm).val(false)
+
+        function validatePageButtons() {
+            if (totalPages <= 1 && !showPageNav) {
+                $('#'+form+" .page-nav").addClass('invisible')
+            } else {
+                $('#'+form+" .page-nav").removeClass('invisible')
+            }
+            $('#prevPage-'+form).attr('disabled',
+                  (+$("#"+form+" #"+pageForm).val() <= 1))
+            $('#nextPage-'+form).attr('disabled',
+                ( parseInt(totalPages) <= parseInt(pageVal) ))
+            $('#lastPage-'+form).attr('disabled',
+                ( parseInt(totalPages) <= parseInt(pageVal) ))
+            $('#firstPage-'+form).attr('disabled',
+                (+$("#"+form+" #"+pageForm).val() <= 1))
+        }
+
+        function cleanMassIds() {
+            $("#"+form+" #"+massIdsForm).val('')
+            massIdsVal = null
+            $("#"+form+" #"+massAllForm).val(false)
+            massAllVal = false
+        }
+
+        function checkselected() {
+            if ($('#'+form+' #'+massIdsForm).val()) {
+                var arr = $('#'+form+' #'+massIdsForm).val().split('#')
+                for (var i = 0; i < arr.length; i++) {
+                    $('#'+form+' #massaction'+arr[i]).attr('checked', 'checked')
+                }
+                var count = arr.length
+                if (arr.length > 0 && arr[0] == "") {
+                    count--
+                }
+                $('#'+form+' #selected-count').text(count)
+            }
+            else {
+                $('#'+form+' #selected-count').text(0)
+            }
+
+            var all = $('#'+form+' .massaction').length
+            var selected = $('#'+form+' .massaction:checked').length
+            var value = all === selected
+            var ma = $('#'+form+' #massaction-all')[0]
+            if (ma !== undefined) {
+                ma.checked = value
+            }
+            $('#'+form+' #'+massAllForm).val(value)
+        }
+
+        function loaderButton(active) {
+            if (active === undefined) {
+                active = true
+            }
+            var content = active
+                            ? '<i class="fa fa-spinner fa-spin" ></i>'
+                            : "{{ 'Search'|trans }}"
+            $('#search-'+form).html(content)
+        }
+
+        var pgroute = ""
+        function pgsubmit () {
+            $('#loader-'+form).removeClass('invisible')
+            $('#table-'+form+' table').addClass('loading')
+            $.ajax({
+                url: "",
+                type: 'post',
+                data: $('#'+form).serialize(),
+            })
+            .done(function(data) {
+                if (data['totalRows'] == 0 && cleanVal && hide) {
+                    $('#table-container-'+form).addClass('invisible')
+                } else {
+                    $('#table-container-'+form).removeClass('invisible')
+                }
+                $('#table-body-'+form).html(data['html'])
+                $('#actualPage-'+form).text($("#"+form+" #"+pageForm).val())
+                $('#totalRows-'+form).text(data['totalRows'])
+                $('#totalPages-'+form).text(data['totalPages'])
+
+                $("#"+form+" #"+cleanForm).val(false)
+                cleanVal = false
+                totalPages = data['totalPages']
+                pageVal = $("#"+form+" #"+pageForm).val()
+                validatePageButtons()
+
+                loaderButton(false)
+                $('#loader-'+form).addClass('invisible')
+                $('#table-'+form+' table').removeClass('loading')
+                checkselected()
+            })
+            .fail(function(err) {
+                console.error("error", err);
+            })
+        }
+
+        $(function () {
+            validatePageButtons()
+
+            $('#prevPage-'+form).click(function () {
+                $("#"+form+" #"+pageForm).val(+$("#"+form+" #"+pageForm).val() - 1)
+                pgsubmit()
+            })
+            $('#nextPage-'+form).click(function () {
+                $("#"+form+" #"+pageForm).val(+$("#"+form+" #"+pageForm).val() + 1)
+                pgsubmit()
+            })
+            $('#firstPage-'+form).click(function () {
+                $("#"+form+" #"+pageForm).val(1)
+                pgsubmit()
+            })
+            $('#lastPage-'+form).click(function () {
+                $("#"+form+" #"+pageForm).val(totalPages)
+                pgsubmit()
+            })
+            $("#"+form+" #"+cantForm).change(function () {
+                $("#"+form+" #"+pageForm).val(1)
+                pgsubmit()
+            })
+            $('#sort-'+form).click(function () {
+                $("#"+form+" #"+pageForm).val(1)
+                pgsubmit()
+            })
+
+            function search() {
+                loaderButton()
+                $("#"+form+" #"+pageForm).val(1)
+                cleanMassIds()
+                pgsubmit()
+            }
+            $('#search-'+form).click(function () {
+                search()
+            })
+            $('#clean-'+form).click(function () {
+                $('#filters-'+form+' :input').val('')
+                $("#"+form+" #"+cleanForm).val(true)
+                cleanVal = true
+                search()
+            })
+            $('#filters-'+form+' :input').keypress(function (e) {
+                if (e.keyCode == 13) {
+                    cleanMassIds()
+                    search()
+                }
+            })
+
+            $('th.sortable').each(function () {
+                var by = $(this).attr('sort')
+                if (by == orderByVal) {
+                    $(this).attr('order', directionVal)
+                    $(this).append('<i class="fa fa-sort-'+directionVal+'"></i>')
+                }
+            })
+            $('th.sortable').click(function () {
+                var by = $(this).attr('sort')
+                var order = $(this).attr('order')
+                $("#"+orderByForm).val(by)
+                $("#"+pageForm).val(1)
+                if (order) {
+                    $(this).find('i.fa').toggleClass('fa-sort-asc fa-sort-desc')
+                    order = order == 'asc' ? 'desc' : 'asc'
+                    $(this).attr('order', order)
+                    $("#"+directionForm).val(order)
+                }
+                else {
+                    $('th.sortable').removeAttr('order')
+                    $('th.sortable i.fa').remove()
+                    $(this).attr('orden', directionVal)
+                    $("#"+directionForm).val(directionVal)
+                    $(this).append('<i class="fa fa-sort-'+directionVal+'"></i>')
+                }
+                pgsubmit()
+            });
+
+            checkselected()
+
+            $("#panel-filter-{{ paginator.id }}").click(function () {
+                $("#arrow-{{ paginator.id }}").toggleClass('fa-chevron-down fa-chevron-up')
+            })
+
+            $('[data-toggle="tooltip"]').tooltip()
+
+            $(document).on('click', '.massaction',function (e) {
+                var value = $(this).val()
+                if ($(this).is(':checked')) {
+                    $('#'+form+' #'+massIdsForm).val($('#'+form+' #'+massIdsForm).val()+'#'+value)
+                    var count = parseInt($('#selected-count').text()) + 1
+                }
+                else {
+                    var arr = []
+                    if ($('#'+form+' #'+massAllForm).val() == 'true') {
+                        $('#'+form+' #'+massAllForm).val(false)
+                        $('#massaction-all')[0].checked = false
+                    }
+                    arr = $('#'+form+' #'+massIdsForm).val().split('#')
+                    var index = arr.indexOf(value)
+                    arr.splice(index, 1)
+                    var count = arr.length
+                    if (arr.length > 0 && arr[0] == "") {
+                        count--
+                    }
+                    var result = arr.join('#')
+                    $('#'+form+' #'+massIdsForm).val(result)
+                }
+                $('#'+form+' #selected-count').text(count)
+            })
+
+            $(document).on('click', '#massaction-all', function (e) {
+                var acc = this.checked ? true : false
+                $('#'+form+' #'+massAllForm).val(acc)
+                massAllVal = acc
+                if (acc) {
+                    $('#'+form+' .massaction:not(:checked)').trigger("click")
+                } else {
+                    $('#'+form+' .massaction:checked').trigger("click")
+                }
+            })
+
+            $(document).on('click', '.dropdown .action', function (e) {
+                e.preventDefault()
+                if ($('#'+form+' #selected-count').text() == '0') {
+                    $('#'+form+' #mass-count-error').removeClass('invisible')
+                    setTimeout(function () {
+                        $('#'+form+' #mass-count-error').addClass('invisible')
+                    }, 2500)
+                } else {
+                    var modal = $(this).attr('modal')
+                    var action = pgroute +"?mass=" + $(this).attr('id')
+                    var x = $('#'+form).attr('action')
+                    var i = x.indexOf('?')
+                    if (i > -1) {
+                        x = x.substr(0, i)
+                    }
+                    $('#'+form).attr('action', x+action)
+                    if (modal != '') {
+                        $('#'+modal).modal('show')
+                    } else {
+                        $('#'+form).submit()
+                    }
+                }
+            })
+
+            $(".modal-cancel-{{ paginator.id }}").click(function () {
+                var action = $('#'+form).attr('action')
+                var i = action.indexOf('?')
+                if (i > -1) {
+                    action = action.substr(0, i)
+                }
+                $('#'+form).attr('action', action)
+            })
+        });
+    </script>
+{% endblock %}

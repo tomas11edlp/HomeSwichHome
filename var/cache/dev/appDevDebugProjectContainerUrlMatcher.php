@@ -122,6 +122,11 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
         }
         not_homepage:
 
+        // adminpage
+        if ('/administracion' === $pathinfo) {
+            return array (  '_controller' => 'AppBundle\\Controller\\DefaultController::indexAdminAction',  '_route' => 'adminpage',);
+        }
+
         // clearsession
         if ('/clearsession' === $pathinfo) {
             return array (  '_controller' => 'AppBundle\\Controller\\DefaultController::clearSessionAction',  '_route' => 'clearsession',);

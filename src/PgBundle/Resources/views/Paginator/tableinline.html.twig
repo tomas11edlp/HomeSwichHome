@@ -1,0 +1,33 @@
+{% extends '@Pg/Paginator/layouts/paginator.html.twig' %}
+
+{% block list %}
+
+    {% set hasMassAction = paginator.massActions|length > 0 ? true : false %}
+    <div class="row justify-content-center align-items-end">
+        <table class="table table-hover col-11">
+            <thead class="text-center">
+                <tr>
+                {% block paginator_table_header %}{% endblock %}
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                {% block page_row %}
+                    {% for entity in paginator.entities %}
+                        {% set entityid = entity.id is defined ? entity.id : '' %}
+                        {% block paginator_row_prev %}
+                            <tr class="pgrow {% block row_class %}{% endblock %}" id="row-{{ entityid }}">
+                                {% block paginator_table_data %}{% endblock %}
+                            </tr>
+                        {% endblock %}
+                    {% else %}
+                        <tr class="text-center">
+                            <td class='text-danger' colspan="20">
+                                {% block no_data %}{{ 'No data'|trans }}.{% endblock %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endblock %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

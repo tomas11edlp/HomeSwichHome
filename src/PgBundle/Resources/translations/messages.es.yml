@@ -1,0 +1,24 @@
+Actions: Acciones
+Ascending: Ascendente
+Cancel: Cancelar
+Clean: Limpiar
+Descending: Descendente
+Download: Descargar
+First page: Primer página
+Last page: Última página
+Next page: Siguiente página
+No data: No hay datos para mostrar
+of: de
+Previous page: Página anterior
+Search filters: Filtros de búsqueda
+Search: Buscar
+Select: Seleccione
+Selected: Seleccionados
+Sort: Ordenar
+Total: Total
+You must select at least one item: Debe seleccionar al menos un item
+pgform:
+    labels:
+        page: Página
+        rows: Mostrar
+        order: Orden
