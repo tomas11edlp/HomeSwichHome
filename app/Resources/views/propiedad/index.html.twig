@@ -8,17 +8,19 @@
 
 {% block paginator_table_header %}
     {# <th></th> #}
-    <th scope="col"></th>
-    <th scope="col" class="sortable" sort="nombre">Nombre</th>
-    <th scope="col" class="sortable" sort="padre">Descripci&oacute;n</th>
+    <th scope="col" class="col-2" sort="nombre"></th>
+    <th scope="col" class="" sort="nombre">T&iacute;tulo</th>
+    <th scope="col" class="" sort="padre">Descripci&oacute;n</th>
     <th scope="col"></th>
 {% endblock %}
 
 {% block paginator_table_data %}
-    <td>unaimagen</td>
-    <td>{{ entity.nombre }}</td>
-    <td>{{ entity.descripcion }}</td>
-    <td>
+    <td class="align-middle">  
+        <img src="{{entity.foto|default('https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fmoorestown-mall.com%2Fnoimage.gif&f=1')}}" width="50%" border="0">  
+    </td>
+    <td class="align-middle">{{ entity.titulo }}</td>
+    <td class="align-middle">{{ entity.descripcion }}</td>
+    <td class="align-middle">
         <a class="text-info" href="{{path('propiedad_edit', {'id':entity.id}) }}"><i class="fas fa-edit"></i></a>
         <a class="text-danger" href="{{path('propiedad_delete', {'id':entity.id}) }}"><i class="fas fa-times"></i></a>
     </td>
