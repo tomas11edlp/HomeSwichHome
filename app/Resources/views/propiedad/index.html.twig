@@ -15,8 +15,11 @@
 {% endblock %}
 
 {% block paginator_table_data %}
-    <td>unaimagen</td>
-    <td>{{ entity.nombre }}</td>
+    <td>
+        
+        <img style="width:15%;" border="0" alt="Null" src="{{entity.foto|default('#')}}"> 
+    </td>
+    <td>{{ entity.titulo|default('N/E') }}</td>
     <td>{{ entity.descripcion }}</td>
     <td>
         <a class="text-info" href="{{path('propiedad_edit', {'id':entity.id}) }}"><i class="fas fa-edit"></i></a>
