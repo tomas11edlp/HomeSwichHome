@@ -28,7 +28,7 @@ class Puja
     private $usuario;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Subasta")
+     * @ORM\ManyToOne(targetEntity="Subasta", inversedBy="pujas")
      * @ORM\JoinColumn(name="id_subasta", referencedColumnName="id")
      */
     private $subasta;

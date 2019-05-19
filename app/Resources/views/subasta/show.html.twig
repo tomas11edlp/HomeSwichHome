@@ -1,48 +1,97 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin_base.html.twig' %}
 
 {% block body %}
-    <h1>Subastum</h1>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ subastum.id }}</td>
-            </tr>
-            <tr>
-                <th>Fechainicio</th>
-                <td>{% if subastum.fechaInicio %}{{ subastum.fechaInicio|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Fechafin</th>
-                <td>{% if subastum.fechaFin %}{{ subastum.fechaFin|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Fechareservainicio</th>
-                <td>{% if subastum.fechaReservaInicio %}{{ subastum.fechaReservaInicio|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Fechareservafin</th>
-                <td>{% if subastum.fechaReservaFin %}{{ subastum.fechaReservaFin|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Montobase</th>
-                <td>{{ subastum.montoBase }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="mb-4 text-center">
+        <h2> Subasta
+            <a class="btn btn-outline-success" href="{{ path('subasta_edit', { 'id': subasta.id }) }}">Modificar</a>
+            <a class="btn btn-outline-danger" href="{{ path('subasta_delete', { 'id': subasta.id }) }}">Eliminar</a>
+        </h2>
+    </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('subasta_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('subasta_edit', { 'id': subastum.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+    <div class="card  pt-5 pb-4">
+        <div class="col-12">
+        <div class="row">
+            <div class="col-8 mb-3">
+                <div class="row">
+                    <div class="col-4">
+                        <h4> {{subasta.propiedad}} </h4>
+                        <h5> T&iacute;tulo </h5>
+                    </div>
+
+                    <div class="col-4">
+                        <h4> {{subasta.semanaReserva}}/{{subasta.anioReserva}} </h4>
+                        <h5> Semana a reservar </h5>
+                    </div>
+
+                    <div class="col-4">
+                        <h4> {{subasta.fechaInicio|date('d-m-Y')}} </h4>
+                        <h5> Fecha Inicio </h5>
+                    </div>
+
+                    <div class="col-4">
+                        <h4> {{subasta.fechaFin|date('d-m-Y')}} </h4>
+                        <h5> Fecha F&iacute;n </h5>
+                    </div>
+
+                    <div class="col-4 mb-3">
+                        <h4> {{subasta.montoBase}} </h4>
+                        <h5> Monto Inicial </h5>
+                    </div>
+
+                    <div class="col-4 mb-3">
+                        <h4> {{subasta.estado|default('-')}} </h4>
+                        <h5> Estado </h5>
+                    </div>
+
+                    <div class="col-6 mt-3">
+                        <h5> Pujas  <a class="btn btn-outline-success ml-5" href="{{path('subasta_cerrar',{'id':subasta.id})}}"> Cerrar Subasta</a></h5>
+                        {% if subasta.pujas|length > 0 %}
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">First</th>
+                                        <th scope="col">Last</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for p in subasta.pujas %}
+                                        <tr>
+                                            <th  scope="row">{{loop.index}}</th>
+                                            <td>{{p.monto}}</td>
+                                            <td>{{p.usuario}}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <hr>
+                            <span class="text-danger"> No hay pujas por el momento </span><br>
+                        {% endif %}
+                    </div>
+                    <div class="col">
+                    </div>
+
+                </div>
+
+            </div>  
+
+            <div class="col-4 mb-3">
+
+                <div class="col-12">
+                    <img src="{{subasta.propiedad.foto|default('https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fmoorestown-mall.com%2Fnoimage.gif&f=1')}}" width="100%" border="0">  
+                </div>
+            
+            </div>
+        </div>
+    </div>
+    </div>  
+
+    <div class="text-left mt-5">
+    
+        <a class="btn btn-outline-secondary" href="{{ path('subasta_index') }}"><i class="fas fa-arrow-left"></i>  Volver al listado</a>
+
+    </div>
+
 {% endblock %}

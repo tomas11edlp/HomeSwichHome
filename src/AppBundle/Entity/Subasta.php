@@ -84,7 +84,17 @@ class Subasta
      */
     private $montoBase;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Puja", mappedBy="subasta")
+     * @ORM\OrderBy({"monto" = "DESC"})
+     */
+     private $pujas;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="EstadoSubasta")
+     * @ORM\JoinColumn(name="estado_subasta", referencedColumnName="id")
+     */
+     private $estado;
 
     /**
      * Get id
@@ -276,5 +286,82 @@ class Subasta
     {
         $this->anioReserva = $anioReserva;
         return $this;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->pujas = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add puja.
+     *
+     * @param \AppBundle\Entity\Puja $puja
+     *
+     * @return Subasta
+     */
+    public function addPuja(\AppBundle\Entity\Puja $puja)
+    {
+        $this->pujas[] = $puja;
+
+        return $this;
+    }
+
+    /**
+     * Remove puja.
+     *
+     * @param \AppBundle\Entity\Puja $puja
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removePuja(\AppBundle\Entity\Puja $puja)
+    {
+        return $this->pujas->removeElement($puja);
+    }
+
+    /**
+     * Get pujas.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPujas()
+    {
+        return $this->pujas;
+    }
+
+    /**
+     * Get pujas.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPujaGanadora()
+    {
+        return $this->getPujas()->first();
+    }
+
+    /**
+     * Set estado.
+     *
+     * @param \AppBundle\Entity\EstadoSubasta|null $estado
+     *
+     * @return Subasta
+     */
+    public function setEstado(\AppBundle\Entity\EstadoSubasta $estado = null)
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * Get estado.
+     *
+     * @return \AppBundle\Entity\EstadoSubasta|null
+     */
+    public function getEstado()
+    {
+        return $this->estado;
     }
 }

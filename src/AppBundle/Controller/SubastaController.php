@@ -70,6 +70,9 @@ class SubastaController extends Controller
                 $dto->setISODate($anio, $sem);
                 $subasta->setFechaInicio($dto->modify('-6 months'));
                 $subasta->setFechaFin($dto->modify('+3 days'));
+
+                $subasta->setEstado($em->getRepository('AppBundle:EstadoSubasta')->find(1));
+
                 $em->persist($subasta);
                 $em->flush();
 
@@ -107,6 +110,43 @@ class SubastaController extends Controller
             'subasta' => $subasta,
             'delete_form' => $deleteForm->createView(),
         ));
+    }
+
+    /**
+     * Finds and displays a subasta entity.
+     *
+     * @Route("/cerrar/{id}", name="subasta_cerrar")
+     * @Method("GET")
+     */
+    public function cerrarSubastaAction(Subasta $subasta)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        if ($subasta->getPujas()){
+            $reserva = new Reserva();
+            $reserva->setUsuario($subasta->getPujaGanadora()->getUsuario());
+            $reserva->setPropiedad($subasta->getPropiedad());
+            $reserva->setSemana($subasta->getPujaGanadora()->getUsuario());
+            $reserva->setAnio($subasta->getPujaGanadora()->getUsuario());
+            $fecha = new DateTime();
+            $fecha->setISODate($reserva->getSemana(), $reserva->getAnio());
+            $reserva->setFechaInicio($fecha);
+            $reserva->setFechaFin($fecha->modify('+6 days'));
+
+            $em->persist($reserva);
+            $this->get('session')->getFlashBag()->add('success', 'Subasta cerrada. <b>'.$reserva->getUsuario().'</b> fue el ganador.'); 
+
+        }else{
+            $this->get('session')->getFlashBag()->add('success', 'Subasta cerrada. No hubo pujas.'); 
+        }
+
+        $subasta->setEstado($em->getRepository('AppBundle:EstadoSubasta')->find(2));
+
+        $em->persist($subasta);
+        $em->flush();
+
+        return $this->redirectToRoute('subasta_index');
+        
     }
 
     /**

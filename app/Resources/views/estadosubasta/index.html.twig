@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Estadosubastas list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Estado</th>
+                <th>Descripcion</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for estadoSubastum in estadoSubastas %}
+            <tr>
+                <td><a href="{{ path('estadosubasta_show', { 'id': estadoSubastum.id }) }}">{{ estadoSubastum.id }}</a></td>
+                <td>{{ estadoSubastum.estado }}</td>
+                <td>{{ estadoSubastum.descripcion }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('estadosubasta_show', { 'id': estadoSubastum.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('estadosubasta_edit', { 'id': estadoSubastum.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('estadosubasta_new') }}">Create a new estadoSubastum</a>
+        </li>
+    </ul>
+{% endblock %}
