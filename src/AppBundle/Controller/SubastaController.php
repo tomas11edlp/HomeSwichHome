@@ -2,23 +2,23 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Propiedad;
+use AppBundle\Entity\Subasta;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Propiedad controller.
+ * Subasta controller.
  *
- * @Route("propiedad")
+ * @Route("subasta")
  */
-class PropiedadController extends Controller
+class SubastaController extends Controller
 {
     /**
-     * Lists all propiedad entities.
+     * Lists all subasta entities.
      *
-     * @Route("/", name="propiedad_index")
+     * @Route("/", name="subasta_index")
      * @Method("GET")
      */
     public function indexAction()
@@ -38,106 +38,108 @@ class PropiedadController extends Controller
             ->showRowsAtFirst()
             ->setFiltersTheme('inline')
             ->setBaseLayout('admin_base')
-            ->setView('propiedad/index.html.twig')
-            ->paginate('AppBundle:Propiedad');
+            ->setView('subasta/index.html.twig')
+            ->paginate('AppBundle:Subasta');
     }
 
     /**
-     * Creates a new propiedad entity.
+     * Creates a new subasta entity.
      *
-     * @Route("/new", name="propiedad_new")
+     * @Route("/new", name="subasta_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
     {
-        $propiedad = new Propiedad();
-        $form = $this->createForm('AppBundle\Form\PropiedadType', $propiedad);
+        $subasta = new Subasta();
+        $form = $this->createForm('AppBundle\Form\SubastaType', $subasta);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($propiedad);
+            $em->persist($subasta);
             $em->flush();
 
-            return $this->redirectToRoute('propiedad_show', array('id' => $propiedad->getId()));
+            return $this->redirectToRoute('subasta_show', array('id' => $subasta->getId()));
         }
 
-        return $this->render('propiedad/new.html.twig', array(
-            'propiedad' => $propiedad,
+        return $this->render('subasta/new.html.twig', array(
+            'subasta' => $subasta,
             'form' => $form->createView(),
         ));
     }
 
     /**
-     * Finds and displays a propiedad entity.
+     * Finds and displays a subasta entity.
      *
-     * @Route("/{id}", name="propiedad_show")
+     * @Route("/{id}", name="subasta_show")
      * @Method("GET")
      */
-    public function showAction(Propiedad $propiedad)
+    public function showAction(Subasta $subasta)
     {
-        $deleteForm = $this->createDeleteForm($propiedad);
+        $deleteForm = $this->createDeleteForm($subasta);
 
-        return $this->render('propiedad/show.html.twig', array(
-            'propiedad' => $propiedad,
+        return $this->render('subasta/show.html.twig', array(
+            'subasta' => $subasta,
             'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-     * Displays a form to edit an existing propiedad entity.
+     * Displays a form to edit an existing subasta entity.
      *
-     * @Route("/{id}/edit", name="propiedad_edit")
+     * @Route("/{id}/edit", name="subasta_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Propiedad $propiedad)
+    public function editAction(Request $request, Subasta $subasta)
     {
-        $deleteForm = $this->createDeleteForm($propiedad);
-        $editForm = $this->createForm('AppBundle\Form\PropiedadType', $propiedad);
+        $deleteForm = $this->createDeleteForm($subasta);
+        $editForm = $this->createForm('AppBundle\Form\SubastaType', $subasta);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('propiedad_edit', array('id' => $propiedad->getId()));
+            return $this->redirectToRoute('subasta_edit', array('id' => $subasta->getId()));
         }
 
-        return $this->render('propiedad/edit.html.twig', array(
-            'propiedad' => $propiedad,
+        return $this->render('subasta/edit.html.twig', array(
+            'subasta' => $subasta,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-     * Deletes a propiedad entity.
+     * Deletes a subasta entity.
      *
-     * @Route("eliminar/{id}", name="propiedad_delete")
+     * @Route("/{id}", name="subasta_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, Propiedad $propiedad)
+    public function deleteAction(Request $request, Subasta $subasta)
     {
-        $form = $this->createDeleteForm($propiedad);
+        $form = $this->createDeleteForm($subasta);
         $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->remove($propiedad);
+            $em->remove($subasta);
             $em->flush();
+        }
 
-        return $this->redirectToRoute('propiedad_index');
+        return $this->redirectToRoute('subasta_index');
     }
 
     /**
-     * Creates a form to delete a propiedad entity.
+     * Creates a form to delete a subasta entity.
      *
-     * @param Propiedad $propiedad The propiedad entity
+     * @param Subasta $subasta The subasta entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Propiedad $propiedad)
+    private function createDeleteForm(Subasta $subasta)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('propiedad_delete', array('id' => $propiedad->getId())))
+            ->setAction($this->generateUrl('subasta_delete', array('id' => $subasta->getId())))
             ->setMethod('DELETE')
             ->getForm()
         ;

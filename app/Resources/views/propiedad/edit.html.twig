@@ -1,21 +1,84 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin_base.html.twig' %}
 
 {% block body %}
-    <h1>Propiedad edit</h1>
 
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
+    <div class="mb-4 text-center">
+        <h2> Modificar Propiedad </h2>
+    </div>
+
+    <div class="card pt-5 pb-4">
+        <div class="col-12">
+        <div class="row">
+            <div class="col-8 mb-3">
+                {{ form_start(edit_form) }}
+                <div class="row">
+                    <div class="col-4">
+                        {{form_label(edit_form.titulo)}}
+                        {{form_widget(edit_form.titulo)}}
+                        {{form_errors(edit_form.titulo)}}
+                    </div>
+
+                    <div class="col-8 mb-3">
+                        {{form_label(edit_form.descripcion)}}
+                        {{form_widget(edit_form.descripcion)}}
+                        {{form_errors(edit_form.descripcion)}}
+                    </div>
+
+                    <div class="col-4">
+                        {{form_label(edit_form.pais)}}
+                        {{form_widget(edit_form.pais)}}
+                        {{form_errors(edit_form.pais)}}                   
+                    </div>
+
+                    <div class="col-4">
+                        {{form_label(edit_form.provincia)}}
+                        {{form_widget(edit_form.provincia)}}
+                        {{form_errors(edit_form.provincia)}}
+                    </div>
+
+                    <div class="col-4 mb-3">
+                        {{form_label(edit_form.localidad)}}
+                        {{form_widget(edit_form.localidad)}}
+                        {{form_errors(edit_form.localidad)}}
+                    </div>
+
+                    <div class="col-4">
+                        {{form_label(edit_form.domicilio)}}
+                        {{form_widget(edit_form.domicilio)}}
+                        {{form_errors(edit_form.domicilio)}}
+                    </div>
+
+                    <div class="col-4">
+                        {{form_label(edit_form.precio)}}
+                        {{form_widget(edit_form.precio)}}
+                        {{form_errors(edit_form.precio)}}
+                    </div>
+
+                    <div class="col-4">
+                        {{form_label(edit_form.foto)}}
+                        {{form_widget(edit_form.foto)}}
+                        {{form_errors(edit_form.foto)}}
+                    </div>
+
+                </div>
+
+            </div>  
+
+        </div>
+    </div>
+    </div>  
+
+
+    <div class="row">
+        <div class="col-6 mt-5">
+            <a class="text-left btn btn-outline-secondary" href="{{ path('propiedad_index') }}"><i class="fas fa-arrow-left"></i>  Volver al listado</a>
+        </div>
+
+        <div class="col-6 mt-5 text-right">
+            <input class="btn btn-outline-success" type="submit" name="" value="Guardar">
+        </div>
+    </div>
+    
     {{ form_end(edit_form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('propiedad_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
 {% endblock %}

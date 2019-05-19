@@ -78,6 +78,9 @@ class Propiedad
     private $precio;
 
 
+    public function __toString(){
+        return $this->titulo;
+    }
 
     /**
      * Get id
