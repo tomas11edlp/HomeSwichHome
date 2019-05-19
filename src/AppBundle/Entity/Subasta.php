@@ -3,12 +3,20 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Subasta
  *
  * @ORM\Table(name="subasta")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\SubastaRepository")
+ * @UniqueEntity(
+ *     fields={"propiedad", "semanaReserva", "anioReserva"},
+ *     errorPath="propiedad",
+ *     message="Ya existe subasta para la semana y propiedad."
+ * )
  */
 class Subasta
 {
@@ -44,16 +52,30 @@ class Subasta
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fechaReservaInicio", type="datetime")
+     * @ORM\Column(name="fechaReservaInicio", type="datetime", nullable = true)
      */
     private $fechaReservaInicio;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fechaReservaFin", type="datetime")
+     * @ORM\Column(name="fechaReservaFin", type="datetime", nullable = true)
      */
     private $fechaReservaFin;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="semanaReserva", type="integer")
+     */
+    private $semanaReserva;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="anioReserva", type="integer")
+     */
+    private $anioReserva;
 
     /**
      * @var string
@@ -216,5 +238,43 @@ class Subasta
     public function getPropiedad()
     {
         return $this->propiedad;
+    }
+
+    /**
+    * Get semanaReserva
+    * @return  
+    */
+    public function getSemanaReserva()
+    {
+        return $this->semanaReserva;
+    }
+    
+    /**
+    * Set semanaReserva
+    * @return $this
+    */
+    public function setSemanaReserva($semanaReserva)
+    {
+        $this->semanaReserva = $semanaReserva;
+        return $this;
+    }
+
+    /**
+    * Get anioReserva
+    * @return  
+    */
+    public function getAnioReserva()
+    {
+        return $this->anioReserva;
+    }
+    
+    /**
+    * Set anioReserva
+    * @return $this
+    */
+    public function setAnioReserva($anioReserva)
+    {
+        $this->anioReserva = $anioReserva;
+        return $this;
     }
 }

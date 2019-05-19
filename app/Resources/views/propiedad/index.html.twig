@@ -8,15 +8,15 @@
 
 {% block paginator_table_header %}
     {# <th></th> #}
-    <th scope="col" class="col-2" sort="nombre"></th>
-    <th scope="col" class="" sort="nombre">T&iacute;tulo</th>
-    <th scope="col" class="" sort="padre">Descripci&oacute;n</th>
+    <th scope="col" class=""></th>
+    <th scope="col" class="">T&iacute;tulo</th>
+    <th scope="col" class="">Descripci&oacute;n</th>
     <th scope="col"></th>
 {% endblock %}
 
 {% block paginator_table_data %}
     <td class="align-middle">  
-        <img src="{{entity.foto|default('https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fmoorestown-mall.com%2Fnoimage.gif&f=1')}}" width="50%" border="0">  
+        <img src="{{entity.foto|default('https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fmoorestown-mall.com%2Fnoimage.gif&f=1')}}" width="50%" border="0" style="max-width:100px; max-heigth:100px;">  
     </td>
     <td class="align-middle">{{ entity.titulo }}</td>
     <td class="align-middle">{{ entity.descripcion }}</td>

@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\FormError;
 
 /**
  * Subasta controller.
@@ -55,11 +56,35 @@ class SubastaController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($subasta);
-            $em->flush();
 
-            return $this->redirectToRoute('subasta_show', array('id' => $subasta->getId()));
+            $em = $this->getDoctrine()->getManager();
+
+            $sem=$subasta->getSemanaReserva();
+            $anio=$subasta->getAnioReserva();
+
+            $reserva = $em->getRepository('AppBundle:Reserva')->findByPropiedadAndSemana($subasta->getPropiedad()->getId(),$sem,$anio);
+
+            if ($reserva == null) {
+
+                $dto = new \DateTime("now");
+                $dto->setISODate($anio, $sem);
+                $subasta->setFechaInicio($dto->modify('-6 months'));
+                $subasta->setFechaFin($dto->modify('+3 days'));
+                $em->persist($subasta);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('success', 'Subasta creada exitosamente.');
+
+                return $this->redirectToRoute('subasta_index');
+            }else{
+
+                $form->get('propiedad')->addError(new FormError('La propiedad ya se encuentra reservada para la semana seleccionada.'));
+                return $this->render('subasta/new.html.twig', array(
+                    'subasta' => $subasta,
+                    'form' => $form->createView(),
+                ));
+            }
+
         }
 
         return $this->render('subasta/new.html.twig', array(

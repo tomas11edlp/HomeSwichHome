@@ -54,6 +54,12 @@ class Reserva
      */
     private $semana;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="anio", type="string", length=255)
+     */
+    private $anio;
 
 
     /**
@@ -185,4 +191,24 @@ class Reserva
     {
         return $this->propiedad;
     }
+
+    /**
+    * Get anio
+    * @return  
+    */
+    public function getAnio()
+    {
+        return $this->anio;
+    }
+    
+    /**
+    * Set anio
+    * @return $this
+    */
+    public function setAnio($anio)
+    {
+        $this->anio = $anio;
+        return $this;
+    }
+
 }

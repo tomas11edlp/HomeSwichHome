@@ -10,4 +10,14 @@ namespace AppBundle\Repository;
  */
 class ReservaRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function findByPropiedadAndSemana($prop,$sem,$anio)
+	{
+		return $this->createQueryBuilder('r')
+			->join('r.propiedad','p')
+            ->where('p.id = '.$prop)
+            ->andWhere('r.semana = '.$sem)
+            ->andWhere('r.anio = '.$anio)
+            ->getQuery()
+            ->getOneOrNullResult();
+	}
 }

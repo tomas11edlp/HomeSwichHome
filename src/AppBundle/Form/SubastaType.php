@@ -5,6 +5,8 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class SubastaType extends AbstractType
 {
@@ -13,8 +15,28 @@ class SubastaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('fechaInicio')->add('fechaFin')->add('fechaReservaInicio')->add('fechaReservaFin')->add('montoBase')->add('propiedad');
-    }/**
+        $builder
+        ->add('propiedad', null, array(
+            'attr' => array(
+                'class' => 'form-control'
+            ),
+            'placeholder' => '-Seleccione-'
+        ))
+        ->add('montoBase', null, array(
+            'attr' => array(
+                'class' => 'form-control'
+            ),
+        ))
+        ->add('semanaReserva', HiddenType::class)
+        ->add('anioReserva', HiddenType::class)
+        // ->add('fechaReservaInicio')
+        // ->add('fechaReservaFin')
+        // ->add('fechaInicio')
+        // ->add('fechaFin')
+        ;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)

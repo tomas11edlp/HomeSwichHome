@@ -1,16 +1,75 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin_base.html.twig' %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var weekpicker = $("#weekpicker1").weekpicker();
+
+            $('#appbundle_subasta_semanaReserva').val(weekpicker.getWeek());
+            $('#appbundle_subasta_anioReserva').val(weekpicker.getYear());
+
+            var inputField = weekpicker.find("input");
+            inputField.datetimepicker().on("dp.change", function() {
+
+                $('#appbundle_subasta_semanaReserva').val(weekpicker.getWeek());
+                $('#appbundle_subasta_anioReserva').val(weekpicker.getYear());
+            })
+        });
+    </script>
+    
+{% endblock %}
 
 {% block body %}
-    <h1>Subastum creation</h1>
+    <div class="mb-4 text-center">
+        <h2> Nueva Subasta </h2>
+    </div>
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+    <div class="card pt-5 pb-4">
+        <div class="col-12">
+        <div class="row justify-content-around">
+            <div class="col-8 mb-3 text-center">
+                {{ form_start(form) }}
+                <div class="row">
+                    <div class="col-4">
+                        {{form_label(form.propiedad)}}
+                        {{form_widget(form.propiedad)}}
+                        {{form_errors(form.propiedad)}}
+                    </div>
+
+                    <div class="col-4">
+                        <label>Semana a reservar</label>
+                        <div class="input-group align-middle">
+                            <div id="weekpicker1"></div>
+                            {{form_errors(form.anioReserva)}}
+                        </div>
+                        {{form_row(form.semanaReserva)}}
+                        {{form_row(form.anioReserva)}}                 
+                    </div>
+
+                    <div class="col-4">
+                        {{form_label(form.montoBase)}}
+                        {{form_widget(form.montoBase)}}
+                        {{form_errors(form.montoBase)}}                   
+                    </div>
+
+                </div>
+
+            </div>  
+
+        </div>
+    </div>
+    </div>  
+
+
+    <div class="row">
+        <div class="col-6 mt-5">
+            <a class="text-left btn btn-outline-secondary" href="{{ path('propiedad_index') }}"><i class="fas fa-arrow-left"></i>  Volver al listado</a>
+        </div>
+
+        <div class="col-6 mt-5 text-right">
+            <input class="btn btn-outline-success" type="submit" name="" value="Guardar">
+        </div>
+    </div>
+    
     {{ form_end(form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('subasta_index') }}">Back to the list</a>
-        </li>
-    </ul>
 {% endblock %}
