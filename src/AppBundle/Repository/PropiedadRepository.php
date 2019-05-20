@@ -34,6 +34,18 @@ class PropiedadRepository extends \Doctrine\ORM\EntityRepository
 
   public function propiedadesHabilitadas($query, $pg)
   {
+      if ($titulo = $pg->getFilterValue('titulo')){
+        $query->andWhere("UPPER(a.titulo) LIKE UPPER('%".$titulo."%')");
+      }
+
+      if ($precioMaximo = $pg->getFilterValue('precioMaximo')){
+        $query->andWhere("a.precio <=".$precioMaximo);
+      }
+
+      if ($precioMinimo = $pg->getFilterValue('precioMinimo')){
+        $query->andWhere("a.precio >=".$precioMinimo);
+      }
+
       $query->andWhere("a.habilitada = 'S'");
         
       return $query;
