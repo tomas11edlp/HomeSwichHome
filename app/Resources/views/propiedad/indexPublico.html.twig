@@ -1,22 +1,21 @@
 {% extends '@Pg/Paginator/tableinline.html.twig' %}
 
 {% block title %}
-    <h2>Propiedades
-    </h2>
+    <h2 class="mb-5" > Propiedades </h2>
 {% endblock %}
 
 {% block paginator_table_header %}
     {# <th></th> #}
-    <th scope="col-8" class=""></th>
-    <th scope="col-2" class="">T&iacute;tulo</th>
-    <th scope="col-2" class="">Descripci&oacute;n</th>
-    <th scope="col-2" class="">Precio</th>
-    <th scope="col-2"></th>
+    <th class="col-2"></th>
+    <th class="">T&iacute;tulo</th>
+    <th class="">Descripci&oacute;n</th>
+    <th class="">Precio</th>
+    <th ></th>
 {% endblock %}
 
 {% block paginator_table_data %}
     <td class="align-middle">  
-        <img src="{{entity.foto|default('https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fmoorestown-mall.com%2Fnoimage.gif&f=1')}}" width="30%" border="0" style="max-width:100%; max-heigth:100%;">  
+        <img src="{{entity.foto|default('https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fmoorestown-mall.com%2Fnoimage.gif&f=1')}}" {# width="30%" #} border="0" style="max-width:100%; max-heigth:100%;">  
     </td>
     <td class="align-middle">{{ entity.titulo }}</td>
     <td class="align-middle">{{ entity.descripcion }}</td>

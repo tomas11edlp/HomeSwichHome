@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Form\Paginador\FilterPropiedadType;
 
 /**
  * Propiedad controller.
@@ -60,7 +61,7 @@ class PropiedadController extends Controller
             //     'asc'
             // )
             ->noRemember(true)
-            // ->setFilter(FilterCategoriasType::class)
+            ->setFilter(FilterPropiedadType::class)
             // ->setFiltersTheme('inline')
             ->setRowsPerPage(15, array(15, 30, 45))
             ->showRowsAtFirst()
