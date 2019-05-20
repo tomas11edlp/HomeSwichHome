@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="mb-4 text-center">
+        <h2> Ver Propiedad </h2>
+    </div>
+
+<div class="container-fluid">
+    <div class="card  pt-5 pb-4">
+        <div class="col-12">
+        <div class="row">
+            <div class="col-8 mb-3">
+                <div class="row">
+                    <div class="col-4">
+                        <h4> {{propiedad.titulo}} </h4>
+                        <h5> T&iacute;tulo </h5>
+                    </div>
+
+                    <div class="col-8 mb-3">
+                        <h4> {{propiedad.descripcion}} </h4>
+                        <h5> Descripci&oacute;n </h5>
+                    </div>
+
+                    <div class="col-4">
+                        <h4> {{propiedad.pais}} </h4>
+                        <h5> Pais </h5>
+                    </div>
+
+                    <div class="col-4">
+                        <h4> {{propiedad.provincia}} </h4>
+                        <h5> Provincia </h5>
+                    </div>
+
+                    <div class="col-4 mb-3">
+                        <h4> {{propiedad.localidad}} </h4>
+                        <h5> Localidad </h5>
+                    </div>
+
+                    <div class="col-4">
+                        <h4> {{propiedad.domicilio}} </h4>
+                        <h5> Domicilio </h5>
+                    </div>
+
+
+                    <div class="col-4">
+                        <h4> {{propiedad.precio}} </h4>
+                        <h5> Precio </h5>
+                    </div>
+
+                </div>
+
+            </div>  
+
+            <div class="col-4 mb-3">
+
+                <div class="col-12">
+                    <img src="{{propiedad.foto|default('https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fmoorestown-mall.com%2Fnoimage.gif&f=1')}}" width="100%" border="0">  
+                </div>
+            
+            </div>
+        </div>
+    </div>
+    </div>  
+
+    <div class="text-left mt-5">
+    
+        <a class="btn btn-outline-secondary" href="{{ path('propiedad_index_publico') }}"><i class="fas fa-arrow-left"></i>  Volver al listado</a>
+
+    </div>
+</div>
+
+{% endblock %}

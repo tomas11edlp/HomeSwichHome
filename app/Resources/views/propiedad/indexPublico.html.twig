@@ -1,0 +1,27 @@
+{% extends '@Pg/Paginator/tableinline.html.twig' %}
+
+{% block title %}
+    <h2>Propiedades
+    </h2>
+{% endblock %}
+
+{% block paginator_table_header %}
+    {# <th></th> #}
+    <th scope="col-8" class=""></th>
+    <th scope="col-2" class="">T&iacute;tulo</th>
+    <th scope="col-2" class="">Descripci&oacute;n</th>
+    <th scope="col-2" class="">Precio</th>
+    <th scope="col-2"></th>
+{% endblock %}
+
+{% block paginator_table_data %}
+    <td class="align-middle">  
+        <img src="{{entity.foto|default('https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fmoorestown-mall.com%2Fnoimage.gif&f=1')}}" width="30%" border="0" style="max-width:100%; max-heigth:100%;">  
+    </td>
+    <td class="align-middle">{{ entity.titulo }}</td>
+    <td class="align-middle">{{ entity.descripcion }}</td>
+    <td class="align-middle">{{ entity.precio }}</td>
+    <td class="align-middle">
+        <a class="ml-4 btn btn-outline-primary" href="{{path('propiedad_show_publico', {'id':entity.id}) }}" title="Ver"> Detalles </a>
+    </td>
+{% endblock %}
