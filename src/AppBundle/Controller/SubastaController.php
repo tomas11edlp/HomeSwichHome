@@ -44,6 +44,33 @@ class SubastaController extends Controller
     }
 
     /**
+     * Lists all subasta entities.
+     *
+     * @Route("/publico", name="subasta_publico_index")
+     * @Method("GET")
+     */
+    public function indexPublicoAction()
+    {
+        return $this->get('pg.pg')
+            // ->setOrder(
+            //     array('Nombre' => 'nombre',
+            //         'Nivel' => 'nivel'
+            //     , 'Padre' => 'padre'),
+            //     'nivel',
+            //     'asc'
+            // )
+            ->noRemember(true)
+            // ->setFilter(FilterCategoriasType::class)
+            // ->setFiltersTheme('inline')
+            ->setRowsPerPage(15, array(15, 30, 45))
+            ->showRowsAtFirst()
+            ->setFiltersTheme('inline')
+            ->setBaseLayout('base')
+            ->setView('subasta/index.html.twig')
+            ->paginate('AppBundle:Subasta', 'publico');
+    }
+
+    /**
      * Creates a new subasta entity.
      *
      * @Route("/new", name="subasta_new")

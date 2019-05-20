@@ -10,24 +10,30 @@ namespace AppBundle\Repository;
  */
 class SubastaRepository extends \Doctrine\ORM\EntityRepository
 {
-	public function buildQuery($query, $pg)
-	{
-		// if ($nombre = $pg->getFilterValue('nombre')){
-  //           $query->andWhere("UPPER(a.nombre) LIKE UPPER('%".$nombre."%')");
-  //       }
+  	public function buildQuery($query, $pg)
+  	{
+  		// if ($nombre = $pg->getFilterValue('nombre')){
+    //           $query->andWhere("UPPER(a.nombre) LIKE UPPER('%".$nombre."%')");
+    //       }
 
-  //       if ($pg->getFilterValue('nivel') !== null ){
-  //       	$nivel = $pg->getFilterValue('nivel');
-  //           $query->andWhere("a.nivel = '".$nivel."'");
-  //       }
+    //       if ($pg->getFilterValue('nivel') !== null ){
+    //       	$nivel = $pg->getFilterValue('nivel');
+    //           $query->andWhere("a.nivel = '".$nivel."'");
+    //       }
 
-		// if ($pg->orderBy('nombre')) {
-  //           $query->addOrderBy("a.nombre", $pg->direction);
-  //       }
-  //       if ($pg->orderBy('nivel')) {
-  //           $query->addOrderBy("a.nivel", $pg->direction);
-  //       }
-        
-	    return $query;
-	}
+  		// if ($pg->orderBy('nombre')) {
+    //           $query->addOrderBy("a.nombre", $pg->direction);
+    //       }
+    //       if ($pg->orderBy('nivel')) {
+    //           $query->addOrderBy("a.nivel", $pg->direction);
+    //       }
+          
+  	    return $query;
+  	}
+    public function buildQuery($query, $pg)
+    {
+        $query->join('a.estado','e')
+            ->andWhere('e.id = 1');          
+        return $query;
+    }
 }
