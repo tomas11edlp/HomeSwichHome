@@ -46,7 +46,7 @@ class SubastaController extends Controller
     /**
      * Lists all subasta entities.
      *
-     * @Route("/publico", name="subasta_publico_index")
+     * @Route("/publico", name="subasta_index_publico")
      * @Method("GET")
      */
     public function indexPublicoAction()
@@ -66,8 +66,8 @@ class SubastaController extends Controller
             ->showRowsAtFirst()
             ->setFiltersTheme('inline')
             ->setBaseLayout('base')
-            ->setView('subasta/index.html.twig')
-            ->paginate('AppBundle:Subasta', 'publico');
+            ->setView('subasta/index_publico.html.twig')
+            ->paginate('AppBundle:Subasta', 'publicoQuery');
     }
 
     /**
