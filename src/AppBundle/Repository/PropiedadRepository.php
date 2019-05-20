@@ -30,4 +30,12 @@ class PropiedadRepository extends \Doctrine\ORM\EntityRepository
         
 	    return $query;
 	}
+
+
+  public function propiedadesHabilitadas($query, $pg)
+  {
+      $query->andWhere("a.habilitada = 'S'");
+        
+      return $query;
+  }
 }

@@ -42,6 +42,34 @@ class PropiedadController extends Controller
             ->paginate('AppBundle:Propiedad');
     }
 
+
+    /**
+     * Lists all propiedad entities.
+     *
+     * @Route("/publico/propiedades", name="propiedad_index_publico")
+     * @Method("GET")
+     */
+    public function indexPublicoAction()
+    {
+        return $this->get('pg.pg')
+            // ->setOrder(
+            //     array('Nombre' => 'nombre',
+            //         'Nivel' => 'nivel'
+            //     , 'Padre' => 'padre'),
+            //     'nivel',
+            //     'asc'
+            // )
+            ->noRemember(true)
+            // ->setFilter(FilterCategoriasType::class)
+            // ->setFiltersTheme('inline')
+            ->setRowsPerPage(15, array(15, 30, 45))
+            ->showRowsAtFirst()
+            ->setFiltersTheme('inline')
+            ->setBaseLayout('base')
+            ->setView('propiedad/indexPublico.html.twig')
+            ->paginate('AppBundle:Propiedad', 'propiedadesHabilitadas');
+    }
+
     /**
      * Creates a new propiedad entity.
      *
@@ -79,6 +107,22 @@ class PropiedadController extends Controller
         $deleteForm = $this->createDeleteForm($propiedad);
 
         return $this->render('propiedad/show.html.twig', array(
+            'propiedad' => $propiedad,
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Finds and displays a propiedad entity.
+     *
+     * @Route("/publico/{id}", name="propiedad_show_publico")
+     * @Method("GET")
+     */
+    public function showPublicoAction(Propiedad $propiedad)
+    {
+        $deleteForm = $this->createDeleteForm($propiedad);
+
+        return $this->render('propiedad/showPublico.html.twig', array(
             'propiedad' => $propiedad,
             'delete_form' => $deleteForm->createView(),
         ));
