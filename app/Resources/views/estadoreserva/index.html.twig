@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Estadoreservas list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Estado</th>
+                <th>Descripcion</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for estadoReserva in estadoReservas %}
+            <tr>
+                <td><a href="{{ path('estadoreserva_show', { 'id': estadoReserva.id }) }}">{{ estadoReserva.id }}</a></td>
+                <td>{{ estadoReserva.estado }}</td>
+                <td>{{ estadoReserva.descripcion }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('estadoreserva_show', { 'id': estadoReserva.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('estadoreserva_edit', { 'id': estadoReserva.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('estadoreserva_new') }}">Create a new estadoReserva</a>
+        </li>
+    </ul>
+{% endblock %}

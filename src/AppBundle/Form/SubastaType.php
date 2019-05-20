@@ -20,7 +20,12 @@ class SubastaType extends AbstractType
             'attr' => array(
                 'class' => 'form-control'
             ),
-            'placeholder' => '-Seleccione-'
+            'placeholder' => '-Seleccione-',
+            'query_builder' => function(EntityRepository $er ){
+                return $er->createQueryBuilder('p')
+                  ->orderBy('p.titulo', 'ASC')
+                  ->where('p.habilitada = "S"');
+              }
         ))
         ->add('montoBase', null, array(
             'attr' => array(

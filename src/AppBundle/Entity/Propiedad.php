@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Propiedad
@@ -76,6 +78,23 @@ class Propiedad
      * @ORM\Column(name="monto", type="decimal", precision=10, scale=2)
      */
     private $precio;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="habilitada", type="string", length=1)
+     */
+    private $habilitada;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Reserva", mappedBy="propiedad")
+     */
+     private $reservas;
+
+     /**
+      * @ORM\OneToMany(targetEntity="Subasta", mappedBy="propiedad")
+      */
+      private $subastas;
 
 
     public function __toString(){
@@ -283,4 +302,103 @@ class Propiedad
     {
         return $this->precio;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->reservas = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add reserva.
+     *
+     * @param \AppBundle\Entity\Reserva $reserva
+     *
+     * @return Propiedad
+     */
+    public function addReserva(\AppBundle\Entity\Reserva $reserva)
+    {
+        $this->reservas[] = $reserva;
+
+        return $this;
+    }
+
+    /**
+     * Remove reserva.
+     *
+     * @param \AppBundle\Entity\Reserva $reserva
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeReserva(\AppBundle\Entity\Reserva $reserva)
+    {
+        return $this->reservas->removeElement($reserva);
+    }
+
+    /**
+     * Get reservas.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReservas()
+    {
+        return $this->reservas;
+    }
+
+    /**
+    * Get habilitada
+    * @return  
+    */
+    public function getHabilitada()
+    {
+        return $this->habilitada;
+    }
+    
+    /**
+    * Set habilitada
+    * @return $this
+    */
+    public function setHabilitada($habilitada)
+    {
+        $this->habilitada = $habilitada;
+        return $this;
+    }
+
+    /**
+     * Add subasta.
+     *
+     * @param \AppBundle\Entity\Reserva $subasta
+     *
+     * @return Propiedad
+     */
+    public function addSubasta(\AppBundle\Entity\Subasta $subasta)
+    {
+        $this->subastas[] = $subasta;
+
+        return $this;
+    }
+
+    /**
+     * Remove subasta.
+     *
+     * @param \AppBundle\Entity\Subasta $subasta
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeSubasta(\AppBundle\Entity\Subasta $subasta)
+    {
+        return $this->subastas->removeElement($subasta);
+    }
+
+    /**
+     * Get subastas.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSubastas()
+    {
+        return $this->subastas;
+    }
+
 }

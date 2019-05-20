@@ -70,6 +70,11 @@ class Usuario
      */
     private $fechaModi;
 
+    public function __toString()
+    {
+        return $this->apellido.', '.$this->nombre;
+    }
+
 
     /**
      * Get id

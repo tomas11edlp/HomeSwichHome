@@ -30,8 +30,9 @@ class Subasta
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Propiedad")
+     * @ORM\ManyToOne(targetEntity="Propiedad", inversedBy="subastas")
      * @ORM\JoinColumn(name="id_propiedad", referencedColumnName="id")
+     * @Assert\NotBlank(message="Campo obligatorio.")
      */
     private $propiedad;
 
@@ -81,6 +82,7 @@ class Subasta
      * @var string
      *
      * @ORM\Column(name="montoBase", type="decimal", precision=10, scale=2)
+     * @Assert\NotBlank(message="Campo obligatorio.")
      */
     private $montoBase;
 

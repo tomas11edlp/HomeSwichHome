@@ -28,7 +28,7 @@ class Reserva
     private $usuario;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Propiedad")
+     * @ORM\ManyToOne(targetEntity="Propiedad", inversedBy="reservas")
      * @ORM\JoinColumn(name="id_propiedad", referencedColumnName="id")
      */
     private $propiedad;

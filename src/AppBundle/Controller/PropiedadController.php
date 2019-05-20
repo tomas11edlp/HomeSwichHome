@@ -109,20 +109,67 @@ class PropiedadController extends Controller
         ));
     }
 
+    
     /**
      * Deletes a propiedad entity.
      *
-     * @Route("eliminar/{id}", name="propiedad_delete")
-     * @Method("DELETE")
+     * @Route("/delete/{id}", name="propiedad_delete")
+     * @Method("GET|POST")
      */
-    public function deleteAction(Request $request, Propiedad $propiedad)
+    public function deleteAction(Propiedad $propiedad)
     {
-        $form = $this->createDeleteForm($propiedad);
-        $form->handleRequest($request);
 
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($propiedad);
-            $em->flush();
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($propiedad);
+
+        $em->flush();
+
+        $this->get('session')->getFlashBag()->add('success', 'La propiedad fu&eacute; eliminada.');
+
+        return $this->redirectToRoute('propiedad_index');
+    }
+
+    /**
+     * Deletes a propiedad entity.
+     *
+     * @Route("/deshabilitar/{id}", name="propiedad_deshabilitar")
+     * @Method("GET|POST")
+     */
+    public function deshabilitarAction(Propiedad $propiedad)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $propiedad->setHabilitada('N');
+
+        $em->persist($propiedad);
+
+        $em->flush();
+
+        $this->get('session')->getFlashBag()->add('success', 'La propiedad fu&eacute; deshabilitada.');
+
+        return $this->redirectToRoute('propiedad_index');
+    }
+
+    /**
+     * Deletes a propiedad entity.
+     *
+     * @Route("/habilitar/{id}", name="propiedad_habilitar")
+     * @Method("GET|POST")
+     */
+    public function habilitarAction(Propiedad $propiedad)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $propiedad->setHabilitada('S');
+
+        $em->persist($propiedad);
+
+        $em->flush();
+
+        $this->get('session')->getFlashBag()->add('success', 'La propiedad fu&eacute; habilitada.');
 
         return $this->redirectToRoute('propiedad_index');
     }
