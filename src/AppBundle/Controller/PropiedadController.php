@@ -84,10 +84,11 @@ class PropiedadController extends Controller
         $form = $this->createForm('AppBundle\Form\PropiedadType', $propiedad);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+		$propiedad->setHabilitada('S');
+        
+		if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            $propiedad->setHabilitada('S');
 
             $em->persist($propiedad);
             $em->flush();
