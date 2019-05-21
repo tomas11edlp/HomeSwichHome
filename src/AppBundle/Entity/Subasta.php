@@ -225,7 +225,7 @@ class Subasta
      */
     public function getMontoBase()
     {
-        return $this->montoBase;
+        return number_format($this->montoBase, 2,',','.');
     }
 
     /**

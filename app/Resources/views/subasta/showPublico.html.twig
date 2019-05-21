@@ -42,14 +42,14 @@
                         <h5> Monto Inicial </h5>
                     </div>
 
-                    <div id="pujas" class="col-6 mt-3">
+                    <div id="pujas-list" class="col-6 mt-3">
                         <h5> Pujas 
                             <input class="col-2 ml-5" placeholder="0.00" id="inputPuja" type="" name="">
                             <button class="btn btn-primary" name="{{subasta.id}}" id="pujar"> Pujar </button>
                         </h5>
 
                         {% if pujas|length > 0 %}
-                            <table class="table table-striped">
+                            <table class="table table-striped text-center">
                                 <thead>
                                     <tr>
                                         <th scope="col">Monto</th>
@@ -61,7 +61,7 @@
                                         {% for p in subasta.pujas %}
                                             {% if cant < 3 %}
                                                 <tr>
-                                                    <td id="{{cant}}">{{p.monto}}</td>
+                                                    <td id="puja-{{cant}}" data-monto="{{p.monto}}">{{p.monto}}</td>
                                                     <td>{{p.usuario}}</td>
                                                 </tr>
                                             {% endif %}
@@ -109,32 +109,35 @@
     <script type="text/javascript">
         $(document).ready(function(){
             
-            $('#pujar').on('click', function (e) {
-                
+            $(document).on('click', '#pujar', function (e) {
                 var valorPujado = $('#inputPuja').val();
+                $('.error-message').remove();
 
-                var subasta = $(this).attr('name');  
+                if ($('#puja-1').data('monto') >= valorPujado){
 
-                var data = { 
-                    valor: valorPujado, 
-                    subasta: subasta
-                };
+                    $('#pujar').after(`<div class="error-message"><br><span class="text-danger">El monto debe ser superior a la mejor oferta.</span></div>`);
 
-                $.ajax({ 
-                    url: "{{ path('puja_new') }}",
-                    type: 'POST', 
-                    data: data, 
-                    success: function (datos) { 
-                        $('#inputPuja').val('0.00');
-                        console.log(datos.monto);
-                    }
-                });
+                }else{
+                    var subasta = $(this).attr('name');  
+
+                    var data = { 
+                        valor: valorPujado, 
+                        subasta: subasta
+                    };
+
+                    $.ajax({ 
+                        url: "{{ path('puja_new') }}",
+                        type: 'POST', 
+                        data: data, 
+                        success: function (datos) { 
+                            $('#inputPuja').val('0.00');
+                            console.log('respuesta', datos)
+                            $('#pujas-list').html(datos.html)
+                        }
+                    });
+                }
 
             });
-
-
-
-
         });
     </script>
 
