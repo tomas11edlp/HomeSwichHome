@@ -205,13 +205,20 @@ class SubastaController extends Controller
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Subasta $subasta)
-    {
+    {   
+        $em = $this->getDoctrine()->getManager();
+
         $deleteForm = $this->createDeleteForm($subasta);
-        $editForm = $this->createForm('AppBundle\Form\SubastaType', $subasta);
+        
+        $editForm = $this->createForm('AppBundle\Form\SubastaType', $subasta, array(
+            'em' => $em,
+        ));
+        
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+        
+            $em->flush();
 
             return $this->redirectToRoute('subasta_edit', array('id' => $subasta->getId()));
         }
