@@ -92,6 +92,8 @@ class PropiedadController extends Controller
             $em->persist($propiedad);
             $em->flush();
 
+            $this->get('session')->getFlashBag()->add('success', 'Propiedad creada exitosamente.');
+
             return $this->redirectToRoute('propiedad_show', array('id' => $propiedad->getId()));
         }
 
@@ -146,7 +148,10 @@ class PropiedadController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+
             $this->getDoctrine()->getManager()->flush();
+
+            $this->get('session')->getFlashBag()->add('success', 'Propiedad modificada exiitosamente.');
 
             return $this->redirectToRoute('propiedad_edit', array('id' => $propiedad->getId()));
         }

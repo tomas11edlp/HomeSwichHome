@@ -101,7 +101,7 @@ class SubastaController extends Controller
                 $dto = new \DateTime("now");
                 $dto->setISODate($anio, $sem);
                 $subasta->setFechaInicio($dto->modify('-6 months'));
-                $subasta->setFechaFin($dto->modify('+3 days'));
+                $subasta->setFechaFin($dto->modify('+3 day'));
 
                 $subasta->setEstado($em->getRepository('AppBundle:EstadoSubasta')->find(1));
 
@@ -180,7 +180,7 @@ class SubastaController extends Controller
             $fecha = new DateTime();
             $fecha->setISODate($reserva->getSemana(), $reserva->getAnio());
             $reserva->setFechaInicio($fecha);
-            $reserva->setFechaFin($fecha->modify('+6 days'));
+            $reserva->setFechaFin($fecha->modify('+6 day'));
 
             $em->persist($reserva);
             $this->get('session')->getFlashBag()->add('success', 'Subasta cerrada. <b>'.$reserva->getUsuario().'</b> fue el ganador.'); 
@@ -219,6 +219,8 @@ class SubastaController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
         
             $em->flush();
+
+            $this->get('session')->getFlashBag()->add('success', 'Subasta modificada exitosamente.');
 
             return $this->redirectToRoute('subasta_edit', array('id' => $subasta->getId()));
         }
