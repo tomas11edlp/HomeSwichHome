@@ -17,6 +17,11 @@
                     bottom:0;
                     left:0;
                 }
+                label.required::after{
+                    font-size: 10px;
+                    color: red;
+                    content: ' *';
+                }
             </style>
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />

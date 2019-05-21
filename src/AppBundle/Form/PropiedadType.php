@@ -26,7 +26,7 @@ class PropiedadType extends AbstractType
             ))
 
             ->add('descripcion', TextType::class, array(
-                'required' => true,
+                'required' => false,
                 'attr' => array(
                    'class' => 'form-control',
                    'autocomplete' => 'off',
