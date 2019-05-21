@@ -98,7 +98,7 @@ class Propiedad
 
 
     public function __toString(){
-        return $this->titulo;
+        return ucfirst( $this->titulo );
     }
 
     /**

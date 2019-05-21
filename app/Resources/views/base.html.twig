@@ -6,8 +6,9 @@
         {% block stylesheets %}
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
             <link rel="stylesheet" href="{{ asset('libs/bootstrap/css/bootstrap.min.css') }}">
-             <link rel="stylesheet" href="{{ asset('libs/bootadmin/css/bootadmin.min.css') }}">
-             <style type="text/css">
+            <link rel="stylesheet" href="{{ asset('libs/bootadmin/css/bootadmin.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('libs/select2/css/select2.min.css') }}">
+            <style type="text/css">
                 #footer
                 {
                     width:100%;
@@ -15,7 +16,7 @@
                     bottom:0;
                     left:0;
                 }
-             </style>
+            </style>
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
@@ -40,6 +41,7 @@
             <script src="{{ asset('libs/bootstrap/js/bootstrap-datetimepicker.min.js') }}"></script>
             <script src="{{ asset('libs/bootadmin/js/bootstrap.bundle.min.js') }}"></script>
             <script src="{{ asset('libs/bootadmin/js/bootadmin.min.js') }}"></script>
+            <script src="{{ asset('libs/jquery-ui/jquery-ui.js') }}"></script>
 
             <script type="text/javascript">
                 $(document).ready(function(){

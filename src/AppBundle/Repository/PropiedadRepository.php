@@ -50,4 +50,20 @@ class PropiedadRepository extends \Doctrine\ORM\EntityRepository
         
       return $query;
   }
+
+
+  //Se utiliza para el autocomplete
+  public function findPropiedadPorTitulo($titulo )
+  {
+    $sql = $this->createQueryBuilder('a');
+
+    if ( $titulo ) {
+      $sql->andWhere('a.titulo LIKE :titulo ');
+      $sql->setParameter( 'titulo', '%'.$titulo.'%' );
+    }
+
+    $sql->andWhere("a.habilitada = 'S'");
+    
+    return $sql->getQuery()->getResult();
+  }
 }

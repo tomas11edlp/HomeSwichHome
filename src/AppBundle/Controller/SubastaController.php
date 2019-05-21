@@ -78,13 +78,18 @@ class SubastaController extends Controller
      */
     public function newAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+        
         $subasta = new Subasta();
-        $form = $this->createForm('AppBundle\Form\SubastaType', $subasta);
+        
+        $form = $this->createForm('AppBundle\Form\SubastaType', $subasta, array(
+            'em' => $em,
+        ));
+        
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $em = $this->getDoctrine()->getManager();
 
             $sem=$subasta->getSemanaReserva();
             $anio=$subasta->getAnioReserva();
@@ -108,7 +113,7 @@ class SubastaController extends Controller
                 return $this->redirectToRoute('subasta_index');
             }else{
 
-                $form->get('propiedad')->addError(new FormError('La propiedad ya se encuentra reservada para la semana seleccionada.'));
+                $form->get('propiedadP')->addError(new FormError('La propiedad ya se encuentra reservada para la semana seleccionada.'));
                 return $this->render('subasta/new.html.twig', array(
                     'subasta' => $subasta,
                     'form' => $form->createView(),
@@ -151,6 +156,7 @@ class SubastaController extends Controller
 
         return $this->render('subasta/showPublico.html.twig', array(
             'subasta' => $subasta,
+            'pujas'   => $subasta->getPujas(),
             'delete_form' => $deleteForm->createView(),
         ));
     }

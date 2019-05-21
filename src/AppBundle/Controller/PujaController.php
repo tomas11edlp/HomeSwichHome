@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Puja controller.
@@ -80,7 +81,19 @@ class PujaController extends Controller
         $em->persist($puja);
         $em->flush();
 
-        return $asd;
+        // $this->render('Bundle:Folder:template.html.twig', array());
+
+        $pujas = $subasta->getPujas();
+
+        $json = array();
+        foreach ( $pujas as $p ) {
+            $json[] = array(
+                "usuario" => $p->getUsuario(),
+                "monto" => $p->getMonto()
+            );
+        }
+
+        return new JsonResponse($pujas);
     
     }
 }

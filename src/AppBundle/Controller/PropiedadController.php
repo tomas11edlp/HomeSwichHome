@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\Paginador\FilterPropiedadType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Propiedad controller.
@@ -233,5 +234,31 @@ class PropiedadController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+    /**
+     * Autocomplete jQuery UI.
+     *
+     * @Route("/autocomplete/propiedad", name="propiedad_autocomplete")
+     * @Method("GET")
+     */
+    public function autocompletePropiedadAction(Request $request)
+    {   
+       
+        $titulo = $request->get('term');
+       
+        $propiedades = $this->get("doctrine.orm.default_entity_manager")
+                         ->getRepository("AppBundle:Propiedad")
+                         ->findPropiedadPorTitulo( $titulo );
+       
+        $json = array();
+        foreach ( $propiedades as $p ) {
+            $json[] = array(
+                "codigo" => $p->getId(),
+                "value" => $p->getTitulo()
+            );
+        }
+
+        return new JsonResponse( $json );
     }
 }
