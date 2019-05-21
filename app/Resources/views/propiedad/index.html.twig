@@ -24,12 +24,12 @@
         <a class="ml-4 text-info" href="{{path('propiedad_show', {'id':entity.id}) }}" title="Ver"><i class="fas fa-eye"></i></a>
         <a class="ml-4 text-info" href="{{path('propiedad_edit', {'id':entity.id}) }}" title="Modificar"><i class="fas fa-edit"></i></a>
         {% if entity.habilitada == 'S' %}
-            <a class="ml-4 text-danger" href="{{path('propiedad_delete', {'id':entity.id}) }}" title="Deshabilitar"><i class="fas fa-ban"></i></i></a>
+            <a class="ml-4 text-danger" href="{{path('propiedad_deshabilitar', {'id':entity.id}) }}" title="Deshabilitar"><i class="fas fa-ban"></i></i></a>
         {% else %}
-            <a class="ml-4 text-danger" href="{{path('propiedad_habilitar', {'id':entity.id}) }}" title="Habilitar"><i class="far fa-check-circle"></i></a>
+            <a class="ml-4 text-success" href="{{path('propiedad_habilitar', {'id':entity.id}) }}" title="Habilitar"><i class="far fa-check-circle"></i></a>
         {% endif %}
         {% if entity.reservas|length == 0 and entity.subastas|length == 0 %}
-            <a class="ml-4 text-danger" href="{{path('propiedad_habilitar', {'id':entity.id}) }}" title="Eliminar"><i class="fas fa-times"></i></a>
+            <a class="ml-4 text-danger" href="{{path('propiedad_delete', {'id':entity.id}) }}" title="Eliminar"><i class="fas fa-times"></i></a>
         {% endif %}
     </td>
 {% endblock %}

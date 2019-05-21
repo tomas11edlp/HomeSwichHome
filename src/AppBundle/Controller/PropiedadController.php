@@ -86,6 +86,9 @@ class PropiedadController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            $propiedad->setHabilitada('S');
+
             $em->persist($propiedad);
             $em->flush();
 
