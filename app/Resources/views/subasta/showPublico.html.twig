@@ -61,7 +61,7 @@
                                         {% for p in subasta.pujas %}
                                             {% if cant < 3 %}
                                                 <tr>
-                                                    <td>{{p.monto}}</td>
+                                                    <td id="{{cant}}">{{p.monto}}</td>
                                                     <td>{{p.usuario}}</td>
                                                 </tr>
                                             {% endif %}
