@@ -90,7 +90,6 @@ class Propiedad
      * @var string
      *
      * @ORM\Column(name="habilitada", type="string", length=1)
-     * @Assert\NotBlank(message="Campo obligatorio.")
      */
     private $habilitada;
 
