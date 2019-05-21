@@ -27,13 +27,14 @@ class Propiedad
      * @var string
      *
      * @ORM\Column(name="titulo", type="string", length=255, unique=true)
+     * @Assert\NotBlank(message="Campo obligatorio.")
      */
     private $titulo;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="descripcion", type="string", length=255)
+     * @ORM\Column(name="descripcion", type="string", length=255, nullable=true)
      */
     private $descripcion;
 
@@ -41,6 +42,7 @@ class Propiedad
      * @var string
      *
      * @ORM\Column(name="pais", type="string", length=255)
+     * @Assert\NotBlank(message="Campo obligatorio.")
      */
     private $pais;
 
@@ -48,6 +50,7 @@ class Propiedad
      * @var string
      *
      * @ORM\Column(name="provincia", type="string", length=255)
+     * @Assert\NotBlank(message="Campo obligatorio.")
      */
     private $provincia;
 
@@ -55,6 +58,7 @@ class Propiedad
      * @var string
      *
      * @ORM\Column(name="localidad", type="string", length=255)
+     * @Assert\NotBlank(message="Campo obligatorio.")
      */
     private $localidad;
 
@@ -62,6 +66,7 @@ class Propiedad
      * @var string
      *
      * @ORM\Column(name="domicilio", type="string", length=255)
+     * @Assert\NotBlank(message="Campo obligatorio.")
      */
     private $domicilio;
 
@@ -69,6 +74,7 @@ class Propiedad
      * @var string
      *
      * @ORM\Column(name="foto", type="string", length=255)
+     * @Assert\NotBlank(message="Campo obligatorio.")
      */
     private $foto;
 
@@ -76,6 +82,7 @@ class Propiedad
      * @var string
      *
      * @ORM\Column(name="monto", type="decimal", precision=10, scale=2)
+     * @Assert\NotBlank(message="Campo obligatorio.")
      */
     private $precio;
 
@@ -83,6 +90,7 @@ class Propiedad
      * @var string
      *
      * @ORM\Column(name="habilitada", type="string", length=1)
+     * @Assert\NotBlank(message="Campo obligatorio.")
      */
     private $habilitada;
 
