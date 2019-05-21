@@ -80,7 +80,7 @@ class Puja
      */
     public function getMonto()
     {
-        return $this->monto;
+        return number_format($this->monto, 2,',','.');
     }
 
     /**

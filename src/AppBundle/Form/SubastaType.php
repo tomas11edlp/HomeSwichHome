@@ -42,7 +42,7 @@ class SubastaType extends AbstractType
                 'attr' => array(
                     'placeholder' => 'Escriba la propiedad y seleccione',
                     'autocomplete' => 'off',
-                    'class' => 'col-10'
+                    'class' => 'form-control'
                     ),
                 ))
             ->add(

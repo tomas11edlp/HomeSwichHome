@@ -94,7 +94,11 @@ class PujaController extends Controller
             );
         }
 
-        return new JsonResponse($pujas);
+        return new JsonResponse(array(
+            'html' => $this->renderView('puja/ultimas_pujas.html.twig', array(
+                'subasta' => $subasta
+            )),
+        ));
     
     }
 }
