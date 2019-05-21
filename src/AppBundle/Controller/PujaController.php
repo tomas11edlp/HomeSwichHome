@@ -75,6 +75,7 @@ class PujaController extends Controller
 
         //Dejo el usuario por defecto el primero que este creado.
         $usuario = $em->getRepository('AppBundle:Usuario')->find(1);
+        
         $puja->setUsuario( $usuario );
         // $puja->setUsuario( $this->getUser() );
 
