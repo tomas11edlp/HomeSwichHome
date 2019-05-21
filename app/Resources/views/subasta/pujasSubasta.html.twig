@@ -1,0 +1,23 @@
+{% if subasta.pujas|length > 0 %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Monto</th>
+                <th scope="col">Usuario</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in subasta.pujas %}
+                <tr>
+                    <th  scope="row">{{loop.index}}</th>
+                    <td>{{p.monto}}</td>
+                    <td>{{p.usuario}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <hr>
+    <span class="text-danger"> No hay pujas por el momento </span><br>
+{% endif %}

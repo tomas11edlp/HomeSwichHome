@@ -1,0 +1,118 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="mb-4 text-center">
+        <h2 class="mb-5"> Subasta </h2>
+    </div>
+
+<div class="container-fluid">
+    <div class="card pt-5 pb-4">
+        <div class="col-12">
+        <div class="row">
+            <div class="col-8 mb-3">
+                <div class="row">
+                    <div class="col-4">
+                        <h4> {{subasta.propiedad}} </h4>
+                        <h5> T&iacute;tulo </h5>
+                    </div>
+
+                    <div class="col-4">
+                        <h4> {{subasta.semanaReserva}}/{{subasta.anioReserva}} </h4>
+                        <h5> Semana a reservar </h5>
+                    </div>
+
+                    <div class="col-4 mb-3">
+                        <h4> {{subasta.estado|default('-')}} </h4>
+                        <h5> Estado </h5>
+                    </div>
+
+                    <div class="col-4">
+                        <h4> {{subasta.fechaInicio|date('d/m/Y')}} </h4>
+                        <h5> Fecha Inicio </h5>
+                    </div>
+
+                    <div class="col-4">
+                        <h4> {{subasta.fechaFin|date('d/m/Y')}} </h4>
+                        <h5> Fecha F&iacute;n </h5>
+                    </div>
+
+                    <div class="col-4 mb-3">
+                        <h4> {{subasta.montoBase}} </h4>
+                        <h5> Monto Inicial </h5>
+                    </div>
+
+                    <div class="col-6 mt-3">
+                        <h5> Pujas 
+                        
+                            <input class="col-2 ml-5" placeholder="0.00" id="inputPuja" type="" name="">
+                            <button class="btn btn-primary" name="{{subasta.id}}" id="pujar"> Pujar </button>
+                        
+                        </h5>
+                        
+                        {% include 'subasta/pujasSubasta.html.twig' %}
+
+                    </div>
+                    <div class="col">
+                    </div>
+
+                </div>
+
+            </div>  
+
+            <div class="col-4 mb-3">
+
+                <div class="col-12">
+                    <img src="{{subasta.propiedad.foto|default('https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fmoorestown-mall.com%2Fnoimage.gif&f=1')}}" width="100%" border="0">  
+                </div>
+            
+            </div>
+        </div>
+    </div>
+    </div>  
+
+    <div class="text-left mt-5">
+    
+        <a class="btn btn-outline-secondary" href="{{ path('subasta_index') }}"><i class="fas fa-arrow-left"></i>  Volver al listado</a>
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            
+            $('#pujar').on('click', function (e) {
+                
+                var valorPujado = $('#inputPuja').val();
+
+                var subasta = $(this).attr('name');  
+
+                var data = { 
+                    valor: valorPujado, 
+                    subasta: subasta
+                };
+
+                $.ajax({ 
+                    url: "{{ path('puja_new') }}",
+                    type: 'POST', 
+                    data: data, 
+                    success: function (datos) { 
+                        //Remplazar view
+                    }
+                });
+
+            });
+
+
+
+
+        });
+    </script>
+
+
+{% endblock %}

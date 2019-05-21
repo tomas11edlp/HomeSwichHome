@@ -66,7 +66,7 @@ class SubastaController extends Controller
             ->showRowsAtFirst()
             ->setFiltersTheme('inline')
             ->setBaseLayout('base')
-            ->setView('subasta/index_publico.html.twig')
+            ->setView('subasta/indexPublico.html.twig')
             ->paginate('AppBundle:Subasta', 'publicoQuery');
     }
 
@@ -134,6 +134,22 @@ class SubastaController extends Controller
         $deleteForm = $this->createDeleteForm($subasta);
 
         return $this->render('subasta/show.html.twig', array(
+            'subasta' => $subasta,
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Finds and displays a subasta entity.
+     *
+     * @Route("/publico/{id}", name="subasta_show_publico")
+     * @Method("GET")
+     */
+    public function showPublicoAction(Subasta $subasta)
+    {
+        $deleteForm = $this->createDeleteForm($subasta);
+
+        return $this->render('subasta/showPublico.html.twig', array(
             'subasta' => $subasta,
             'delete_form' => $deleteForm->createView(),
         ));
