@@ -11,6 +11,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="propiedad")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PropiedadRepository")
+ * @UniqueEntity(
+ *     fields={"titulo"},
+ *     errorPath="titulo",
+ *     message="Ya existe propiedad con el título ingresado."
+ * )
  */
 class Propiedad
 {
