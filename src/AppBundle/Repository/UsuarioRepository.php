@@ -10,4 +10,38 @@ namespace AppBundle\Repository;
  */
 class UsuarioRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function findUsuariosFiltrados( $usuario, $nombre )
+	{
+		$sql = $this->createQueryBuilder('a');
+
+		if ( $usuario ) {
+			$sql->andWhere('a.usuario LIKE :usuario');
+			$sql->setParameter( 'usuario', '%'.$usuario.'%' );
+		}
+
+		if ( $nombre ) {
+			$sql->andWhere('a.nombre LIKE :nombre');
+			$sql->setParameter( 'nombre', '%'.$nombre.'%' );
+		}
+
+		// $sql->andWhere('a.eliminado = 0');
+
+		// $sql->orderBy('a.fecha', 'ASC');
+		// $sql->setFirstResult(10);
+		$sql->setMaxResults(100);
+
+		// dump( $sql->getQuery() ); die();
+
+		return $sql->getQuery()->getResult();
+	}
+
+
+	public function findAll()
+	{
+		$sql = $this->createQueryBuilder('a');
+
+		// dump( $sql->getQuery() ); die();
+
+		return $sql->getQuery()->getResult();
+	}
 }

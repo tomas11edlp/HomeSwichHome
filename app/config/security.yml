@@ -2,10 +2,19 @@
 # https://symfony.com/doc/current/security.html
 security:
 
+    role_hierarchy:
+        ROLE_SUPERADMINISTRADOR: [ROLE_ADMINISTRADOR]
+        ROLE_ADMINISTRADOR: [ROLE_OPERADOR]
+        ROLE_OPERADOR:      [ROLE_OPERADOR]
+
+    encoders:
+        AppBundle\Entity\Usuario: bcrypt
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-        in_memory:
-            memory: ~
+        usuarios:
+            entity:
+                class: AppBundle:Usuario
+                property: usuario
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs

@@ -1,16 +1,40 @@
 {% extends 'base.html.twig' %}
 
+{% block javascripts %}
+    {{parent()}}
+{% endblock %}
+
+
 {% block body %}
-    <h1>Usuario creation</h1>
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
+{{ form_start(form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('usuario_index') }}">Back to the list</a>
-        </li>
-    </ul>
+<div class="row ">
+    <div class="col-4 ">
+    </div>
+
+    <div class="col-4 form-group">
+
+        {{ form_row(form.email) }}
+    
+        {{ form_row(form.plainPassword) }}
+
+        {{ form_row(form.nombre) }}
+    
+        {{ form_row(form.apellido) }}
+    
+        {{ form_row(form.fechaNacimiento) }}
+    </div><!-- form-group -->
+    
+
+</div>
+<div class="row mt-4">
+    <div class="col text-center">
+        <a class="btn btn-secondary" href="{{path('homepage')}}">Cancelar</a>
+        <button class="btn btn-success" type='submit'>Confirmar</button>
+    </div>
+</div>
+{{ form_end(form) }}
+
+
 {% endblock %}

@@ -3,6 +3,10 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
  * Usuario
@@ -10,7 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="usuario")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UsuarioRepository")
  */
-class Usuario
+// class Usuario implements UserInterface
+class Usuario implements  AdvancedUserInterface, \Serializable
 {
     /**
      * @var int
@@ -55,20 +60,6 @@ class Usuario
      * @ORM\Column(name="fechaNacimiento", type="string", length=255)
      */
     private $fechaNacimiento;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="usuModi", type="string", length=255)
-     */
-    private $usuModi;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="fechaModi", type="datetime")
-     */
-    private $fechaModi;
 
 
     public function __toString()
@@ -206,52 +197,67 @@ class Usuario
         return $this->fechaNacimiento;
     }
 
-    /**
-     * Set usuModi
-     *
-     * @param string $usuModi
-     *
-     * @return Usuario
-     */
-    public function setUsuModi($usuModi)
+    public function getSalt()
     {
-        $this->usuModi = $usuModi;
-
-        return $this;
+        // The bcrypt and argon2i algorithms don't require a separate salt.
+        // You *may* need a real salt if you choose a different encoder.
+        return null;
     }
 
-    /**
-     * Get usuModi
-     *
-     * @return string
-     */
-    public function getUsuModi()
+     public function isAccountNonExpired()
     {
-        return $this->usuModi;
+        return true;
+    }
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+    public function isEnabled()
+    {
+        return true;
     }
 
-    /**
-     * Set fechaModi
-     *
-     * @param \DateTime $fechaModi
-     *
-     * @return Usuario
-     */
-    public function setFechaModi($fechaModi)
+    public function getUserName()
     {
-        $this->fechaModi = $fechaModi;
-
-        return $this;
+        return $this->email;
     }
 
-    /**
-     * Get fechaModi
-     *
-     * @return \DateTime
-     */
-    public function getFechaModi()
+    public function esAdministrador()
     {
-        return $this->fechaModi;
+        // return $this->getRoles()[0] == "ROLE_ADMINISTRADOR";
+        return ( ($this->getRoles()[0] == "ROLE_ADMINISTRADOR") or ($this->getRoles()[0] == "ROLE_SUPERADMINISTRADOR") );
+    }
+
+    function eraseCredentials()
+    {
+    }
+
+    function getRoles()
+    {
+        //return array('ROLE_USUARIO');
+        return array( 'ROLE_'.strtoupper( $this->getPerfil()->getNombre() ) );
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->email,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->email,
+        ) = unserialize($serialized);
     }
 }
 
