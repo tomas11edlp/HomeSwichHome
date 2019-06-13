@@ -24,6 +24,14 @@ security:
 
         main:
             anonymous: ~
+            provider: usuarios
+            form_login:
+                login_path: login
+                check_path: login
+                success_handler: AppBundle\Security\AuthenticationSuccessHandler
+            logout:
+                path:   logout
+                target: login
             # activate different ways to authenticate
 
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate

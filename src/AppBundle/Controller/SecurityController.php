@@ -16,10 +16,10 @@ class SecurityController extends Controller
     public function loginAction(Request $request)
 	{
 	    $authenticationUtils = $this->get('security.authentication_utils');
-
+	    
 	    // get the login error if there is one
 	    $error = $authenticationUtils->getLastAuthenticationError();
-
+	    
 	    // last username entered by the user
 	    $lastUsername = $authenticationUtils->getLastUsername();
 
@@ -29,7 +29,7 @@ class SecurityController extends Controller
             return $this->redirect($this->generateUrl('inicio'));
         }
 
-        dump($authenticationUtils->getLastUsername()); die;
+        // dump($authenticationUtils->getLastUsername()); die;
 
 	    return $this->render('security/login.html.twig', array(
 	    // return $this->render('contenedor.html.twig', array(
@@ -45,7 +45,7 @@ class SecurityController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 		
-	    return $this->render('default/homepage.html.twig', array(
+	    return $this->render('default/index.html.twig', array(
 	        'textoBienvenida' => 'Bienvenido al Sistema de Gestión de IDYTAC',
 	    ));
 	}
