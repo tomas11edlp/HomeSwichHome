@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Estadocredito</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ estadoCredito.id }}</td>
+            </tr>
+            <tr>
+                <th>Estado</th>
+                <td>{{ estadoCredito.estado }}</td>
+            </tr>
+            <tr>
+                <th>Descripcion</th>
+                <td>{{ estadoCredito.descripcion }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('estadocredito_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('estadocredito_edit', { 'id': estadoCredito.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
