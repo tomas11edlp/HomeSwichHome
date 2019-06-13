@@ -25,9 +25,9 @@ class SecurityController extends Controller
 
 	    // dump( $authenticationUtils->getCredentials() ); die;
 
-	    if ($lastUsername) {
-            return $this->redirect($this->generateUrl('inicio'));
-        }
+	    // if ($lastUsername) {
+     //        return $this->redirect($this->generateUrl('inicio'));
+     //    }
 
         // dump($authenticationUtils->getLastUsername()); die;
 

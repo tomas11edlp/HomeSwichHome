@@ -21,7 +21,7 @@
                     {% if app.session.has('user') %}
                         <div class="btn-group">
                             <button class="btn btn-outline-light btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-user"> </i> {{app.session.get('user')}}
+                                <i class="fas fa-user"> </i> {{app.user}}
                             </button>
                             <div class="dropdown-menu text-center" style='margin-left:-60px'>
                             Some action
@@ -29,10 +29,10 @@
                                 <a class="dropdown-item text-danger" href="{{path('clearsession')}}">Cerrar Sesi&oacute;n</a>
                             </div>
                         </div>
-                    {% elseif app.session.has('useradmin') %}
+                    {% elseif is_granted('ROLE_ADMINISTRADOR') %}
                         <div class="btn-group">
                             <button class="btn btn-outline-light btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-user"> </i> {{app.session.get('useradmin')}}
+                                <i class="fas fa-user"> </i> {{app.user}}
                             </button>
                             <div class="dropdown-menu text-center" style='margin-left:-60px'>
                                 <a href="{{path('adminpage')}}">Administraci&oacute;n</a>

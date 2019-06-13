@@ -61,6 +61,13 @@ class Usuario implements  AdvancedUserInterface, \Serializable
      */
     private $fechaNacimiento;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="rol", type="string", length=255)
+     */
+    private $rol;
+
 
     public function __toString()
     {
@@ -239,7 +246,7 @@ class Usuario implements  AdvancedUserInterface, \Serializable
     function getRoles()
     {
         //return array('ROLE_USUARIO');
-        return array( 'ROLE_'.strtoupper( $this->getPerfil()->getNombre() ) );
+        return array( 'ROLE_'.strtoupper( $this->getRol() ) );
     }
 
     /** @see \Serializable::serialize() */
@@ -258,6 +265,25 @@ class Usuario implements  AdvancedUserInterface, \Serializable
             $this->id,
             $this->email,
         ) = unserialize($serialized);
+    }
+
+    /**
+    * Get rol
+    * @return  
+    */
+    public function getRol()
+    {
+        return $this->rol;
+    }
+    
+    /**
+    * Set rol
+    * @return $this
+    */
+    public function setRol($rol)
+    {
+        $this->rol = $rol;
+        return $this;
     }
 }
 
