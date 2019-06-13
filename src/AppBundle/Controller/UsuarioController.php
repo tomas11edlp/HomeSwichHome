@@ -79,6 +79,7 @@ class UsuarioController extends Controller
                 $encoded = $encoder->encodePassword($usuario, $form->get('plainPassword')->getData());
                 
                 $usuario->setPassword( $encoded );
+                $usuario->setRol('COMUN');
 
                 $em->persist($usuario);
                 $em->flush();
@@ -87,7 +88,7 @@ class UsuarioController extends Controller
 
             } catch(\Exception $e) {
                 $this->addFlash('danger', 'Ocurrio un ERROR. El registro no pudo ser creado.');
-                $this->addFlash('danger', $e);
+                // $this->addFlash('danger', $e);
 
                 return $this->redirectToRoute('usuario_new');
             }
