@@ -174,9 +174,19 @@ class PropiedadController extends Controller
     public function deleteAction(Propiedad $propiedad)
     {
 
-        $em = $this->getDoctrine()->getManager();
+        if (count($propiedad->getReservas()) > 0 || count($propiedad->getSubastas()) > 0 ) {
+            
+            $propiedad->setHabilitada('N');
 
-        $em->remove($propiedad);
+            $em->persist($propiedad);
+
+        }else{
+
+            $em = $this->getDoctrine()->getManager();
+
+            $em->remove($propiedad);
+
+        }
 
         $em->flush();
 
