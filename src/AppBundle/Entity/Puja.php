@@ -80,6 +80,16 @@ class Puja
      */
     public function getMonto()
     {
+        return $this->monto;
+    }
+
+    /**
+     * Get monto
+     *
+     * @return string
+     */
+    public function getMontoFormat()
+    {
         return number_format($this->monto, 2,',','.');
     }
 

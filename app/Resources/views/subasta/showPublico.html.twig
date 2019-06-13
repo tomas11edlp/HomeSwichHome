@@ -61,7 +61,7 @@
                                         {% for p in subasta.pujas %}
                                             {% if cant < 3 %}
                                                 <tr>
-                                                    <td id="puja-{{cant}}" data-monto="{{p.monto}}">{{p.monto}}</td>
+                                                    <td id="puja-{{cant}}" data-monto="{{p.monto}}">{{p.montoFormat}}</td>
                                                     <td>{{p.usuario}}</td>
                                                 </tr>
                                             {% endif %}
@@ -112,12 +112,16 @@
             var montoInicial = '{{subasta.montoBase}}';
 
             $(document).on('click', '#pujar', function (e) {
+
                 var valorPujado = $('#inputPuja').val();
+
                 $('.error-message').remove();
 
-                if ($('#puja-1').length > 0) {
+                console.log($('#puja-0').data('monto'), valorPujado);
 
-                    if ($('#puja-1').data('monto') >= valorPujado){
+                if ( $('#puja-1').length > 0 ) {
+
+                    if ($('#puja-0').data('monto') >= valorPujado){
 
                         $('#pujar').after(`<div class="error-message"><br><span class="text-danger">El monto debe ser superior a la mejor oferta.</span></div>`);
 
