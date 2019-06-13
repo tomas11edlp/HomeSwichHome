@@ -444,12 +444,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineBundle.git",
-                "reference": "ad538cbc415418ddf6a7b0457cc50588740feee1"
+                "reference": "c03726c9c85697fa6ec2009733307212cb79b6f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/ad538cbc415418ddf6a7b0457cc50588740feee1",
-                "reference": "ad538cbc415418ddf6a7b0457cc50588740feee1",
+                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/c03726c9c85697fa6ec2009733307212cb79b6f1",
+                "reference": "c03726c9c85697fa6ec2009733307212cb79b6f1",
                 "shasum": ""
             },
             "require": {
@@ -487,7 +487,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.12.x-dev"
+                    "dev-master": "2.0.x-dev"
                 }
             },
             "autoload": {
@@ -525,7 +525,7 @@
                 "orm",
                 "persistence"
             ],
-            "time": "2019-06-07T10:21:18+00:00"
+            "time": "2019-06-11T21:33:20+00:00"
         },
         {
             "name": "doctrine/doctrine-cache-bundle",
