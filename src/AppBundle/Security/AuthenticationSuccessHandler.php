@@ -24,14 +24,14 @@ class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterf
 
     	// dump( $token ); die;
 
-    	$usuario = $token->getUser();
+    	// $usuario = $token->getUser();
 
-    	$usuario->setFechaUltimoLogin( new \DateTime() );
+    	// $usuario->setFechaUltimoLogin( new \DateTime() );
 
-    	$this->em->persist( $usuario );
-    	$this->em->flush();
+    	// $this->em->persist( $usuario );
+    	// $this->em->flush();
 
-        return new RedirectResponse($this->router->generate('inicio'));
+        return new RedirectResponse($this->router->generate('homepage'));
     }
 }
 

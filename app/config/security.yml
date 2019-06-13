@@ -27,8 +27,9 @@ security:
             provider: usuarios
             form_login:
                 login_path: login
-                check_path: homepage
-                # success_handler: AppBundle\Security\AuthenticationSuccessHandler
+                check_path: login
+                success_handler: AppBundle\Security\AuthenticationSuccessHandler
+
             logout:
                 path: logout
                 target: homepage

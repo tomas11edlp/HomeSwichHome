@@ -23,13 +23,8 @@ class SecurityController extends Controller
 	    // last username entered by the user
 	    $lastUsername = $authenticationUtils->getLastUsername();
 
-	    // dump( $authenticationUtils->getCredentials() ); die;
+	    // dump( ); die;
 
-	    // if ($lastUsername) {
-     //        return $this->redirect($this->generateUrl('inicio'));
-     //    }
-
-        // dump($authenticationUtils->getLastUsername()); die;
 
 	    return $this->render('security/login.html.twig', array(
 	    // return $this->render('contenedor.html.twig', array(
@@ -46,7 +41,7 @@ class SecurityController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		
 	    return $this->render('default/index.html.twig', array(
-	        'textoBienvenida' => 'Bienvenido al Sistema de Gestión de IDYTAC',
+	        'textoBienvenida' => 'Bienvenido al Sistema',
 	    ));
 	}
 
