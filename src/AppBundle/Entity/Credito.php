@@ -34,6 +34,12 @@ class Credito
      */
      private $estado;
 
+     /**
+      * @ORM\ManyToOne(targetEntity="Usuario", inversedBy="creditos")
+      * @ORM\JoinColumn(name="usuario", referencedColumnName="id")
+      */
+      private $usuario;
+
     /**
      * Get id.
      *
@@ -91,5 +97,29 @@ class Credito
     public function getEstado()
     {
         return $this->estado;
+    }
+
+    /**
+     * Set usuario.
+     *
+     * @param \AppBundle\Entity\Usuario|null $usuario
+     *
+     * @return Credito
+     */
+    public function setUsuario(\AppBundle\Entity\Usuario $usuario = null)
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * Get usuario.
+     *
+     * @return \AppBundle\Entity\Usuario|null
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
     }
 }

@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Usuario;
+use AppBundle\Entity\Credito;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -81,6 +82,18 @@ class UsuarioController extends Controller
                 $usuario->setPassword( $encoded );
                 $usuario->setRol('COMUN');
 
+                $cred = new Credito();
+                $cred2 = new Credito();
+                $estado = $em->getRepository('AppBundle:EstadoCredito')->find(1);
+                $cred->setEstado($estado);
+                $cred2->setEstado($estado);
+                $fecha = date('d/m/Y', strtotime('+1 year'));
+                $cred->setVencimiento($fecha);
+                $cred2->setVencimiento($fecha);
+
+                $usuario->addCredito($cred);
+                $usuario->addCredito($cred2);
+
                 $em->persist($usuario);
                 $em->flush();
 
@@ -88,7 +101,7 @@ class UsuarioController extends Controller
 
             } catch(\Exception $e) {
                 $this->addFlash('danger', 'Ocurrio un ERROR. El registro no pudo ser creado.');
-                // $this->addFlash('danger', $e);
+                $this->addFlash('danger', $e);
 
                 return $this->redirectToRoute('usuario_new');
             }
