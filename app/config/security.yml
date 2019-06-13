@@ -27,11 +27,11 @@ security:
             provider: usuarios
             form_login:
                 login_path: login
-                check_path: login
+                check_path: homepage
                 # success_handler: AppBundle\Security\AuthenticationSuccessHandler
             logout:
-                path:   logout
-                target: login
+                path: logout
+                target: homepage
             # activate different ways to authenticate
 
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
