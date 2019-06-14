@@ -1,51 +1,27 @@
-{% extends 'base.html.twig' %}
+{% extends '@Pg/Paginator/tableinline.html.twig' %}
 
-{% block body %}
-    <h1>Usuarios list</h1>
+{% block title %}
+    <h2>Usuarios
+        {# <a class="btn btn-outline-success ml-2" href="{{ path('propiedad_new') }}">Nueva</a> #}
+    </h2>
+{% endblock %}
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Email</th>
-                <th>Password</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Fechanacimiento</th>
-                <th>Usumodi</th>
-                <th>Fechamodi</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for usuario in usuarios %}
-            <tr>
-                <td><a href="{{ path('usuario_show', { 'id': usuario.id }) }}">{{ usuario.id }}</a></td>
-                <td>{{ usuario.email }}</td>
-                <td>{{ usuario.password }}</td>
-                <td>{{ usuario.nombre }}</td>
-                <td>{{ usuario.apellido }}</td>
-                <td>{{ usuario.fechaNacimiento }}</td>
-                <td>{{ usuario.usuModi }}</td>
-                <td>{% if usuario.fechaModi %}{{ usuario.fechaModi|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('usuario_show', { 'id': usuario.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('usuario_edit', { 'id': usuario.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+{% block paginator_table_header %}
+    {# <th></th> #}
+    <th scope="col" class="">Nombre</th>
+    <th scope="col" class="">Apellido</th>
+    <th scope="col" class="">Tipo de cuenta</th>
+    <th scope="col" class="">Email</th>
+    <th scope="col"></th>
+{% endblock %}
 
-    <ul>
-        <li>
-            <a href="{{ path('usuario_new') }}">Create a new usuario</a>
-        </li>
-    </ul>
+{% block paginator_table_data %}
+    <td class="align-middle">{{ entity.nombre }}</td>
+    <td class="align-middle">{{ entity.apellido }}</td>
+    <td class="align-middle">{{ entity.rol }}</td>
+    <td class="align-middle">{{ entity.email }}</td>
+    <td class="align-middle">
+        <a class="ml-4 text-info" href="{{path('propiedad_show', {'id':entity.id}) }}" title="Ver"><i title="Ver cliente" class="fas fa-eye"></i></a>
+    </td>
+
 {% endblock %}

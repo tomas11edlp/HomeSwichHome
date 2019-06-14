@@ -36,6 +36,15 @@ class UsuarioRepository extends \Doctrine\ORM\EntityRepository
 	}
 
 
+	//PARA EL INDEX DE CLIENTES
+	public function findClientes($query, $pg)
+	{
+		return $query->where("a.rol = 'COMUN'")
+					 ->orWhere("a.rol = 'PREMIUM'");
+
+	}
+
+
 	public function findAll()
 	{
 		$sql = $this->createQueryBuilder('a');

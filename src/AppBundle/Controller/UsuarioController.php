@@ -26,32 +26,23 @@ class UsuarioController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $form = $this->createForm('AppBundle\Form\FiltroUsuarioType');
-        $form->handleRequest($request);
-
-        $usuarios = $em->getRepository('AppBundle:Usuario')->findAll();
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $usuarios = $em->getRepository('AppBundle:Usuario')->findUsuariosFiltrados( 
-                                                                $form->get('usuario')->getData(),
-                                                                $form->get('nombre')->getData()
-                                                            );
-
-        } else {
-
-            $usuarios = array();
-
-            $this->addFlash('info', 'Sin datos para mostrar.');
-
-        }
-
-        return $this->render('usuario/index.html.twig', array(
-            'usuarios' => $usuarios,
-            'form' => $form->createView(),
-        ));
+        return $this->get('pg.pg')
+            // ->setOrder(
+            //     array('Nombre' => 'nombre',
+            //         'Nivel' => 'nivel'
+            //     , 'Padre' => 'padre'),
+            //     'nivel',
+            //     'asc'
+            // )
+            ->noRemember(true)
+            // ->setFilter(FilterCategoriasType::class)
+            // ->setFiltersTheme('inline')
+            ->setRowsPerPage(15, array(15, 30, 45))
+            ->showRowsAtFirst()
+            ->setFiltersTheme('inline')
+            ->setBaseLayout('admin_base')
+            ->setView('usuario/index.html.twig')
+            ->paginate('AppBundle:Usuario', 'findClientes');
     }
 
     /**
