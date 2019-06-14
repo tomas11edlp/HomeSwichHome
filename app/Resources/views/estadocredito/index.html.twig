@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Estadocreditos list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Estado</th>
+                <th>Descripcion</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for estadoCredito in estadoCreditos %}
+            <tr>
+                <td><a href="{{ path('estadocredito_show', { 'id': estadoCredito.id }) }}">{{ estadoCredito.id }}</a></td>
+                <td>{{ estadoCredito.estado }}</td>
+                <td>{{ estadoCredito.descripcion }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('estadocredito_show', { 'id': estadoCredito.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('estadocredito_edit', { 'id': estadoCredito.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('estadocredito_new') }}">Create a new estadoCredito</a>
+        </li>
+    </ul>
+{% endblock %}

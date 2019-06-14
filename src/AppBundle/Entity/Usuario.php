@@ -68,6 +68,18 @@ class Usuario implements  AdvancedUserInterface, \Serializable
      */
     private $rol;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="fecha_registro", type="date", nullable=true)
+     */
+    private $fechaRegistro;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Credito", mappedBy="usuario", cascade={"all"})
+     */
+     private $creditos;
+
 
     public function __toString()
     {
@@ -285,5 +297,71 @@ class Usuario implements  AdvancedUserInterface, \Serializable
         $this->rol = $rol;
         return $this;
     }
-}
 
+    /**
+     * Set fechaRegistro.
+     *
+     * @param \DateTime $fechaRegistro
+     *
+     * @return Usuario
+     */
+    public function setFechaRegistro($fechaRegistro)
+    {
+        $this->fechaRegistro = $fechaRegistro;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaRegistro.
+     *
+     * @return \DateTime
+     */
+    public function getFechaRegistro()
+    {
+        return $this->fechaRegistro;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->creditos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add credito.
+     *
+     * @param \AppBundle\Entity\Credito $credito
+     *
+     * @return Usuario
+     */
+    public function addCredito(\AppBundle\Entity\Credito $credito)
+    {
+        $this->creditos[] = $credito;
+
+        return $this;
+    }
+
+    /**
+     * Remove credito.
+     *
+     * @param \AppBundle\Entity\Credito $credito
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeCredito(\AppBundle\Entity\Credito $credito)
+    {
+        return $this->creditos->removeElement($credito);
+    }
+
+    /**
+     * Get creditos.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCreditos()
+    {
+        return $this->creditos;
+    }
+}

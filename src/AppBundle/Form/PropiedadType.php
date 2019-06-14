@@ -86,7 +86,7 @@ class PropiedadType extends AbstractType
                    'autocomplete' => 'off',
                 ),
                 // 'precision' => 2,
-                'label' => 'Precio'
+                'label' => 'Precio de inicio de subasta'
             ));
     }/**
      * {@inheritdoc}
