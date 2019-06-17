@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Tarjetas list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titular</th>
+                <th>Marca</th>
+                <th>Numero</th>
+                <th>Codigo</th>
+                <th>Fechavto</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tarjetum in tarjetas %}
+            <tr>
+                <td><a href="{{ path('tarjeta_show', { 'id': tarjetum.id }) }}">{{ tarjetum.id }}</a></td>
+                <td>{{ tarjetum.titular }}</td>
+                <td>{{ tarjetum.marca }}</td>
+                <td>{{ tarjetum.numero }}</td>
+                <td>{{ tarjetum.codigo }}</td>
+                <td>{% if tarjetum.fechaVto %}{{ tarjetum.fechaVto|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('tarjeta_show', { 'id': tarjetum.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('tarjeta_edit', { 'id': tarjetum.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('tarjeta_new') }}">Create a new tarjetum</a>
+        </li>
+    </ul>
+{% endblock %}

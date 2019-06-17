@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use AppBundle\Validator\Constraints as MyAssert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
@@ -12,6 +13,7 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
  * Usuario
  *
  * @ORM\Table(name="usuario")
+ * @MyAssert\ValidarFechaNacimiento
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UsuarioRepository")
  */
 // class Usuario implements UserInterface
@@ -79,6 +81,14 @@ class Usuario implements  AdvancedUserInterface, \Serializable
      * @ORM\OneToMany(targetEntity="Credito", mappedBy="usuario", cascade={"all"})
      */
      private $creditos;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Tarjeta", mappedBy="usuario", cascade={"all"})
+     */
+     private $tarjetas;
+
+
+
 
 
     public function __toString()
@@ -371,8 +381,39 @@ class Usuario implements  AdvancedUserInterface, \Serializable
         return $this->creditos;
     }
 
-    public function getThis()
+    /**
+     * Add tarjeta.
+     *
+     * @param \AppBundle\Entity\Tarjeta $tarjeta
+     *
+     * @return Usuario
+     */
+    public function addTarjeta(\AppBundle\Entity\Tarjeta $tarjeta)
     {
+        $this->tarjetas[] = $tarjeta;
+
         return $this;
+    }
+
+    /**
+     * Remove tarjeta.
+     *
+     * @param \AppBundle\Entity\Tarjeta $tarjeta
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeTarjeta(\AppBundle\Entity\Tarjeta $tarjeta)
+    {
+        return $this->tarjetas->removeElement($tarjeta);
+    }
+
+    /**
+     * Get tarjetas.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTarjetas()
+    {
+        return $this->tarjetas;
     }
 }

@@ -57,7 +57,7 @@ class Tarjeta
     private $fechaVto;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Usuario")
+     * @ORM\ManyToOne(targetEntity="Usuario", inversedBy="tarjetas")
      * @ORM\JoinColumn(name="id_usuario", referencedColumnName="id")
      */
     private $usuario;
