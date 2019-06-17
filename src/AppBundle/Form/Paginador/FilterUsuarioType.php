@@ -8,11 +8,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use DuxBeerBundle\Form\Type\CategoriaType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use TecnologicosBundle\Entity\Categoria;
+use TecnologicosBundle\Entity\Usuario;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
-class FilterPropiedadType extends AbstractType
+
+class FilterUsuarioType extends AbstractType
 {
 
 	/**
@@ -23,32 +25,39 @@ class FilterPropiedadType extends AbstractType
 	{
 
 		$builder
-			->add('titulo', TextType::class, array(
+			->add('nombreCompleto', TextType::class, array(
+				'required' => false,
 				'attr' => array(
 					'class' => 'form-control',
-					'placeholder'=>'Ingresar título',
+					'placeholder'=>'Nombre y apellido',
 					'autocomplete' => 'off'
 				),
-				'label' => 'Titulo'
+				'label' => 'Nombre y apellido'
 			))
 
-            ->add('precioMaximo', NumberType::class, array(
-                'required' => true,
-                'attr' => array(
-                   'class' => 'form-control',
-                   'autocomplete' => 'off',
-       				'placeholder'=>'Precio máximo',
+            ->add('rol', ChoiceType::class, array(
+                'choices' => array(
+                	'Premium' => 'PREMIUM',
+                	'Común'   => 'COMUN'
                 ),
-                'label' => ''
+                'required' => false,
+                'attr' => array(
+                   'class' => 'form-control select2',
+                   'autocomplete' => 'off',
+                ),
+       			'placeholder'=>'Tipo de usuario',
+                // 'label' => 'Seleccione'
             ))
 
-            ->add('precioMinimo', NumberType::class, array(
-                'required' => true,
+            ->add('fechaRegistro', DateType::class, array(
+                'required' => false,
                 'attr' => array(
-                   'class' => 'form-control',
+                   'class' => 'form-control date',
                    'autocomplete' => 'off',
-       				'placeholder'=>'Precio mínimo',
+       				'placeholder'=>'Fecha de registro',
                 ),
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
                 'label' => ''
             ));
 	}
@@ -68,7 +77,7 @@ class FilterPropiedadType extends AbstractType
 	*/
 	public function getName()
 	{
-		return 'FilterPropiedadType';
+		return 'FilterUsuarioType';
 	}
 }
 

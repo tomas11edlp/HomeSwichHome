@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class UsuarioType extends AbstractType
 {
@@ -30,20 +31,22 @@ class UsuarioType extends AbstractType
                 'class' => 'form-control'
             )
         ))
-        ->add('nombre',null, array(
+        ->add('nombre',TextType::class, array(
             'attr' => array(
                 'class' => 'form-control'
             )
         ))
-        ->add('apellido',null, array(
+        ->add('apellido',TextType::class, array(
             'attr' => array(
                 'class' => 'form-control'
             )
         ))
-        ->add('fechaNacimiento',null, array(
+        ->add('fechaNacimiento',DateType::class, array(
             'attr' => array(
                 'class' => 'form-control'
-            )
+            ),
+            'widget' => 'single_text',
+            'format' => 'dd/MM/yyyy',
         ));
     }
 

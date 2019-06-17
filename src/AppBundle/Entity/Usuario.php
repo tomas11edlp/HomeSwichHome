@@ -55,9 +55,9 @@ class Usuario implements  AdvancedUserInterface, \Serializable
     private $apellido;
 
     /**
-     * @var string
+     * @var datetime
      *
-     * @ORM\Column(name="fechaNacimiento", type="string", length=255)
+     * @ORM\Column(name="fecha_nacimiento", type="datetime", nullable=true)
      */
     private $fechaNacimiento;
 
@@ -69,9 +69,9 @@ class Usuario implements  AdvancedUserInterface, \Serializable
     private $rol;
 
     /**
-     * @var string
+     * @var datetime
      *
-     * @ORM\Column(name="fecha_registro", type="date", nullable=true)
+     * @ORM\Column(name="fecha_registro", type="datetime", nullable=true)
      */
     private $fechaRegistro;
 
@@ -85,6 +85,12 @@ class Usuario implements  AdvancedUserInterface, \Serializable
     {
         return $this->apellido.', '.$this->nombre;
     }
+
+    public function nombreCompleto()
+    {
+        return $this->apellido.', '.$this->nombre;
+    }
+
 
     /**
      * Get id
