@@ -36,27 +36,39 @@ class SolicitudClienteController extends Controller
     /**
      * Creates a new solicitudCliente entity.
      *
-     * @Route("/new", name="solicitudcliente_new")
+     * @Route("/new/{id}/{tipo}", name="solicitudcliente_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
-    {
-        $solicitudCliente = new Solicitudcliente();
-        $form = $this->createForm('AppBundle\Form\SolicitudClienteType', $solicitudCliente);
-        $form->handleRequest($request);
+    public function newAction(Usuario $usuario, $tipo = null)
+    {   
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($solicitudCliente);
+        $em = $this->getDoctrine()->getManager(); 
+
+        $solicitud = $em->getRepository('AppBundle:SolicitudCliente')->findOneBy( array( 
+            'usuario' => $usuario,
+            'tipo' => $tipo,
+            'finalizada' => 'N',
+        ));
+
+        if ( empty($solicitud) ) {
+
+            $solicitud = new SolicitudCliente();
+            $solicitud->setUsuario( $usuario );
+            $solicitud->setFecha( new \DateTime('today') );
+            $solicitud->setTipo('A');
+            $solicitud->setFinalizada('N');
+
+            $em->persist($solicitud);
             $em->flush();
 
-            return $this->redirectToRoute('solicitudcliente_show', array('id' => $solicitudCliente->getId()));
+            $this->get('session')->getFlashBag()->add('success', 'Solicitud enviada exitosamente.');
+        
+        }else{
+            $this->get('session')->getFlashBag()->add('danger', 'Usted ya posee una solicitud en curso.');
         }
 
-        return $this->render('solicitudcliente/new.html.twig', array(
-            'solicitudCliente' => $solicitudCliente,
-            'form' => $form->createView(),
-        ));
+        return $this->redirectToRoute('perfil_cliente_show', array( 'id' => $usuario->getId()));
+
     }
 
     /**
@@ -136,42 +148,4 @@ class SolicitudClienteController extends Controller
         ;
     }
 
-
-    /**
-     *
-     * @Route("/solicitud/alta/premium", name="solicitud_alta_premium")
-     * @Method("POST")
-     */
-    public function solicitudAltaPremiumAction(Request $request)
-    {   
-       
-        $userId = $request->get('id');
-        
-        $usuario = $em->getRepository('AppBundle:Usuario')->findById( $userId );
-
-        $solicitud = $em->getRepository('AppBundle:SolicitudCliente')->findOneBy( array( 
-            'usuario' => $usuario,
-            'tipo' => 'A',
-            'finalizada' => 'N',
-        ));
-
-        if ( empty($solicitud) ) {
-            
-            $solicitud = new SolicitudCliente();
-            $solicitud->setUsuario( $usuario );
-            $solicitud->setFecha( new \DateTime('today') );
-            $solicitud->setTipo('A');
-            $solicitud->setFinalizada('N');
-
-            $this->addFlash('success', 'Solicitud enviada exitosamente.');
-            return new JsonResponse( true );
-
-        }else{
-
-            $this->addFlash('danger', 'Usted tiene una solicitud en proceso de aceptación.');
-
-            return new JsonResponse( false );
-        }
-
-    }
 }

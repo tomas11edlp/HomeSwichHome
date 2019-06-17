@@ -80,6 +80,11 @@ class Usuario implements  AdvancedUserInterface, \Serializable
      */
      private $creditos;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Tarjeta", mappedBy="usuario", cascade={"all"})
+     */
+     private $tarjetas;
+
 
     public function __toString()
     {
@@ -369,5 +374,41 @@ class Usuario implements  AdvancedUserInterface, \Serializable
     public function getCreditos()
     {
         return $this->creditos;
+    }
+
+    /**
+     * Add tarjeta.
+     *
+     * @param \AppBundle\Entity\Tarjeta $tarjeta
+     *
+     * @return Usuario
+     */
+    public function addTarjeta(\AppBundle\Entity\Tarjeta $tarjeta)
+    {
+        $this->tarjetas[] = $tarjeta;
+
+        return $this;
+    }
+
+    /**
+     * Remove tarjeta.
+     *
+     * @param \AppBundle\Entity\Tarjeta $tarjeta
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeTarjeta(\AppBundle\Entity\Tarjeta $tarjeta)
+    {
+        return $this->tarjetas->removeElement($tarjeta);
+    }
+
+    /**
+     * Get tarjetas.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTarjetas()
+    {
+        return $this->tarjetas;
     }
 }
