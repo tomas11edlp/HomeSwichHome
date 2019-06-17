@@ -55,7 +55,7 @@ class SolicitudClienteController extends Controller
             $solicitud = new SolicitudCliente();
             $solicitud->setUsuario( $usuario );
             $solicitud->setFecha( new \DateTime('today') );
-            $solicitud->setTipo('A');
+            $solicitud->setTipo($tipo);
             $solicitud->setFinalizada('N');
 
             $em->persist($solicitud);
@@ -68,6 +68,53 @@ class SolicitudClienteController extends Controller
         }
 
         return $this->redirectToRoute('perfil_cliente_show', array( 'id' => $usuario->getId()));
+
+    }
+
+    /**
+     * Creates a new solicitudCliente entity.
+     *
+     * @Route("/aceptar/{id}/{tipo}/admin", name="aceptar_solicitud")
+     * @Method({"GET", "POST"})
+     */
+    public function aceptarSolicitudAction(Usuario $usuario, $tipo = null)
+    {   
+
+        $em = $this->getDoctrine()->getManager(); 
+
+        $solicitud = $em->getRepository('AppBundle:SolicitudCliente')->findOneBy( array( 
+            'usuario' => $usuario,
+            'tipo' => $tipo,
+            'finalizada' => 'N',
+        ));
+
+        if ( empty($solicitud) ) {
+
+            $this->get('session')->getFlashBag()->add('error', 'La solicitud ya no está vigente.');
+        
+        }else{
+            
+            if ( $tipo == 'A') {
+            
+                $usuario->setRol('PREMIUM');
+                $this->get('session')->getFlashBag()->add('success', 'Solicitud aceptada. El usuario paso a ser premium.');
+            
+            }else{
+            
+                $this->get('session')->getFlashBag()->add('success', 'Solicitud aceptada. El usuario dejo de ser premium.');
+                $usuario->setRol('COMUN');
+
+            }
+
+            $solicitud->setFinalizada('S');
+
+            $em->persist($solicitud);
+            $em->persist($usuario);
+            $em->flush();
+
+        }
+
+        return $this->redirectToRoute('usuario_show', array( 'id' => $usuario->getId()));
 
     }
 

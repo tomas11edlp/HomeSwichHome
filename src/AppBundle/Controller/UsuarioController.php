@@ -117,7 +117,15 @@ class UsuarioController extends Controller
     {
         $deleteForm = $this->createDeleteForm($usuario);
 
+        $em = $this->getDoctrine()->getManager();
+
+        $solicitud = $em->getRepository('AppBundle:SolicitudCliente')->findOneBy( array( 
+            'usuario' => $usuario,
+            'finalizada' => 'N',
+        ));
+
         return $this->render('usuario/show.html.twig', array(
+            'solicitud' => $solicitud,
             'usuario' => $usuario,
             'delete_form' => $deleteForm->createView(),
         ));
