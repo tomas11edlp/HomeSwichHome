@@ -6,11 +6,11 @@
 
 {% block paginator_table_header %}
     {# <th></th> #}
-    <th class="col-2"></th>
-    <th class="">T&iacute;tulo</th>
-    <th class="">Descripci&oacute;n</th>
-    <th class="">Precio</th>
-    <th ></th>
+    <th scope="col" class="col-2" style="width:15%"></th>
+    <th scope="col" class="">T&iacute;tulo</th>
+    <th scope="col" class="">Descripci&oacute;n</th>
+    <th scope="col" class="">Precio</th>
+    <th></th>
 {% endblock %}
 
 {% block paginator_table_data %}
@@ -22,5 +22,8 @@
     <td class="align-middle">{{ entity.precio }}</td>
     <td class="align-middle">
         <a class="ml-4 btn btn-outline-primary" href="{{path('propiedad_show_publico', {'id':entity.id}) }}" title="Ver"> Detalles </a>
+        {% if is_granted('ROLE_PREMIUM') %}
+            <a class="ml-4 btn btn-outline-success" href="{{path('reserva_propiedad_index', {'id':entity.id}) }}" title="Ver"> Reservar Semana </a>
+        {% endif %}
     </td>
 {% endblock %}

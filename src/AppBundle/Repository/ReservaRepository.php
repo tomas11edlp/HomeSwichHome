@@ -20,4 +20,41 @@ class ReservaRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getOneOrNullResult();
 	}
+
+	public function buildQuery($query, $pg)
+	{
+		$propiedad = $pg->getFilterValue('propiedad');
+
+		$fechaMin = (new \DateTime("now"))->modify('+6 months');
+		$fechaMin= date('Y-m-d', strtotime('last monday', strtotime($fechaMin->format('Y-m-d')) ));
+		$fechaMax = (new \DateTime("now"))->modify('+12 months');
+		$fechaMax= date('Y-m-d', strtotime('last monday', strtotime($fechaMax->format('Y-m-d')) ));
+
+
+        $query->join("a.propiedad","p")
+        	  ->andWhere("a.fechaInicio >= ".$fechaMin)
+        	  ->andWhere("a.fechaFin <= ".$fechaMax)
+        	  ->andWhere("p.id = ".$propiedad)
+        	  ->orderBy('a.fechaInicio');
+		
+
+		// if ($nombre = $pg->getFilterValue('nombre')){
+  //           $query->andWhere("UPPER(a.nombre) LIKE UPPER('%".$nombre."%')");
+  //       }
+
+  //       if ($pg->getFilterValue('nivel') !== null ){
+  //       	$nivel = $pg->getFilterValue('nivel');
+  //           $query->andWhere("a.nivel = '".$nivel."'");
+  //       }
+
+		// if ($pg->orderBy('nombre')) {
+  //           $query->addOrderBy("a.nombre", $pg->direction);
+  //       }
+  //       if ($pg->orderBy('nivel')) {
+  //           $query->addOrderBy("a.nivel", $pg->direction);
+  //       }
+        
+	    return $query;
+	}
+
 }

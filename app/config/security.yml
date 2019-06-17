@@ -4,7 +4,8 @@ security:
 
     role_hierarchy:
         ROLE_SUPERADMINISTRADOR: [ROLE_ADMINISTRADOR]
-        ROLE_ADMINISTRADOR: [ROLE_COMUN, ROLE_PREMIUM]
+        ROLE_ADMINISTRADOR: [ROLE_PREMIUM]
+        ROLE_PREMIUM: [ROLE_COMUN]
 
 
     encoders:

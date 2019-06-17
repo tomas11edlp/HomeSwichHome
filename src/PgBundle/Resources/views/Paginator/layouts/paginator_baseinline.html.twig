@@ -25,11 +25,7 @@
 		            	{% include '@Pg/Paginator/components/filter_'~ paginator.filterTheme ~'.html.twig' %}
 		            {% endblock %}
 		        {% endif %}
-		        <div class="row">
-		            <div class="col-md-12">
-		                {% block botones %}{% endblock %}
-		            </div>
-		        </div>
+	            {% block botones %}{% endblock %}
 	    	{% endblock %}
 	        <div id="table-container-{{ paginator.id }}" class="{{ paginator.hide.list ? 'hide' : '' }}">
 	            {# <div class="e10"></div> #}

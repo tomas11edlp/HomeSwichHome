@@ -4,11 +4,20 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
+
 /**
  * Reserva
  *
  * @ORM\Table(name="reserva")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ReservaRepository")
+ * @UniqueEntity(
+ *     fields={"propiedad", "semana", "anio"},
+ *     errorPath="semana",
+ *     message="Ya existe reserva para la semana en esta propiedad."
+ * )
  */
 class Reserva
 {

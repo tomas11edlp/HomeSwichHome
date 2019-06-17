@@ -370,4 +370,9 @@ class Usuario implements  AdvancedUserInterface, \Serializable
     {
         return $this->creditos;
     }
+
+    public function getThis()
+    {
+        return $this;
+    }
 }

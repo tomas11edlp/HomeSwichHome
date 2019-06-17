@@ -1,0 +1,84 @@
+{% extends '@Pg/Paginator/tableinline.html.twig' %}
+
+{% block stylesheets %}
+   {{ parent() }}
+
+    <link rel="stylesheet" href="{{asset('css/jquery-ui.theme.css')}}">
+    <link rel="stylesheet" href="{{asset('css/jquery-ui.structure.css')}}">
+    
+{% endblock %}
+
+{% block title %}
+    <h2>Reservar {{propiedad.titulo}}</h2>
+{% endblock %}
+
+{% block botones %}
+    <div class="row justify-content-center mt-3 mb-5">
+        <div class="col-5">
+            <div class="card p-5">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col">
+                        {{ form_start(form) }}
+                            <div class="row justify-content-end">
+                                <div class="input-group justify-content-end">
+                                    <div id="weekpicker1"></div>
+                                </div>
+                                {{form_widget(form.semana)}}
+                                {{form_widget(form.anio)}}                 
+                            </div>
+                        {{ form_end(form) }}
+                    </div>
+                    <div class="col">
+                        <div class="row justify-content-center">
+                            <button class="btn btn-success realizar-reserva">Realizar Reserva</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center align-items-center mt-4">
+                    {{form_errors(form.semana,{'attr' : {'class' : 'text-right' } })}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col">
+            <h4 class="text-center mb-0 pb-0"><u>Semanas NO disponibles</u></h4>
+        </div>
+    </div>
+{% endblock %}
+
+{% block paginator_table_header %}
+    {# <th></th> #}
+    <th scope="col" class="">Semana</th>
+    <th scope="col" class="">Fecha incio </th>
+    <th scope="col" class="">Fecha fin </th>
+    <th scope="col"></th>
+{% endblock %}
+
+{% block paginator_table_data %}
+    <td class="align-middle">{{ entity.semana }}/{{ entity.anio }}</td>
+    <td class="align-middle">{{ entity.fechaInicio|date('d/m/Y') }}</td>
+    <td class="align-middle">{{ entity.fechaFin|date('d/m/Y') }}</td>
+    <td class="align-middle"></td>
+{% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            var weekpicker = $("#weekpicker1").weekpicker();
+
+            $('#appbundle_reserva_semana').val(weekpicker.getWeek());
+            $('#appbundle_reserva_anio').val(weekpicker.getYear());
+
+            var inputField = weekpicker.find("input");
+            inputField.datetimepicker().on("dp.change", function() {
+
+                $('#appbundle_reserva_semana').val(weekpicker.getWeek());
+                $('#appbundle_reserva_anio').val(weekpicker.getYear());
+            })
+        });
+    </script>
+    
+{% endblock %}
