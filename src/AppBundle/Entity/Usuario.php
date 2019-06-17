@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use AppBundle\Validator\Constraints as MyAssert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
@@ -12,6 +13,7 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
  * Usuario
  *
  * @ORM\Table(name="usuario")
+ * @MyAssert\ValidarFechaNacimiento
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UsuarioRepository")
  */
 // class Usuario implements UserInterface
@@ -84,6 +86,9 @@ class Usuario implements  AdvancedUserInterface, \Serializable
      * @ORM\OneToMany(targetEntity="Tarjeta", mappedBy="usuario", cascade={"all"})
      */
      private $tarjetas;
+
+
+
 
 
     public function __toString()

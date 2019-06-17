@@ -147,6 +147,42 @@ class UsuarioController extends Controller
         ));
     }
 
+        /**
+     * Displays a form to edit an existing usuario entity.
+     *
+     * @Route("/cliente/{id}/edit", name="perfil_cliente_edit")
+     * @Method({"GET", "POST"})
+     */
+    public function clienteEditAction(Request $request, Usuario $usuario)
+    {
+        $deleteForm = $this->createDeleteForm($usuario);
+        $editForm = $this->createForm('AppBundle\Form\UsuarioType', $usuario);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+  
+            try {
+                $this->getDoctrine()->getManager()->flush();
+
+            } catch(\Exception $e) {
+
+                $this->addFlash('danger', 'Ocurrio un ERROR. El registro no pudo ser modificado.');
+
+                return $this->redirectToRoute('perfil_cliente_edit', array('id' => $usuario->getId()));
+            }
+
+            $this->get('session')->getFlashBag()->add('success', 'Medio de pago creado exitosamente.');
+
+            return $this->redirectToRoute('perfil_cliente_show', array( 'id' => $usuario->getId()));
+        }
+
+        return $this->render('usuario/clienteEdit.html.twig', array(
+            'usuario' => $usuario,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
     /**
      * Displays a form to edit an existing usuario entity.
      *
@@ -158,9 +194,6 @@ class UsuarioController extends Controller
         $deleteForm = $this->createDeleteForm($usuario);
         $editForm = $this->createForm('AppBundle\Form\UsuarioType', $usuario);
         $editForm->handleRequest($request);
-
-        // $usuario->setUsuario( $this->getUser() );
-        // $usuario->setFechaModi( new \Datetime() );
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             
