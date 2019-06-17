@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Solicitudclientes list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fecha</th>
+                <th>Finalizada</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for solicitudCliente in solicitudClientes %}
+            <tr>
+                <td><a href="{{ path('solicitudcliente_show', { 'id': solicitudCliente.id }) }}">{{ solicitudCliente.id }}</a></td>
+                <td>{% if solicitudCliente.fecha %}{{ solicitudCliente.fecha|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ solicitudCliente.finalizada }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('solicitudcliente_show', { 'id': solicitudCliente.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('solicitudcliente_edit', { 'id': solicitudCliente.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('solicitudcliente_new') }}">Create a new solicitudCliente</a>
+        </li>
+    </ul>
+{% endblock %}

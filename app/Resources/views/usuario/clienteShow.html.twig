@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-4 offset-4 mb-4 text-center">
+            <h2> Ver Perfil </h2>
+        </div>
+    </div>
+
+<div class="container-fluid">
+    <div class="card  pt-5 pb-4">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <div class="row mb-3">
+                        <div class="col">
+                            <h4> {{usuario.nombreCompleto}} </h4>
+                            <h5> T&iacute;tulo </h5>
+                        </div>
+
+                        <div class="col">
+                            <h4> {{usuario.email}} </h4>
+                            <h5> Email (username) </h5>
+                        </div>
+
+                        <div class="col">
+                            <h4> {{usuario.fechaNacimiento|date('d/m/Y')}} </h4>
+                            <h5> Fecha Nacimiento </h5>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-2">
+                                    {# <button class="btn btn-sm btn-primary pull-right "> Solicitar premium</button> #}
+                                    <h4> 
+                                        {{usuario.rol}} 
+                                        {% if usuario.rol == 'COMUN' %}
+                                            <button class="ml-5 btn btn-sm btn-primary pull-right" data-userId="{{usuario.id}}" id="solicitarAlta"> Solicitar premium</button>
+                                        {% else %}
+                                            <button class="ml-4 btn btn-sm btn-primary pull-right" data-userId="{{usuario.id}}" id="solicitarBaja"> Solicitar baja</button>
+                                        {% endif %}
+                                    </h4>
+                                </div>
+                                <div class="col-4">
+                                </div>
+                            </div>
+                            <h5> Tipo de cuenta  </h5>
+                        </div>
+
+                    </div>
+
+                </div>  
+            </div>
+        </div>
+    </div>  
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            
+            $("#solicitarAlta").on('click', function () {
+
+                userId = $(this).attr( 'data-userId' );
+                
+                //consulto si ya tiene solicitud en curso
+                $.ajax({
+                    url: "path('solicitud_alta_premium')",
+                    type: 'POST',
+                    data: {id: userId },
+                })
+                .done(function() {
+
+                })
+                .fail(function() {
+                    
+                });
+
+
+            });
+
+        });
+    </script>
+    
+{% endblock %}
+

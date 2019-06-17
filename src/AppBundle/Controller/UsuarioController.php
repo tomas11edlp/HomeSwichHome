@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
+use AppBundle\Form\Paginador\FilterUsuarioType;
 
 
 /**
@@ -36,8 +37,8 @@ class UsuarioController extends Controller
             //     'asc'
             // )
             ->noRemember(true)
-            // ->setFilter(FilterCategoriasType::class)
             // ->setFiltersTheme('inline')
+            ->setFilter(FilterUsuarioType::class)
             ->setRowsPerPage(15, array(15, 30, 45))
             ->showRowsAtFirst()
             ->setFiltersTheme('inline')
@@ -117,6 +118,22 @@ class UsuarioController extends Controller
         $deleteForm = $this->createDeleteForm($usuario);
 
         return $this->render('usuario/show.html.twig', array(
+            'usuario' => $usuario,
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Finds and displays a usuario entity.
+     *
+     * @Route("/cliente/{id}", name="perfil_cliente_show")
+     * @Method("GET")
+     */
+    public function clienteShowAction(Usuario $usuario)
+    {
+        $deleteForm = $this->createDeleteForm($usuario);
+
+        return $this->render('usuario/clienteShow.html.twig', array(
             'usuario' => $usuario,
             'delete_form' => $deleteForm->createView(),
         ));

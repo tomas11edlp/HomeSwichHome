@@ -39,10 +39,28 @@ class UsuarioRepository extends \Doctrine\ORM\EntityRepository
 	//PARA EL INDEX DE CLIENTES
 	public function findClientes($query, $pg)
 	{
-		return $query->where("a.rol = 'COMUN'")
-					 ->orWhere("a.rol = 'PREMIUM'");
+	   	if ($nombreCompleto = $pg->getFilterValue('nombreCompleto')){
+	        $query->andWhere("CONCAT (UPPER(a.nombre),' ',UPPER(a.apellido))  LIKE UPPER('%".$nombreCompleto."%')");
+	        $query->orWhere("CONCAT (UPPER(a.apellido),' ',UPPER(a.nombre))  LIKE UPPER('%".$nombreCompleto."%')");
+      	}
 
-	}
+  		if ($rol = $pg->getFilterValue('rol')){
+	        $query->andWhere("a.rol like :rol");
+	        $query->setParameter('rol', $rol);
+      	}
+
+      	if ($fechaRegistro = $pg->getFilterValue('fechaRegistro')){
+	        $query->andWhere("a.fechaRegistro = :fecha");
+	        $query->setParameter('fecha', $fechaRegistro->format('Y-m-d'));
+      	}
+
+      	$query->andWhere("a.rol != 'ADMINISTRADOR'");
+	        
+      	return $query;
+  	}
+
+	
+
 
 
 	public function findAll()
