@@ -32,8 +32,8 @@ class ReservaRepository extends \Doctrine\ORM\EntityRepository
 
 
         $query->join("a.propiedad","p")
-        	  ->andWhere("a.fechaInicio >= ".$fechaMin)
-        	  ->andWhere("a.fechaFin <= ".$fechaMax)
+        	  ->andWhere("a.fechaInicio >= ".strtotime($fechaMin))
+        	  ->andWhere("a.fechaFin <= ".strtotime($fechaMax))
         	  ->andWhere("p.id = ".$propiedad)
         	  ->orderBy('a.fechaInicio');
 		
