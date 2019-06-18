@@ -65,7 +65,7 @@
         </div>  
 
         <div class="col-12">
-            <h3>Medios de pago  <a href="{{path('tarjeta_new', {id : usuario.id})}}" class="btn btn-primary"> Agregar </a></h3>
+            <h3>Medio de pago  {# <a href="{{path('tarjeta_new', {id : usuario.id})}}" class="btn btn-primary"> Agregar </a> #}</h3>
 
             <div class="table-wrapper">
                 <table id="datatable1" class="table display responsive nowrap" style="width: 100% !important">
@@ -88,7 +88,7 @@
                                 <td> 
                                     <a class="" href="{{path('tarjeta_edit', {id : tarjeta.id})}}" title="Modificar"> <i class="far fa-edit"></i></a> 
                                     &nbsp;&nbsp;
-                                    <a class="text-danger" href="{{path('tarjeta_delete', {id : tarjeta.id})}}" title="Eliminar"> <i class="fas fa-minus-circle"></i></a> 
+                                    {# <a class="text-danger" href="{{path('tarjeta_delete', {id : tarjeta.id})}}" title="Eliminar"> <i class="fas fa-minus-circle"></i></a>  #}
 
                                 </td>
                             </tr>

@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Tarjeta
@@ -24,6 +25,7 @@ class Tarjeta
     /**
      * @var string
      *
+     * @Assert\NotBlank(message="Campo obligatorio.")
      * @ORM\Column(name="titular", type="string", length=255)
      */
     private $titular;
@@ -31,6 +33,7 @@ class Tarjeta
     /**
      * @var string
      *
+     * @Assert\NotBlank(message="Campo obligatorio.")
      * @ORM\Column(name="marca", type="string", length=255)
      */
     private $marca;
@@ -38,6 +41,7 @@ class Tarjeta
     /**
      * @var string
      *
+     * @Assert\NotBlank(message="Campo obligatorio.")
      * @ORM\Column(name="numero", type="string", length=255)
      */
     private $numero;
@@ -45,6 +49,7 @@ class Tarjeta
     /**
      * @var string
      *
+     * @Assert\NotBlank(message="Campo obligatorio.")
      * @ORM\Column(name="codigo", type="string", length=255)
      */
     private $codigo;
@@ -52,6 +57,7 @@ class Tarjeta
     /**
      * @var \DateTime
      *
+     * @Assert\NotBlank(message="Campo obligatorio.")
      * @ORM\Column(name="fechaVto", type="datetime")
      */
     private $fechaVto;

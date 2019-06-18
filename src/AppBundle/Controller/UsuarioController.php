@@ -56,12 +56,8 @@ class UsuarioController extends Controller
     public function newAction(Request $request)
     {
         $usuario = new Usuario();
-        $form = $this->createForm('AppBundle\Form\UsuarioType', $usuario);
+        $form = $this->createForm('AppBundle\Form\UsuarioRegistroType', $usuario);
         $form->handleRequest($request);
-
-        // $usuario->setUsuario( $this->getUser() );
-        // $usuario->setFechaCreacion( new \Datetime() );
-        // $usuario->setIsActive( true );
 
         if ($form->isSubmitted() && $form->isValid()) {
             

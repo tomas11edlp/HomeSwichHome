@@ -31,6 +31,7 @@ class Usuario implements  AdvancedUserInterface, \Serializable
     /**
      * @var string
      *
+     * @Assert\NotBlank(message="Campo obligatorio.")
      * @ORM\Column(name="email", type="string", length=255, unique=true)
      */
     private $email;
@@ -38,6 +39,7 @@ class Usuario implements  AdvancedUserInterface, \Serializable
     /**
      * @var string
      *
+     * @Assert\NotBlank(message="Campo obligatorio.")
      * @ORM\Column(name="password", type="string", length=255)
      */
     private $password;
@@ -45,6 +47,7 @@ class Usuario implements  AdvancedUserInterface, \Serializable
     /**
      * @var string
      *
+     * @Assert\NotBlank(message="Campo obligatorio.")
      * @ORM\Column(name="nombre", type="string", length=255)
      */
     private $nombre;
@@ -52,6 +55,7 @@ class Usuario implements  AdvancedUserInterface, \Serializable
     /**
      * @var string
      *
+     * @Assert\NotBlank(message="Campo obligatorio.")
      * @ORM\Column(name="apellido", type="string", length=255)
      */
     private $apellido;
@@ -59,6 +63,7 @@ class Usuario implements  AdvancedUserInterface, \Serializable
     /**
      * @var datetime
      *
+     * @Assert\NotBlank(message="Campo obligatorio.")
      * @ORM\Column(name="fecha_nacimiento", type="datetime", nullable=true)
      */
     private $fechaNacimiento;
