@@ -57,17 +57,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                        {% set cant = 0 %}
-                                        {% for p in subasta.pujas %}
-                                            {% if cant < 3 %}
-                                                <tr>
-                                                    <td id="puja-{{cant}}" data-monto="{{p.monto}}">{{p.montoFormat}}</td>
-                                                    <td>{{p.usuario}}</td>
-                                                </tr>
-                                            {% endif %}
+                                    {% set cant = 0 %}
+                                    {% for p in subasta.pujas %}
+                                        {% if cant < 3 %}
+                                            <tr>
+                                                <td id="puja-{{cant}}" data-monto="{{p.monto}}">{{p.montoFormat}}</td>
+                                                <td>{{p.usuario}}</td>
+                                            </tr>
+                                        {% endif %}
 
-                                            {% set cant = cant + 1 %}
-                                        {% endfor %}
+                                        {% set cant = cant + 1 %}
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         {% else %}
@@ -95,8 +95,12 @@
     </div>  
 
     <div class="text-left mt-5">
-    
-        <a class="btn btn-outline-secondary" href="{{ path('subasta_index') }}"><i class="fas fa-arrow-left"></i>  Volver al listado</a>
+        
+        {% if is_granted("ROLE_ADMINISTRADOR") %}
+            <a class="btn btn-outline-secondary" href="{{ path('subasta_index') }}"><i class="fas fa-arrow-left"></i>  Volver al listado</a>
+        {% else %}
+            <a class="btn btn-outline-secondary" href="{{ path('subasta_index_publico') }}"><i class="fas fa-arrow-left"></i>  Volver al listado</a>
+        {% endif %}
 
     </div>
 </div>

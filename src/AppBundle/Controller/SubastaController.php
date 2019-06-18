@@ -179,6 +179,7 @@ class SubastaController extends Controller
             $reserva->setPropiedad($subasta->getPropiedad());
             $reserva->setSemana($subasta->getPujaGanadora()->getUsuario());
             $reserva->setAnio($subasta->getPujaGanadora()->getUsuario());
+            $reserva->setEstado($em->getRepository('AppBundle:EstadoReserva')->find(1));
             $fecha = new DateTime();
             $fecha->setISODate($reserva->getSemana(), $reserva->getAnio());
             $reserva->setFechaInicio(new \DateTime());
