@@ -4,11 +4,27 @@
     {{parent()}}
 
     <script type="text/javascript">
+        
         $(document).ready(function(){
-            $("#appbundle_usuario_email").attr('disabled', 'disabled');
+        
+            $("#appbundle_usuario_email").attr('readonly', 'true');
+        
+            $('.datepicker').datepicker({
+                format: 'mm/dd/yyyy',
+                startDate: '-3d'
+            });
+
+
         });
+
     </script>
     
+{% endblock %}
+
+{% block stylesheets %}
+    {{parent()}}            
+    <link rel="stylesheet" href="{{ asset('libs/bootstrap/css/bootstrap-datetimepicker.css') }}">
+        
 {% endblock %}
 
 

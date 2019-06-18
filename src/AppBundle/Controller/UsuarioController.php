@@ -174,7 +174,7 @@ class UsuarioController extends Controller
 
             } catch(\Exception $e) {
 
-                $this->addFlash('danger', 'Ocurrio un ERROR. El registro no pudo ser modificado.');
+                $this->addFlash('danger', $e.'Ocurrio un ERROR. El registro no pudo ser modificado.');
 
                 return $this->redirectToRoute('perfil_cliente_edit', array('id' => $usuario->getId()));
             }
@@ -211,7 +211,7 @@ class UsuarioController extends Controller
                 $this->addFlash('success', 'Registro modificado correctamente.');
 
             } catch(\Exception $e) {
-                $this->addFlash('danger', 'Ocurrio un ERROR. El registro no pudo ser modificado.');
+                $this->addFlash('danger', $e.'Ocurrio un ERROR. El registro no pudo ser modificado.');
 
                 return $this->redirectToRoute('usuario_edit', array('id' => $usuario->getId()));
             }

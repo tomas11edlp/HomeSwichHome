@@ -9,6 +9,8 @@
             <link rel="stylesheet" href="{{ asset('libs/bootadmin/css/bootadmin.min.css') }}">
             <link rel="stylesheet" href="{{ asset('libs/bootstrap/css/bootstrap-datetimepicker.css') }}">
             <link rel="stylesheet" href="{{ asset('libs/select2/css/select2.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/jquery-ui.theme.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/jquery-ui.structure.css') }}">
             <style type="text/css">
                 #footer
                 {
@@ -52,11 +54,32 @@
             <script src="{{ asset('libs/bootadmin/js/bootstrap.bundle.min.js') }}"></script>
             <script src="{{ asset('libs/bootadmin/js/bootadmin.min.js') }}"></script>            
             <script src="{{ asset('libs/jquery-ui/jquery-ui.js') }}"></script>
+            <script src="{{ asset('libs/select2/js/select2.min.js') }}"></script>
 
             <script type="text/javascript">
                 $(document).ready(function(){
                     $("form").attr('novalidate', 'novalidate');
                     $("form").attr('autocomplete', "off");
+
+                    // Select2 Initialize
+                      // Select2 without the search
+                      if($().select2) {
+                        $('.select2').select2({
+                          minimumResultsForSearch: Infinity
+                        });
+
+                        // Select2 by showing the search
+                        $('.select2-show-search').select2({
+                          minimumResultsForSearch: ''
+                        });
+
+                        // Select2 with tagging support
+                        $('.select2-tag').select2({
+                          tags: true,
+                          tokenSeparators: [',', ' ']
+                        });
+                      }
+                    // $('.select2').select2();
                 });
             </script>
         {% endblock %}

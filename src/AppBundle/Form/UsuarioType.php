@@ -43,7 +43,7 @@ class UsuarioType extends AbstractType
         ))
         ->add('fechaNacimiento',DateType::class, array(
             'attr' => array(
-                'class' => 'form-control'
+                'class' => 'form-control datepicker'
             ),
             'widget' => 'single_text',
             'format' => 'dd/MM/yyyy',

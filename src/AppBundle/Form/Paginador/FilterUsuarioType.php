@@ -52,7 +52,7 @@ class FilterUsuarioType extends AbstractType
             ->add('fechaRegistro', DateType::class, array(
                 'required' => false,
                 'attr' => array(
-                   'class' => 'form-control date',
+                   'class' => 'form-control datepicker',
                    'autocomplete' => 'off',
        				'placeholder'=>'Fecha de registro',
                 ),
