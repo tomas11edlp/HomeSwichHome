@@ -79,7 +79,9 @@ class UsuarioController extends Controller
                 $estado = $em->getRepository('AppBundle:EstadoCredito')->find(1);
                 $cred->setEstado($estado);
                 $cred2->setEstado($estado);
-                $fecha = date('d/m/Y', strtotime('+1 year'));
+                $fecha = new \DateTime();
+                $fecha->modify('+1 year');
+                // $fecha = date('d/m/Y', strtotime('+1 year'));
                 $cred->setVencimiento($fecha);
                 $cred2->setVencimiento($fecha);
 
@@ -93,7 +95,7 @@ class UsuarioController extends Controller
 
             } catch(\Exception $e) {
                 $this->addFlash('danger', 'Ocurrio un ERROR. El registro no pudo ser creado.');
-                $this->addFlash('danger', $e);
+                // $this->addFlash('danger', $e);
 
                 return $this->redirectToRoute('usuario_new');
             }

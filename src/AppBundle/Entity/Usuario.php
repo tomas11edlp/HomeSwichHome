@@ -354,6 +354,7 @@ class Usuario implements  AdvancedUserInterface, \Serializable
      */
     public function addCredito(\AppBundle\Entity\Credito $credito)
     {
+        $credito->setUsuario($this);
         $this->creditos[] = $credito;
 
         return $this;

@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormError;
+use AppBundle\Form\Paginador\FilterSubastaType;
 
 /**
  * Subasta controller.
@@ -60,8 +61,8 @@ class SubastaController extends Controller
             //     'asc'
             // )
             ->noRemember(true)
-            // ->setFilter(FilterCategoriasType::class)
-            // ->setFiltersTheme('inline')
+            ->setFilter(FilterSubastaType::class)
+            ->setFiltersTheme('inline')
             ->setRowsPerPage(15, array(15, 30, 45))
             ->showRowsAtFirst()
             ->setFiltersTheme('inline')
