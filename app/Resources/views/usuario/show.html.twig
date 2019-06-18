@@ -55,7 +55,7 @@
         </div>  
 
         <div class="col-12">
-            <h3>Medios de pago  </h3>
+            <h3>Medio de pago  </h3>
 
             <div class="table-wrapper">
                 <table id="datatable1" class="table display responsive nowrap" style="width: 100% !important">
@@ -69,12 +69,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for tarjeta in usuario.tarjetas %}
+                        {# {% for tarjeta in usuario.tarjetas %} #}
 
                             <tr>
-                                <td>{{ tarjeta.marca }}</td>
-                                <td>{{ tarjeta.titular }}</td>
-                                <td>{{ tarjeta.numero }}</td>
+                                <td>{{ usuario.tarjeta.marca }}</td>
+                                <td>{{ usuario.tarjeta.titular }}</td>
+                                <td>{{ usuario.tarjeta.numero }}</td>
                                 <td> 
                                    {#  <a class="" href="{{path('tarjeta_edit', {id : tarjeta.id})}}" title="Modificar"> <i class="far fa-edit"></i></a> 
                                     &nbsp;&nbsp;
@@ -82,7 +82,7 @@
 
                                 </td>
                             </tr>
-                        {% endfor %}
+                        {# {% endfor %} #}
                     </tbody>
                 </table>
             </div><!-- table-wrapper -->
