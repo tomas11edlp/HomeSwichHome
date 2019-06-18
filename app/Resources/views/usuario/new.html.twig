@@ -22,28 +22,59 @@
         <div class="col-3">
             {{ form_row(form.email) }}
         </div>
-    </div>
-    <div class="row justify-content-center mb-3 text-center">
+   
         <div class="col-3">
             {{ form_row(form.plainPassword) }}
         </div>
     </div>
-    <div class="row justify-content-center mb-3 text-center">
-        <div class="col-3">
+
+    <div class="row justify-content-center mb-5 text-center">
+        <div class="col-2">
             {{ form_row(form.nombre) }}
         </div>
-    </div>
-    <div class="row justify-content-center mb-3 text-center">
-        <div class="col-3">
+
+        <div class="col-2">
             {{ form_row(form.apellido) }}
         </div>
-    </div>
-    <div class="row justify-content-center mb-3 text-center">
-        <div class="col-3">
+
+        <div class="col-2 align-content-center">
             {{ form_row(form.fechaNacimiento) }}
         </div>
+   
     </div>    
-        
+    
+    <div class="row justify-content-left  text-center">
+        <div class="col">
+            <h5>
+                Medio de pago
+            </h5>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mb-3 text-center">
+        <div class="col-3">
+            {{ form_row(form.tarjetas.titular) }}
+        </div>
+   
+        <div class="col-3">
+            {{ form_row(form.tarjetas.numero) }}
+        </div>
+    </div>
+
+    <div class="row justify-content-center mb-3 text-center">
+        <div class="col-2">
+            {{ form_row(form.tarjetas.marca) }}
+        </div>
+
+        <div class="col-2">
+            {{ form_row(form.tarjetas.codigo) }}
+        </div>
+
+        <div class="col-2">
+            {{ form_row(form.tarjetas.fechaVto) }}
+        </div>
+    </div>
+
 
     </div>
     <div class="row justify-content-center mt-5">
