@@ -45,7 +45,11 @@
                     </div>
 
                     <div class="col-6 mt-3">
-                        <h5> Pujas  <a class="btn btn-outline-success ml-5" href="{{path('subasta_cerrar',{'id':subasta.id})}}"> Cerrar Subasta</a></h5>
+                        <h5> Pujas  
+                            {% if subasta.estado.id == 1 %}
+                                <a class="btn btn-outline-success ml-5" href="{{path('subasta_cerrar',{'id':subasta.id})}}"> Cerrar Subasta</a>
+                            {% endif %}
+                        </h5>
                         {% if subasta.pujas|length > 0 %}
                             <table class="table table-striped">
                                 <thead>

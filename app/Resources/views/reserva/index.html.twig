@@ -13,10 +13,13 @@
 {% endblock %}
 
 {% block botones %}
-    <div class="row justify-content-center mt-3 mb-5">
-        <div class="col-5">
+    <div class="row justify-content-center mt-3 mb-3">
+        <div class="col-6">
             <div class="card p-5">
                 <div class="row justify-content-center align-items-center">
+                    <div class="col text-right">
+                        <label>Seleccionar semana:</label>
+                    </div>
                     <div class="col">
                         {{ form_start(form) }}
                             <div class="row justify-content-end">
@@ -40,6 +43,11 @@
             </div>
         </div>
     </div>
+    <div class="row justify-content-center mb-5">
+        <div class="col text-center">
+            <a class="btn btn-secondary" href="{{ path('propiedad_index_publico') }}">Volver al listado</a>
+        </div>
+    </div>
     <div class="row justify-content-center">
         <div class="col">
             <h4 class="text-center mb-0 pb-0"><u>Semanas NO disponibles</u></h4>
@@ -50,16 +58,16 @@
 {% block paginator_table_header %}
     {# <th></th> #}
     <th scope="col" class="">Semana</th>
+    <th scope="col" class="">Año</th>
     <th scope="col" class="">Fecha incio </th>
     <th scope="col" class="">Fecha fin </th>
-    <th scope="col"></th>
 {% endblock %}
 
 {% block paginator_table_data %}
-    <td class="align-middle">{{ entity.semana }}/{{ entity.anio }}</td>
+    <td class="align-middle">{{ entity.semana }}</td>
+    <td class="align-middle">{{ entity.anio }}</td>
     <td class="align-middle">{{ entity.fechaInicio|date('d/m/Y') }}</td>
     <td class="align-middle">{{ entity.fechaFin|date('d/m/Y') }}</td>
-    <td class="align-middle"></td>
 {% endblock %}
 
 {% block javascripts %}
