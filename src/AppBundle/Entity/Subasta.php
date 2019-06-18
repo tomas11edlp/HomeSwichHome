@@ -99,6 +99,31 @@ class Subasta
      private $estado;
 
     /**
+     *
+     * @ORM\Column(name="ultimo_valor", type="decimal", precision=10, scale=2)
+     */
+    private $ultimoValor;
+
+    /**
+    * Get ultimoValor
+    * @return  
+    */
+    public function getUltimoValor()
+    {
+        return $this->ultimoValor;
+    }
+    
+    /**
+    * Set ultimoValor
+    * @return $this
+    */
+    public function setUltimoValor($ultimoValor)
+    {
+        $this->ultimoValor = $ultimoValor;
+        return $this;
+    }
+
+    /**
      * Get id
      *
      * @return integer

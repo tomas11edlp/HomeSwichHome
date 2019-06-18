@@ -40,6 +40,13 @@ class Credito
       */
       private $usuario;
 
+     /**
+     * One Product has One Shipment.
+     * @ORM\OneToOne(targetEntity="Subasta")
+     * @ORM\JoinColumn(name="subasta_id", referencedColumnName="id")
+     */
+       private $subasta;
+
     /**
      * Get id.
      *
@@ -121,5 +128,29 @@ class Credito
     public function getUsuario()
     {
         return $this->usuario;
+    }
+
+    /**
+     * Set subasta.
+     *
+     * @param \AppBundle\Entity\Subasta|null $subasta
+     *
+     * @return Credito
+     */
+    public function setSubasta(\AppBundle\Entity\Subasta $subasta = null)
+    {
+        $this->subasta = $subasta;
+
+        return $this;
+    }
+
+    /**
+     * Get subasta.
+     *
+     * @return \AppBundle\Entity\Subasta|null
+     */
+    public function getSubasta()
+    {
+        return $this->subasta;
     }
 }

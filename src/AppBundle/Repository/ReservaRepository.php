@@ -34,10 +34,10 @@ class ReservaRepository extends \Doctrine\ORM\EntityRepository
 
 
         $query->join("a.propiedad","p")
-        	  ->andWhere("a.fechaInicio >= :finicio")->setParameter('finicio', $fechaMin)
-        	  ->andWhere("a.fechaFin <= :ffin")->setParameter('ffin', $fechaMax)
-        	  ->andWhere("p.id = ".$propiedad)
-        	  ->orderBy('a.fechaInicio');
+      	  ->andWhere("a.fechaInicio >= :finicio")->setParameter('finicio', $fechaMin)
+      	  ->andWhere("a.fechaFin <= :ffin")->setParameter('ffin', $fechaMax)
+      	  ->andWhere("p.id = ".$propiedad)
+      	  ->orderBy('a.fechaInicio');
 		
 
 		// if ($nombre = $pg->getFilterValue('nombre')){

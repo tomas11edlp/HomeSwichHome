@@ -117,11 +117,9 @@
 
                 $('.error-message').remove();
 
-                console.log($('#puja-0').data('monto'), valorPujado);
-
                 if ( $('#puja-1').length > 0 ) {
 
-                    if ($('#puja-0').data('monto') >= valorPujado){
+                    if (Number($('#puja-0').data('monto')) >= Number(valorPujado)){
 
                         $('#pujar').after(`<div class="error-message"><br><span class="text-danger">El monto debe ser superior a la mejor oferta.</span></div>`);
 
@@ -137,9 +135,12 @@
                             url: "{{ path('puja_new') }}",
                             type: 'POST', 
                             data: data, 
-                            success: function (datos) { 
+                            success: function (datos) {
                                 $('#inputPuja').val('0.00');
                                 $('#pujas-list').html(datos.html)
+                                if (datos.mensaje != null) {
+                                    $('#pujar').after(`<div class="error-message"><br><span class="text-danger">`+datos.mensaje+`</span></div>`);
+                                }
                             }
                         });
                     }
@@ -162,6 +163,9 @@
                             type: 'POST', 
                             data: data, 
                             success: function (datos) { 
+                                if (datos.mensaje == null) {
+                                    $('#pujar').after(`<div class="error-message"><br><span class="text-danger">`+datos.mensaje+`</span></div>`);
+                                }
                                 $('#inputPuja').val('0.00');
                                 $('#pujas-list').html(datos.html)
                             }

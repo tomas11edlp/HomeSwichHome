@@ -106,6 +106,8 @@ class SubastaController extends Controller
 
                 $subasta->setEstado($em->getRepository('AppBundle:EstadoSubasta')->find(1));
 
+                $subasta->setUltimoValor($subasta->getMontoBase());
+
                 $em->persist($subasta);
                 $em->flush();
 
@@ -120,7 +122,6 @@ class SubastaController extends Controller
                     'form' => $form->createView(),
                 ));
             }
-
         }
 
         return $this->render('subasta/new.html.twig', array(
@@ -180,7 +181,7 @@ class SubastaController extends Controller
             $reserva->setAnio($subasta->getPujaGanadora()->getUsuario());
             $fecha = new DateTime();
             $fecha->setISODate($reserva->getSemana(), $reserva->getAnio());
-            $reserva->setFechaInicio($fecha);
+            $reserva->setFechaInicio(new \DateTime());
             $reserva->setFechaFin($fecha->modify('+6 day'));
 
             $em->persist($reserva);

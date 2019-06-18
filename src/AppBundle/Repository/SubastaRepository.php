@@ -23,19 +23,19 @@ class SubastaRepository extends \Doctrine\ORM\EntityRepository
   	}
     public function publicoQuery($query, $pg)
     {
+        $query->join('a.estado', 'e')
+              ->andWhere('e.id = 1');
         if ($titulo = $pg->getFilterValue('titulo')){
             $query->join("a.propiedad","p");
             $query->andWhere("UPPER(p.titulo) LIKE UPPER('%".$titulo."%')");
         }
-        $query->join('a.pujas','pu');
         if ($min = $pg->getFilterValue('montoMin')){
-            $query->andWhere("pu.monto >= ".$min);
+            $query->andWhere("a.ultimoValor >= ".$min);
         }
         if ($max = $pg->getFilterValue('montoMax')){
-            $query->andWhere("pu.monto <= ".$max);
+          
+            $query->andWhere("a.ultimoValor <= ".$max);
         }
-        $query->join('a.estado', 'e')
-              ->andWhere('e.id = 1');
         return $query;
     }
 }

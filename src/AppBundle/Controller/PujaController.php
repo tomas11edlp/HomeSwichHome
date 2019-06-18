@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Puja;
+use AppBundle\Entity\Credito;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -59,30 +60,69 @@ class PujaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $valorPujado = $request->get('valor');
+        $usuario = $this->getUser();
 
-        $subastaId = $request->get('subasta');
+        $credito = $em->getRepository('AppBundle:Credito')->creditoEnSubasta($usuario->getId(), $request->get('subasta'));
 
-        $subasta = $em->getRepository('AppBundle:Subasta')->find( $subastaId );
+        $subasta = $em->getRepository('AppBundle:Subasta')->find($request->get('subasta'));
+        if($credito == null){
 
-        $puja = new Puja();
+            $creditos = $em->getRepository('AppBundle:Credito')->creditosDisponibles($usuario->getId());
 
-        $puja->setFecha( new \DateTime() );
+            if (count($creditos) > 0) {
 
-        $puja->setMonto( $valorPujado );
+                $cred = $creditos[0];
+                $cred->setEstado($em->getRepository('AppBundle:EstadoCredito')->find(2));
+                
+                $cred->setSubasta($subasta);
 
-        $puja->setSubasta( $subasta );
+                $valorPujado = $request->get('valor');
 
-        //Dejo el usuario por defecto el primero que este creado.
-        $usuario = $em->getRepository('AppBundle:Usuario')->find(1);
-        
-        $puja->setUsuario( $usuario );
-        // $puja->setUsuario( $this->getUser() );
+                $subasta->setUltimoValor($valorPujado);
 
-        $em->persist($puja);
-        $em->flush();
+                $puja = new Puja();
 
-        // $this->render('Bundle:Folder:template.html.twig', array());
+                $puja->setFecha( new \DateTime() );
+
+                $puja->setMonto( $valorPujado );
+
+                $puja->setSubasta( $subasta );
+                
+                $puja->setUsuario( $usuario );
+                // $puja->setUsuario( $this->getUser() );
+
+                $em->persist($cred);
+                $em->persist($subasta);
+                $em->persist($puja);
+                $em->flush();
+
+                $mensaje = null;
+                // $this->render('Bundle:Folder:template.html.twig', array());
+            }else{
+                $mensaje = "No posee créditos suficientes.";
+            }
+        }else{
+            $valorPujado = $request->get('valor');
+
+            $subasta->setUltimoValor($valorPujado);
+
+            $puja = new Puja();
+
+            $puja->setFecha( new \DateTime() );
+
+            $puja->setMonto( $valorPujado );
+
+            $puja->setSubasta( $subasta );
+            
+            $puja->setUsuario( $usuario );
+            // $puja->setUsuario( $this->getUser() );
+
+            $em->persist($subasta);
+            $em->persist($puja);
+            $em->flush();
+
+            $mensaje = null;
+        }
 
         $pujas = $subasta->getPujas();
 
@@ -95,8 +135,9 @@ class PujaController extends Controller
         }
 
         return new JsonResponse(array(
+            'mensaje' => $mensaje,
             'html' => $this->renderView('puja/ultimas_pujas.html.twig', array(
-                'subasta' => $subasta
+                'subasta' => $subasta,
             )),
         ));
     
