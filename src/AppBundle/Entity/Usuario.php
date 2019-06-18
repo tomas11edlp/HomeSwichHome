@@ -14,6 +14,11 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
  *
  * @ORM\Table(name="usuario")
  * @MyAssert\ValidarFechaNacimiento
+ * @UniqueEntity(
+ *     fields={"email"},
+ *     errorPath="email",
+ *     message="El email ingresado ya existe en el sistema."
+ * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UsuarioRepository")
  */
 // class Usuario implements UserInterface
