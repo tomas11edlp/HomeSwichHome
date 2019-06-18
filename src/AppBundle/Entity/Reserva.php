@@ -70,6 +70,12 @@ class Reserva
      */
     private $anio;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="EstadoReserva")
+     * @ORM\JoinColumn(name="estado", referencedColumnName="id")
+     */
+     private $estado;
+
 
     /**
      * Get id
@@ -220,4 +226,28 @@ class Reserva
         return $this;
     }
 
+
+    /**
+     * Set estado.
+     *
+     * @param \AppBundle\Entity\EstadoReserva|null $estado
+     *
+     * @return Reserva
+     */
+    public function setEstado(\AppBundle\Entity\EstadoReserva $estado = null)
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * Get estado.
+     *
+     * @return \AppBundle\Entity\EstadoReserva|null
+     */
+    public function getEstado()
+    {
+        return $this->estado;
+    }
 }

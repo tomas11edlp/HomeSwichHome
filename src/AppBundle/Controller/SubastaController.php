@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Subasta;
+use AppBundle\Entity\Reserva;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -177,13 +178,15 @@ class SubastaController extends Controller
             $reserva = new Reserva();
             $reserva->setUsuario($subasta->getPujaGanadora()->getUsuario());
             $reserva->setPropiedad($subasta->getPropiedad());
-            $reserva->setSemana($subasta->getPujaGanadora()->getUsuario());
-            $reserva->setAnio($subasta->getPujaGanadora()->getUsuario());
+            $reserva->setSemana($subasta->getAnioReserva());
+            $reserva->setAnio($subasta->getSemanaReserva());
             $reserva->setEstado($em->getRepository('AppBundle:EstadoReserva')->find(1));
-            $fecha = new DateTime();
+            $fecha = new \DateTime();
             $fecha->setISODate($reserva->getSemana(), $reserva->getAnio());
             $reserva->setFechaInicio(new \DateTime());
             $reserva->setFechaFin($fecha->modify('+6 day'));
+
+            $subasta->setEstado($em->getRepository('AppBundle:EstadoSubasta')->find(2));
 
             $em->persist($reserva);
             $this->get('session')->getFlashBag()->add('success', 'Subasta cerrada. <b>'.$reserva->getUsuario().'</b> fue el ganador.'); 

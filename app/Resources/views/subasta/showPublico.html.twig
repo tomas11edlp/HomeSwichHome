@@ -44,8 +44,10 @@
 
                     <div id="pujas-list" class="col-6 mt-3">
                         <h5> Pujas 
-                            <input class="col-2 ml-5" placeholder="0.00" id="inputPuja" type="" name="">
-                            <button class="btn btn-primary" name="{{subasta.id}}" id="pujar"> Pujar </button>
+                            {% if app.user.rol == "COMUN" or app.user.rol == "PREMIUM" %}
+                                <input class="col-2 ml-5" placeholder="0.00" id="inputPuja" type="" name="">
+                                <button class="btn btn-primary" name="{{subasta.id}}" id="pujar"> Pujar </button>
+                            {% endif %}
                         </h5>
 
                         {% if pujas|length > 0 %}
@@ -97,8 +99,9 @@
     <div class="text-left mt-5">
         
         {% if is_granted("ROLE_ADMINISTRADOR") %}
-            <a class="btn btn-outline-secondary" href="{{ path('subasta_index') }}"><i class="fas fa-arrow-left"></i>  Volver al listado</a>
-        {% else %}
+            <a class="btn btn-outline-secondary" href="{{ path('subasta_index') }}"><i class="fas fa-arrow-left"></i>  Volver al listado Administracion</a>
+        {% endif %}
+        {% if is_granted("ROLE_COMUN") %}
             <a class="btn btn-outline-secondary" href="{{ path('subasta_index_publico') }}"><i class="fas fa-arrow-left"></i>  Volver al listado</a>
         {% endif %}
 
