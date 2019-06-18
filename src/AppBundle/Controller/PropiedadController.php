@@ -41,7 +41,7 @@ class PropiedadController extends Controller
             ->setFiltersTheme('inline')
             ->setBaseLayout('admin_base')
             ->setView('propiedad/index.html.twig')
-            ->paginate('AppBundle:Propiedad');
+            ->paginate('AppBundle:Propiedad', 'propiedadesHabilitadas');
     }
 
 
@@ -172,7 +172,9 @@ class PropiedadController extends Controller
      * @Method("GET|POST")
      */
     public function deleteAction(Propiedad $propiedad)
-    {
+    {   
+
+        $em = $this->getDoctrine()->getManager();
 
         if (count($propiedad->getReservas()) > 0 || count($propiedad->getSubastas()) > 0 ) {
             
