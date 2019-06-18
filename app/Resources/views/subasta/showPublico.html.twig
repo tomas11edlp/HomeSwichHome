@@ -45,7 +45,7 @@
                     <div id="pujas-list" class="col-6 mt-3">
                         <h5> Pujas 
                             {% if app.user.rol == "COMUN" or app.user.rol == "PREMIUM" %}
-                                <input class="col-2 ml-5" placeholder="0.00" id="inputPuja" type="" name="">
+                                <input class="col-4 ml-5" placeholder="0.00" id="inputPuja" type="" name="">
                                 <button class="btn btn-primary" name="{{subasta.id}}" id="pujar"> Pujar </button>
                             {% endif %}
                         </h5>
