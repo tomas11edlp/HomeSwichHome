@@ -96,11 +96,11 @@ class TarjetaController extends Controller
 
             $this->get('session')->getFlashBag()->add('success', 'Medio de pago modificado exitosamente.');
 
-            return $this->redirectToRoute('perfil_cliente_show', array( 'id' => $tarjeta->getUsuario()->getId() ));
+            return $this->redirectToRoute('perfil_cliente_show', array( 'id' => $tarjeta->getUsuario()[0]->getId() ));
         }
         return $this->render('tarjeta/edit.html.twig', array(
             'tarjeta' => $tarjeta,
-            'usuario' => $tarjeta->getUsuario(),
+            'usuario' => $tarjeta->getUsuario()[0],
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
