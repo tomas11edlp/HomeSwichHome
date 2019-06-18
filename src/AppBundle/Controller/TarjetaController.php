@@ -47,7 +47,6 @@ class TarjetaController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $tarjeta->setUsuario($usuario);
             $em->persist($tarjeta);
             $em->flush();
 

@@ -39,7 +39,6 @@ class Usuario implements  AdvancedUserInterface, \Serializable
     /**
      * @var string
      *
-     * @Assert\NotBlank(message="Campo obligatorio.")
      * @ORM\Column(name="password", type="string", length=255)
      */
     private $password;
@@ -87,12 +86,12 @@ class Usuario implements  AdvancedUserInterface, \Serializable
      */
      private $creditos;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Tarjeta", mappedBy="usuario", cascade={"all"})
-     */
-     private $tarjetas;
-
-
+     /**
+      * @Assert\Valid
+      * @ORM\ManyToOne(targetEntity="Tarjeta",cascade={"persist"})
+      * @ORM\JoinColumn(name="id_tarjeta", referencedColumnName="id")
+      */
+     private $tarjeta;
 
 
 
@@ -388,38 +387,26 @@ class Usuario implements  AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Add tarjeta.
+     * Set tarjeta
      *
-     * @param \AppBundle\Entity\Tarjeta $tarjeta
+     * @param \AppBundle\Entity\Tarjeta|null $tarjeta
      *
      * @return Usuario
      */
-    public function addTarjeta(\AppBundle\Entity\Tarjeta $tarjeta)
+    public function setTarjeta(\AppBundle\Entity\Tarjeta $tarjeta = null)
     {
-        $this->tarjetas[] = $tarjeta;
+        $this->tarjeta = $tarjeta;
 
         return $this;
     }
 
     /**
-     * Remove tarjeta.
+     * Get tarjeta
      *
-     * @param \AppBundle\Entity\Tarjeta $tarjeta
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     * @return \AppBundle\Entity\Tarjeta|null
      */
-    public function removeTarjeta(\AppBundle\Entity\Tarjeta $tarjeta)
+    public function getTarjeta()
     {
-        return $this->tarjetas->removeElement($tarjeta);
-    }
-
-    /**
-     * Get tarjetas.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getTarjetas()
-    {
-        return $this->tarjetas;
+        return $this->tarjeta;
     }
 }

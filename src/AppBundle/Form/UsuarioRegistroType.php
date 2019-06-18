@@ -50,8 +50,7 @@ class UsuarioRegistroType extends AbstractType
             'format' => 'dd/MM/yyyy',
         ))
 
-        ->add('tarjetas', TarjetaType::class,array(
-            'mapped' => false,
+        ->add('tarjeta', TarjetaType::class,array(
         ))
         ;
     }

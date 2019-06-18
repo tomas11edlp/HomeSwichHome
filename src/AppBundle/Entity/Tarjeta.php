@@ -63,8 +63,7 @@ class Tarjeta
     private $fechaVto;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Usuario", inversedBy="tarjetas")
-     * @ORM\JoinColumn(name="id_usuario", referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="Usuario", mappedBy="tarjeta", cascade={"persist"})
      */
     private $usuario;
 
@@ -201,23 +200,43 @@ class Tarjeta
     }
 
     /**
-     * Set usuario
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->usuario = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add usuario.
      *
      * @param \AppBundle\Entity\Usuario $usuario
      *
      * @return Tarjeta
      */
-    public function setUsuario(\AppBundle\Entity\Usuario $usuario = null)
+    public function addUsuario(\AppBundle\Entity\Usuario $usuario)
     {
-        $this->usuario = $usuario;
+        $this->usuario[] = $usuario;
 
         return $this;
     }
 
     /**
-     * Get usuario
+     * Remove usuario.
      *
-     * @return \AppBundle\Entity\Usuario
+     * @param \AppBundle\Entity\Usuario $usuario
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeUsuario(\AppBundle\Entity\Usuario $usuario)
+    {
+        return $this->usuario->removeElement($usuario);
+    }
+
+    /**
+     * Get usuario.
+     *
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getUsuario()
     {
