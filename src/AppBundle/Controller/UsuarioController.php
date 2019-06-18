@@ -81,6 +81,7 @@ class UsuarioController extends Controller
                 $cred->setVencimiento($fecha);
                 $cred2->setVencimiento($fecha);
 
+                $usuario->setFechaRegistro(new \DateTime());
                 $usuario->addCredito($cred);
                 $usuario->addCredito($cred2);
 

@@ -66,7 +66,8 @@ class ReservaController extends Controller
                 $fecha = new \DateTime("now");
                 $fecha->setISODate($reserva->getAnio(), $reserva->getSemana());
                 $reserva->setFechaInicio($fecha);
-                $reserva->setFechaFin($fecha->modify('+6 days'));
+                $fechaFin = clone $fecha;
+                $reserva->setFechaFin($fechaFin->modify('+6 days'));
             
                 $aux1 = new \DateTime();
                 $aux2 = new \DateTime();
@@ -86,7 +87,7 @@ class ReservaController extends Controller
                 $em->persist($cred);
                 $em->persist($reserva);
                 $em->flush();
-                return $this->redirectToRoute('homepage');
+                // return $this->redirectToRoute('homepage');
 
             }else{
                 $this->get('session')->getFlashBag()->add('danger', 'No posee creditos suficientes.');

@@ -25,15 +25,17 @@ class ReservaRepository extends \Doctrine\ORM\EntityRepository
 	{
 		$propiedad = $pg->getFilterValue('propiedad');
 
-		$fechaMin = (new \DateTime("now"))->modify('+6 months');
-		$fechaMin= date('Y-m-d', strtotime('last monday', strtotime($fechaMin->format('Y-m-d')) ));
-		$fechaMax = (new \DateTime("now"))->modify('+12 months');
-		$fechaMax= date('Y-m-d', strtotime('last monday', strtotime($fechaMax->format('Y-m-d')) ));
+    $fechaMin = (new \DateTime("now"))->modify('+6 months');
+		$fechaMin->modify('last monday');;
+		
+    $fechaMax = (new \DateTime("now"))->modify('+12 months');
+		$fechaMax->modify('last monday');
+		
 
 
         $query->join("a.propiedad","p")
-        	  ->andWhere("a.fechaInicio >= ".strtotime($fechaMin))
-        	  ->andWhere("a.fechaFin <= ".strtotime($fechaMax))
+        	  ->andWhere("a.fechaInicio >= :finicio")->setParameter('finicio', $fechaMin)
+        	  ->andWhere("a.fechaFin <= :ffin")->setParameter('ffin', $fechaMax)
         	  ->andWhere("p.id = ".$propiedad)
         	  ->orderBy('a.fechaInicio');
 		
