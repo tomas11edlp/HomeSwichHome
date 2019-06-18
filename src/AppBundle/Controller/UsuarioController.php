@@ -91,7 +91,7 @@ class UsuarioController extends Controller
                 $this->addFlash('success', 'Registro creado correctamente.');
 
             } catch(\Exception $e) {
-                $this->addFlash('danger', 'Ocurrio un ERROR. El registro no pudo ser creado.');
+                $this->addFlash('danger', $e.'Ocurrio un ERROR. El registro no pudo ser creado.');
                 // $this->addFlash('danger', $e);
 
                 return $this->redirectToRoute('usuario_new');

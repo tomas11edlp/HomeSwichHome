@@ -79,20 +79,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for tarjeta in usuario.tarjetas %}
+                        {# {% for tarjeta in usuario.tarjetas %} #}
 
                             <tr>
-                                <td>{{ tarjeta.marca }}</td>
-                                <td>{{ tarjeta.titular }}</td>
-                                <td>{{ tarjeta.numero }}</td>
+                                <td>{{ usuario.tarjeta.marca }}</td>
+                                <td>{{ usuario.tarjeta.titular }}</td>
+                                <td>{{ usuario.tarjeta.numero }}</td>
                                 <td> 
-                                    <a class="" href="{{path('tarjeta_edit', {id : tarjeta.id})}}" title="Modificar"> <i class="far fa-edit"></i></a> 
+                                    <a class="" href="{{path('tarjeta_edit', {id : usuario.tarjeta.id})}}" title="Modificar"> <i class="far fa-edit"></i></a> 
                                     &nbsp;&nbsp;
                                     {# <a class="text-danger" href="{{path('tarjeta_delete', {id : tarjeta.id})}}" title="Eliminar"> <i class="fas fa-minus-circle"></i></a>  #}
 
                                 </td>
                             </tr>
-                        {% endfor %}
+                        {# {% endfor %} #}
                     </tbody>
                 </table>
             </div><!-- table-wrapper -->
