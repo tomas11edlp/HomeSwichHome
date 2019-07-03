@@ -30,33 +30,26 @@ class ReservaRepository extends \Doctrine\ORM\EntityRepository
 		
     $fechaMax = (new \DateTime("now"))->modify('+12 months');
 		$fechaMax->modify('last monday');
-		
 
-
-        $query->join("a.propiedad","p")
-      	  ->andWhere("a.fechaInicio >= :finicio")->setParameter('finicio', $fechaMin)
-      	  ->andWhere("a.fechaFin <= :ffin")->setParameter('ffin', $fechaMax)
-      	  ->andWhere("p.id = ".$propiedad)
-      	  ->orderBy('a.fechaInicio');
-		
-
-		// if ($nombre = $pg->getFilterValue('nombre')){
-  //           $query->andWhere("UPPER(a.nombre) LIKE UPPER('%".$nombre."%')");
-  //       }
-
-  //       if ($pg->getFilterValue('nivel') !== null ){
-  //       	$nivel = $pg->getFilterValue('nivel');
-  //           $query->andWhere("a.nivel = '".$nivel."'");
-  //       }
-
-		// if ($pg->orderBy('nombre')) {
-  //           $query->addOrderBy("a.nombre", $pg->direction);
-  //       }
-  //       if ($pg->orderBy('nivel')) {
-  //           $query->addOrderBy("a.nivel", $pg->direction);
-  //       }
+    $query->join("a.propiedad","p")
+  	  ->andWhere("a.fechaInicio >= :finicio")->setParameter('finicio', $fechaMin)
+  	  ->andWhere("a.fechaFin <= :ffin")->setParameter('ffin', $fechaMax)
+  	  ->andWhere("p.id = ".$propiedad)
+    	->orderBy('a.fechaInicio');
         
 	    return $query;
 	}
+
+
+  public function reservasDelUsuario($query, $pg)
+  {
+
+    $usuario = $pg->getFilterValue('usuario');
+
+    $query->join("a.usuario","u")
+      ->andWhere("u.id = :usuario")->setParameter('usuario', $usuario);
+        
+      return $query;
+  }
 
 }

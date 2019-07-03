@@ -37,7 +37,9 @@
                                 <i class="fas fa-user"> </i> {{app.user}}
                             </button>
                             <div class="dropdown-menu text-center" style='margin-left:-60px'>
-                                <a href="{{path('perfil_cliente_show', {id : app.user.id})}}"> Perfil </a>
+                                <a class="dropdown-item" href="{{path('perfil_cliente_show', {id : app.user.id})}}"> Perfil </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{path('reservas_usuario_index')}}">Mis reservas</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item text-danger" href="{{path('logout')}}">Cerrar Sesi&oacute;n</a>
                             </div>

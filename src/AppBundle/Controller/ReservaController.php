@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Reserva;
 use AppBundle\Entity\Propiedad;
+use AppBundle\Entity\Usuario;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -124,6 +125,41 @@ class ReservaController extends Controller
             ->paginate('AppBundle:Reserva');
 
         return $pg;
+    }
+
+
+    /**
+     * Lists all reserva entities.
+     *
+     * @Route("/reservas/usuario", name="reservas_usuario_index")
+     * @Method("GET|POST")
+     */
+    public function indexReservasDelUsuarioAction(Request $request)
+    {
+
+        $usuario = $this->getUser();
+
+        return $this->get('pg.pg')
+            // ->setOrder(
+            //     array('Nombre' => 'nombre',
+            //         'Nivel' => 'nivel'
+            //     , 'Padre' => 'padre'),
+            //     'nivel',
+            //     'asc'
+            // )
+            ->noRemember(true)
+            // ->setFilter(FilterCategoriasType::class)
+            // ->setFiltersTheme('inline')
+            ->setRowsPerPage(15, array(15, 30, 45))
+            ->showRowsAtFirst()
+            ->setFiltersTheme('inline')
+            ->setBaseLayout('base')
+            ->setView('reserva/indexReservasDelUsuario.html.twig')
+            ->addQueryParams(array(
+                    'usuario' => $usuario->getId()
+                ))
+            ->paginate('AppBundle:Reserva', 'reservasDelUsuario');
+
     }
 
     /**
