@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
  * @UniqueEntity(
  *     fields={"email"},
  *     errorPath="email",
- *     message="El email ingresado ya existe en el sistema."
+ *     message="Ya esta en uso, intente con otro."
  * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UsuarioRepository")
  */
@@ -67,7 +67,6 @@ class Usuario implements  AdvancedUserInterface, \Serializable
     /**
      * @var datetime
      *
-     * @Assert\NotBlank(message="Campo obligatorio.")
      * @ORM\Column(name="fecha_nacimiento", type="datetime", nullable=true)
      */
     private $fechaNacimiento;

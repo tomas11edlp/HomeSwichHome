@@ -59,6 +59,19 @@ class UsuarioRepository extends \Doctrine\ORM\EntityRepository
       	return $query;
   	}
 
+
+  	//PARA EL INDEX DE ADMINISTRADORES
+	public function findAdministradores($query, $pg)
+	{
+	   	if ($nombreCompleto = $pg->getFilterValue('nombreCompleto')){
+	        $query->andWhere("CONCAT (UPPER(a.nombre),' ',UPPER(a.apellido))  LIKE UPPER('%".$nombreCompleto."%')");
+	        $query->orWhere("CONCAT (UPPER(a.apellido),' ',UPPER(a.nombre))  LIKE UPPER('%".$nombreCompleto."%')");
+      	}
+	    $query->andWhere("a.rol like 'ADMINISTRADOR'");
+	        
+      	return $query;
+  	}
+
 	
 
 

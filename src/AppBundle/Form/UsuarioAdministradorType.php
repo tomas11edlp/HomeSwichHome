@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 
-class UsuarioType extends AbstractType
+class UsuarioAdministradorType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -21,6 +21,7 @@ class UsuarioType extends AbstractType
     {
         $builder
         ->add('email', TextType::class, array(
+            'label' => 'Nombre de usuario',
             'attr' => array(
                 'class' => 'form-control'
             )
@@ -40,15 +41,15 @@ class UsuarioType extends AbstractType
             'attr' => array(
                 'class' => 'form-control'
             )
-        ))
+        ))/*
         ->add('fechaNacimiento',DateType::class, array(
             'attr' => array(
                 'class' => 'form-control datepicker'
             ),
             'widget' => 'single_text',
             'format' => 'dd/MM/yyyy',
-            'constraint' => new NotBlank(array('message' => 'Campo obligatorio.')),
-        ));
+        ))*/
+        ;
     }
 
     /**
@@ -66,7 +67,7 @@ class UsuarioType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_usuario';
+        return 'appbundle_usuarioadministrador';
     }
 
 
