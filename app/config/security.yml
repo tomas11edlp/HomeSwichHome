@@ -49,5 +49,6 @@ security:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/usuario/new, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin, roles: ROLE_ADMINISTRADOR }
+        - { path: ^/superadmin/crearusuario/superadministrador, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/superadmin, roles: ROLE_SUPERADMINISTRADOR }
         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }

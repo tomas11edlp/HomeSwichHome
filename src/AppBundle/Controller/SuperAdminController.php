@@ -180,35 +180,42 @@ class SuperAdminController extends Controller
     /**
      * Displays a form to edit an existing usuario entity.
      *
-     * @Route("/{id}/edit", name="usuario_edit")
+     * @Route("/{id}/edit", name="administrador_edit")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Usuario $usuario)
     {
         $deleteForm = $this->createDeleteForm($usuario);
-        $editForm = $this->createForm('AppBundle\Form\UsuarioType', $usuario);
+        $editForm = $this->createForm('AppBundle\Form\UsuarioAdministradorType', $usuario);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             
             try {
-                $this->getDoctrine()->getManager()->flush();
+                $em = $this->getDoctrine()->getManager();
 
-                $this->addFlash('success', 'Registro modificado correctamente.');
+                $encoder = $this->container->get('security.password_encoder');
+                $encoded = $encoder->encodePassword($usuario, $editForm->get('plainPassword')->getData());
+                
+                $usuario->setPassword( $encoded );
+
+                $em->persist($usuario);
+                $em->flush();
+
+                $this->addFlash('success', 'Administrador modificado correctamente.');
 
             } catch(\Exception $e) {
                 $this->addFlash('danger', $e.'Ocurrio un ERROR. El registro no pudo ser modificado.');
 
-                return $this->redirectToRoute('usuario_edit', array('id' => $usuario->getId()));
+                return $this->redirectToRoute('administrador_edit', array('id' => $usuario->getId()));
             }
 
-            return $this->redirectToRoute('usuario_index');
+            return $this->redirectToRoute('administrador_index');
         }
 
-        return $this->render('usuario/edit.html.twig', array(
+        return $this->render('usuario/administrador_edit.html.twig', array(
             'usuario' => $usuario,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'form' => $editForm->createView(),
         ));
     }
 
@@ -247,42 +254,29 @@ class SuperAdminController extends Controller
     /**
      * Deletes a usuario entity.
      *
-     * @Route("/{id}", name="usuario_delete")
-     * @Method("DELETE")
+     * @Route("/{id}/delete", name="administrador_delete")
+     * @Method("DELETE|GET|POST")
      */
     public function deleteAction(Request $request, Usuario $usuario)
-    {
-        $form = $this->createDeleteForm($usuario);
-        $form->handleRequest($request);
+    {            
+        try {
 
-        $usuario->setUsuario( $this->getUser() );
-        $usuario->setFechaModi( new \Datetime() );
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($usuario);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'Usuario administrador eliminado correctamente.');
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            
-            try {
-                    $em = $this->getDoctrine()->getManager();
-                $em->remove($usuario);
-                $em->flush();
-                
-                $this->addFlash('success', 'Registro eliminado correctamente.');
+        } catch(\Exception $e) {
 
-            } catch(\Exception $e) {
-                if ( $e instanceof \Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException ) {
-
-                    $this->addFlash('danger', 'Ocurrio un ERROR. El usuario se encuentra posee registros asociados.');
-
-                } else {
-
-                    $this->addFlash('danger', 'Ocurrio un ERROR.');
-
-                }
-
-                return $this->redirectToRoute('usuario_eliminar', array('id' => $obraSocial->getId()));
+            if ( $e instanceof \Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException ) {
+                $this->get('session')->getFlashBag()->add('success', 'Ocurrio un ERROR. El usuario se encuentra posee registros asociados.');
+            } else {
+                $this->get('session')->getFlashBag()->add('success', 'Ocurrio un ERROR.');
             }
+
         }
 
-        return $this->redirectToRoute('usuario_index');
+        return $this->redirectToRoute('administrador_index');
     }
 
     /**
@@ -337,6 +331,47 @@ class SuperAdminController extends Controller
             'usuario' => $usuario,
             'form' => $form->createView(),
         ));
+
+    }
+
+
+
+
+    /**
+     * Crea por defecto un usuario superadministrador.
+     *
+     * @Route("/crearusuario/superadministrador", name="crearusuario_superadministrador")
+     * @Method("GET")
+     */
+    public function crearUsuarioSuperadministradorAction()
+    {
+        $usuario = new Usuario;
+        $usuario->setEmail('HPETRONE');
+        $usuario->setNombre('Hernan');
+        $usuario->setApellido('Petrone');
+
+        try {
+            $em = $this->getDoctrine()->getManager();
+
+            $encoder = $this->container->get('security.password_encoder');
+            $encoded = $encoder->encodePassword($usuario, 'superadmin');
+            
+            $usuario->setPassword( $encoded );
+            $usuario->setRol('SUPERADMINISTRADOR');
+
+            $usuario->setFechaRegistro(new \DateTime('today'));
+
+            $em->persist($usuario);
+            $em->flush();
+
+            $this->addFlash('success', 'SUPERADMINISTRADOR CREADO.');
+
+        } catch(\Exception $e) {
+            $this->addFlash('danger', $e.'Ocurrio un ERROR. El registro no pudo ser creado.');
+            // $this->addFlash('danger', $e);
+        }
+
+        return $this->redirectToRoute('homepage');
 
     }
 }

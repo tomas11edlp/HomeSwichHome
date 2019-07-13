@@ -92,7 +92,7 @@ class Usuario implements  AdvancedUserInterface, \Serializable
 
      /**
       * @Assert\Valid
-      * @ORM\ManyToOne(targetEntity="Tarjeta",cascade={"persist"})
+      * @ORM\ManyToOne(targetEntity="Tarjeta", inversedBy="usuario", cascade={"persist"})
       * @ORM\JoinColumn(name="id_tarjeta", referencedColumnName="id")
       */
      private $tarjeta;
