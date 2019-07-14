@@ -60,15 +60,14 @@
                     <div class="col-4">
                         {{form_label(form.propiedad)}}
                         {{form_widget(form.propiedad)}}
-                        {{form_widget(form.propiedadP)}}
                         {{form_errors(form.propiedad)}}
-                        {{form_errors(form.propiedadP)}}
+
                     </div>
 
                     <div class="col-4">
                         <label>Semana a reservar</label>
                         <div class="input-group align-middle">
-                            <div id="weekpicker1"></div>
+                            <div id="weekpicker1" style="width:80%"></div>
                             {{form_errors(form.anioReserva)}}
                         </div>
                         {{form_row(form.semanaReserva)}}

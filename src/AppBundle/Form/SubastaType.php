@@ -26,37 +26,23 @@ class SubastaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->factory = $builder->getFormFactory();
-        $this->em = $options['em'];
-
-        $propiedadToIntTransformer = new EntityToIntTransformer($options["em"]);
-        $propiedadToIntTransformer->setEntityClass("AppBundle\Entity\Propiedad");
-        $propiedadToIntTransformer->setEntityRepository("AppBundle:Propiedad");
-        $propiedadToIntTransformer->setEntityType("Propiedad");
         
         $builder
 
-            ->add('propiedadP', TextType::class , array(
+            ->add('propiedad', null, array(
                 'label' => 'Propiedad',
-                'mapped' => false,
                 'attr' => array(
-                    'placeholder' => 'Escriba la propiedad y seleccione',
+                    'placeholder' => 'Seleccione',
                     'autocomplete' => 'off',
-                    'class' => 'form-control'
-                    ),
-                ))
-            ->add(
-                $builder
-                    ->create('propiedad', 'Symfony\Component\Form\Extension\Core\Type\HiddenType')
-                    ->addModelTransformer($propiedadToIntTransformer)
-            )
-
+                    'class' => 'form-control select2'
+                ),
+                'placeholder' => '-Seleccione-'
+            ))
             ->add('montoBase', null, array(
                 'attr' => array(
                     'class' => 'form-control'
                 ),
             ))
-
             ->add('semanaReserva', HiddenType::class)
 
             ->add('anioReserva', HiddenType::class)

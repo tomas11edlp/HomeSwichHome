@@ -100,7 +100,7 @@ class SubastaController extends Controller
 
             if ($reserva == null) {
 
-                $dto = new \DateTime("now");
+                $dto = new \DateTime("today");
                 $dto->setISODate($anio, $sem);
                 $subasta->setFechaInicio($dto->modify('-6 months'));
                 $subasta->setFechaFin($dto->modify('+3 day'));
@@ -117,7 +117,7 @@ class SubastaController extends Controller
                 return $this->redirectToRoute('subasta_index');
             }else{
 
-                $form->get('propiedadP')->addError(new FormError('La propiedad ya se encuentra reservada para la semana seleccionada.'));
+                $form->get('propiedad')->addError(new FormError('La propiedad ya se encuentra reservada para la semana seleccionada.'));
                 return $this->render('subasta/new.html.twig', array(
                     'subasta' => $subasta,
                     'form' => $form->createView(),
@@ -130,6 +130,80 @@ class SubastaController extends Controller
             'form' => $form->createView(),
         ));
     }
+
+    /**
+     * Creates a new subasta entity.
+     *
+     * @Route("/multiple_new", name="subasta_multiple_new")
+     * @Method({"GET", "POST"})
+     */
+    public function newMultipleAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        $today = new \DateTime("today");
+        $end = clone $today;
+        $end->modify('+3 day');
+        $dto = new \DateTime("today");
+        
+        $inicioSemana = $dto->modify('+6 months');
+
+        if ($inicioSemana->format('D') != 'Mon') {
+            $inicioSemana->modify('next monday');
+        }
+
+        $finSemana = clone $inicioSemana;
+        $finSemana->modify('+6 day');
+
+        $semana = $inicioSemana->format('W');
+        $anio = $inicioSemana->format('Y');
+
+        $propiedades = $em->getRepository('AppBundle:Propiedad')->findParaSubasta(intval($semana), intval($anio));
+
+        $todasLasPropiedades = $em->getRepository('AppBundle:Propiedad')->findBy(array('habilitada'=> 'S' ) , array('id'=>'ASC'));
+        $diff = array_diff($todasLasPropiedades, $propiedades);
+
+        // dump($todasLasPropiedades, $propiedades, $diff);die;
+
+        if(count($diff) > 0){
+
+            foreach ($diff as $p) {
+
+                $subasta = new Subasta();
+                $subasta->setPropiedad($p);
+
+                $subasta->setFechaInicio($today);
+                $subasta->setFechaFin($end);
+
+                $subasta->setFechaReservaInicio($inicioSemana);
+                $subasta->setFechaReservaFin($finSemana);
+
+                $subasta->setSemanaReserva($semana);
+                $subasta->setAnioReserva($anio);
+
+                $subasta->setMontoBase($p->getPrecio());
+
+                $subasta->setEstado($em->getRepository('AppBundle:EstadoSubasta')->find(1));
+
+                $subasta->setUltimoValor($p->getPrecio());
+
+                $em->persist($subasta);
+            }
+
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->add('success', 'Se han creado subastas para la semana <b>'.$semana.' del año '.$anio.'</b>.');
+
+        }else{
+
+            $this->get('session')->getFlashBag()->add('info', '<b>NO</b> se crearon subastas para la semana <b>'.$semana.' del año '.$anio.'</b>. Han sido reservadas o estan en puja.');
+
+        }
+
+        return $this->redirectToRoute('subasta_index');
+
+    }
+
 
     /**
      * Finds and displays a subasta entity.
@@ -174,7 +248,7 @@ class SubastaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        if ($subasta->getPujas()){
+        if (!$subasta->getPujas()->isEmpty()){
             $reserva = new Reserva();
             $reserva->setUsuario($subasta->getPujaGanadora()->getUsuario());
             $reserva->setPropiedad($subasta->getPropiedad());
@@ -199,6 +273,48 @@ class SubastaController extends Controller
 
         $em->persist($subasta);
         $em->flush();
+
+        return $this->redirectToRoute('subasta_index');
+        
+    }
+
+    /**
+     * Finds and displays a subasta entity.
+     *
+     * @Route("/cerrar_todas_subastas/", name="subasta_cerrar_todas")
+     * @Method("GET")
+     */
+    public function cerrarTodasSubastaAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $subastas = $em->getRepository('AppBundle:Subasta')->findByEstado(1);
+
+        if (count($subastas) > 0 ){
+            foreach ($subastas as $s) {
+
+                if (!$s->getPujas()->isEmpty()){
+                    $reserva = new Reserva();
+                    $reserva->setUsuario($s->getPujaGanadora()->getUsuario());
+                    $reserva->setPropiedad($s->getPropiedad());
+                    $reserva->setSemana($s->getAnioReserva());
+                    $reserva->setAnio($s->getSemanaReserva());
+                    $reserva->setEstado($em->getRepository('AppBundle:EstadoReserva')->find(1));
+                    $fecha = new \DateTime();
+                    $fecha->setISODate($reserva->getSemana(), $reserva->getAnio());
+                    $reserva->setFechaInicio(new \DateTime());
+                    $reserva->setFechaFin($fecha->modify('+6 day'));
+                    $em->persist($reserva);
+                }
+
+                $s->setEstado($em->getRepository('AppBundle:EstadoSubasta')->find(2));
+                $em->persist($s);
+            }
+        }
+
+        $em->flush();
+
+        $this->get('session')->getFlashBag()->add('success', 'Todas las subastas han sido cerradas.');
 
         return $this->redirectToRoute('subasta_index');
         

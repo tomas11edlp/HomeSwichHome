@@ -66,4 +66,19 @@ class PropiedadRepository extends \Doctrine\ORM\EntityRepository
     
     return $sql->getQuery()->getResult();
   }
+
+  public function findParaSubasta($sem,$anio)
+  {
+    $query = $this->createQueryBuilder('p')
+                  ->leftJoin('p.reservas','r')
+                  ->leftJoin('p.subastas','s')
+                  ->where('r.semana = '.$sem.' AND r.anio = '.$anio)
+                  ->orWhere('s.semanaReserva = '.$sem.' AND s.anioReserva = '.$anio)
+                  ->andWhere("p.habilitada = 'S'")
+                  ->orderBy("p.id","ASC");
+
+
+    return $query->getQuery()->getResult();
+  }
+
 }
