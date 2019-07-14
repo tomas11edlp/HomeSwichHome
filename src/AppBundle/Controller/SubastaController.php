@@ -281,8 +281,8 @@ class SubastaController extends Controller
             $reserva = new Reserva();
             $reserva->setUsuario($subasta->getPujaGanadora()->getUsuario());
             $reserva->setPropiedad($subasta->getPropiedad());
-            $reserva->setSemana($subasta->getAnioReserva());
-            $reserva->setAnio($subasta->getSemanaReserva());
+            $reserva->setAnio($subasta->getAnioReserva());
+            $reserva->setSemana($subasta->getSemanaReserva());
             $reserva->setEstado($em->getRepository('AppBundle:EstadoReserva')->find(1));
             $fecha = new \DateTime();
             $fecha->setISODate($reserva->getSemana(), $reserva->getAnio());
@@ -328,8 +328,8 @@ class SubastaController extends Controller
                     $reserva = new Reserva();
                     $reserva->setUsuario($s->getPujaGanadora()->getUsuario());
                     $reserva->setPropiedad($s->getPropiedad());
-                    $reserva->setSemana($s->getAnioReserva());
-                    $reserva->setAnio($s->getSemanaReserva());
+                    $reserva->setAnio($s->getAnioReserva());
+                    $reserva->setSemana($s->getSemanaReserva());
                     $reserva->setEstado($em->getRepository('AppBundle:EstadoReserva')->find(1));
                     $fecha = new \DateTime();
                     $fecha->setISODate($reserva->getSemana(), $reserva->getAnio());
