@@ -76,11 +76,18 @@ class Reserva
      */
      private $estado;
 
+<<<<<<< HEAD
      /**
       * @ORM\ManyToOne(targetEntity="HotSale", inversedBy="reserva")
       * @ORM\JoinColumn(name="hotsale_id", referencedColumnName="id")
       */
       private $hotSale;
+=======
+    /**
+     * @ORM\OneToOne(targetEntity="Credito", mappedBy="reserva")
+     */
+     private $credito;
+>>>>>>> 8ac451d594a0747b7a2f92374fda12524bad326a
 
 
     /**
@@ -258,6 +265,7 @@ class Reserva
     }
 
     /**
+<<<<<<< HEAD
      * Set hotSale.
      *
      * @param \AppBundle\Entity\HotSale|null $hotSale
@@ -267,11 +275,23 @@ class Reserva
     public function setHotSale(\AppBundle\Entity\HotSale $hotSale = null)
     {
         $this->hotSale = $hotSale;
+=======
+     * Set credito.
+     *
+     * @param \AppBundle\Entity\Credito|null $credito
+     *
+     * @return Reserva
+     */
+    public function setCredito(\AppBundle\Entity\Credito $credito = null)
+    {
+        $this->credito = $credito;
+>>>>>>> 8ac451d594a0747b7a2f92374fda12524bad326a
 
         return $this;
     }
 
     /**
+<<<<<<< HEAD
      * Get hotSale.
      *
      * @return \AppBundle\Entity\HotSale|null
@@ -279,5 +299,14 @@ class Reserva
     public function getHotSale()
     {
         return $this->hotSale;
+=======
+     * Get credito.
+     *
+     * @return \AppBundle\Entity\Credito|null
+     */
+    public function getCredito()
+    {
+        return $this->credito;
+>>>>>>> 8ac451d594a0747b7a2f92374fda12524bad326a
     }
 }

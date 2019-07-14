@@ -391,6 +391,18 @@ class Usuario implements  AdvancedUserInterface, \Serializable
     }
 
     /**
+     * Get creditos.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCreditosDisponibles()
+    {
+        return $this->getCreditos()->filter(function(Credito $credito) {
+            return $credito->getEstado()->getId() == 1;
+        });
+    }
+
+    /**
      * Set tarjeta
      *
      * @param \AppBundle\Entity\Tarjeta|null $tarjeta

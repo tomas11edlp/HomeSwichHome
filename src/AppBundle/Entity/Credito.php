@@ -38,14 +38,21 @@ class Credito
       * @ORM\ManyToOne(targetEntity="Usuario", inversedBy="creditos")
       * @ORM\JoinColumn(name="usuario", referencedColumnName="id")
       */
-      private $usuario;
+    private $usuario;
 
      /**
      * One Product has One Shipment.
      * @ORM\OneToOne(targetEntity="Subasta")
      * @ORM\JoinColumn(name="subasta_id", referencedColumnName="id")
      */
-       private $subasta;
+    private $subasta;
+
+    /**
+     * One Product has One Shipment.
+     * @ORM\OneToOne(targetEntity="Reserva")
+     * @ORM\JoinColumn(name="reserva_id", referencedColumnName="id")
+     */
+    private $reserva;
 
     /**
      * Get id.
@@ -152,5 +159,29 @@ class Credito
     public function getSubasta()
     {
         return $this->subasta;
+    }
+
+    /**
+     * Set reserva.
+     *
+     * @param \AppBundle\Entity\Reserva|null $reserva
+     *
+     * @return Credito
+     */
+    public function setReserva(\AppBundle\Entity\Reserva $reserva = null)
+    {
+        $this->reserva = $reserva;
+
+        return $this;
+    }
+
+    /**
+     * Get reserva.
+     *
+     * @return \AppBundle\Entity\Reserva|null
+     */
+    public function getReserva()
+    {
+        return $this->reserva;
     }
 }
