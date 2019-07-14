@@ -76,18 +76,17 @@ class Reserva
      */
      private $estado;
 
-<<<<<<< HEAD
      /**
       * @ORM\ManyToOne(targetEntity="HotSale", inversedBy="reserva")
       * @ORM\JoinColumn(name="hotsale_id", referencedColumnName="id")
       */
       private $hotSale;
-=======
+
     /**
      * @ORM\OneToOne(targetEntity="Credito", mappedBy="reserva")
      */
      private $credito;
->>>>>>> 8ac451d594a0747b7a2f92374fda12524bad326a
+
 
 
     /**
