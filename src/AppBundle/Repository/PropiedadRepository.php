@@ -103,9 +103,9 @@ class PropiedadRepository extends \Doctrine\ORM\EntityRepository
                   ->select('s.semanaReserva', 'r.semana')
                   ->leftJoin('p.reservas','r')
                   ->leftJoin('p.subastas','s')
-                  ->where('p.id = '.$propiedad)
-                  ->andWhere('s.pujas is empty')
+                  ->Where('s.pujas is empty')
                   ->orWhere('r.estado = 3')
+                  ->andWhere('p.id = '.$propiedad)
                   /*->groupBy()*/;
 
     return $query->getQuery()->getResult();
