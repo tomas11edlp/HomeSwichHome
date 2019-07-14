@@ -67,6 +67,8 @@ class PropiedadRepository extends \Doctrine\ORM\EntityRepository
     return $sql->getQuery()->getResult();
   }
 
+
+
   public function findParaSubasta($sem,$anio)
   {
     $query = $this->createQueryBuilder('p')
@@ -80,5 +82,34 @@ class PropiedadRepository extends \Doctrine\ORM\EntityRepository
 
     return $query->getQuery()->getResult();
   }
+
+
+
+  public function propiedadesDisponiblesHotSale()
+  {
+    $query = $this->createQueryBuilder('p')
+                  ->leftJoin('p.reservas','r')
+                  ->leftJoin('p.subastas','s')
+                  ->where('s.pujas is empty')
+                  ->orWhere('r.estado = 3');
+
+    return $query->getQuery()->getResult();
+  }  
+
+
+  public function semanasDisponiblesHotSale($propiedad)
+  {
+    $query = $this->createQueryBuilder('p')
+                  ->select('s.semanaReserva', 'r.semana')
+                  ->leftJoin('p.reservas','r')
+                  ->leftJoin('p.subastas','s')
+                  ->where('p.id = '.$propiedad)
+                  ->andWhere('s.pujas is empty')
+                  ->orWhere('r.estado = 3')
+                  /*->groupBy()*/;
+
+    return $query->getQuery()->getResult();
+  }
+
 
 }
