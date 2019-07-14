@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormError;
 use AppBundle\Form\Paginador\FilterSubastaType;
+use AppBundle\Form\Paginador\FilterSubastaAdministradorType;
 
 /**
  * Subasta controller.
@@ -35,7 +36,7 @@ class SubastaController extends Controller
             //     'asc'
             // )
             ->noRemember(true)
-            // ->setFilter(FilterCategoriasType::class)
+            ->setFilter(FilterSubastaAdministradorType::class)
             // ->setFiltersTheme('inline')
             ->setRowsPerPage(15, array(15, 30, 45))
             ->showRowsAtFirst()

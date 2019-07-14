@@ -12,13 +12,29 @@ class SubastaRepository extends \Doctrine\ORM\EntityRepository
 {
   	public function buildQuery($query, $pg)
   	{
-//     if ($nombre = $pg->getFilterValue('nombre')){
-//           $query->andWhere("UPPER(a.nombre) LIKE UPPER('%".$nombre."%')");
-//       }
-//       if ($pg->orderBy('nivel')) {
-//           $query->addOrderBy("a.nivel", $pg->direction);
-//       }
-          
+        $query->join('a.propiedad','p');
+        $query->addOrderBy("p.titulo", 'ASC');
+        $query->join('a.estado','e');
+        $query->addOrderBy("e.id", 'ASC');
+
+        if ($titulo = $pg->getFilterValue('titulo')){
+            $query->andWhere("UPPER(p.titulo) LIKE UPPER('%".$titulo."%')");
+        }
+        if ($pg->getFilterValue('estado')){
+            $estado = $pg->getFilterValue('estado');
+            $query->andWhere("e.id = ".$estado);
+        }
+        if ($pg->getFilterValue('semana')) {
+            $semana = $pg->getFilterValue('semana');
+            $query->andWhere("a.semanaReserva = ".$semana);
+        }
+        if ($pg->orderBy('anio')) {
+            $anio = $pg->getFilterValue('anio');
+            $query->andWhere("a.anioReserva = ".$anio);
+        }
+        $query->addOrderBy("a.anioReserva", 'DESC');
+        $query->addOrderBy("a.semanaReserva", 'DESC');
+
   	    return $query;
   	}
     public function publicoQuery($query, $pg)
