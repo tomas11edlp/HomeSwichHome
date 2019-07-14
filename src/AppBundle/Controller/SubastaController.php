@@ -73,6 +73,34 @@ class SubastaController extends Controller
     }
 
     /**
+     * Lists all subasta entities.
+     *
+     * @Route("/misSubastas", name="subastas_usuario_index")
+     * @Method("GET")
+     */
+    public function subastasUsuarioAction()
+    {
+        return $this->get('pg.pg')
+            // ->setOrder(
+            //     array('Nombre' => 'nombre',
+            //         'Nivel' => 'nivel'
+            //     , 'Padre' => 'padre'),
+            //     'nivel',
+            //     'asc'
+            // )
+            ->addQueryParams( ['usuario' => $this->getUser() ] )
+            ->noRemember(true)
+            ->setFilter(FilterSubastaType::class)
+            ->setFiltersTheme('inline')
+            ->setRowsPerPage(15, array(15, 30, 45))
+            ->showRowsAtFirst()
+            ->setFiltersTheme('inline')
+            ->setBaseLayout('base')
+            ->setView('subasta/indexSubastasDelUsuario.html.twig')
+            ->paginate('AppBundle:Subasta', 'subastasPorUsuarioQuery');
+    }
+
+    /**
      * Creates a new subasta entity.
      *
      * @Route("/new", name="subasta_new")

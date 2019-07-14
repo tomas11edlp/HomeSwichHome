@@ -42,6 +42,16 @@ class HotSale
      */
     private $precio;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Reserva", mappedBy="hotSale")
+     */
+     private $reserva;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Subasta", mappedBy="hotSale")
+     */
+     private $subasta;
+
 
     /**
      * Get id.
@@ -123,5 +133,85 @@ class HotSale
     public function getPrecio()
     {
         return $this->precio;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->reserva = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->subasta = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add reserva.
+     *
+     * @param \AppBundle\Entity\Reserva $reserva
+     *
+     * @return HotSale
+     */
+    public function addReserva(\AppBundle\Entity\Reserva $reserva)
+    {
+        $this->reserva[] = $reserva;
+
+        return $this;
+    }
+
+    /**
+     * Remove reserva.
+     *
+     * @param \AppBundle\Entity\Reserva $reserva
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeReserva(\AppBundle\Entity\Reserva $reserva)
+    {
+        return $this->reserva->removeElement($reserva);
+    }
+
+    /**
+     * Get reserva.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReserva()
+    {
+        return $this->reserva;
+    }
+
+    /**
+     * Add subastum.
+     *
+     * @param \AppBundle\Entity\Subasta $subastum
+     *
+     * @return HotSale
+     */
+    public function addSubastum(\AppBundle\Entity\Subasta $subastum)
+    {
+        $this->subasta[] = $subastum;
+
+        return $this;
+    }
+
+    /**
+     * Remove subastum.
+     *
+     * @param \AppBundle\Entity\Subasta $subastum
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeSubastum(\AppBundle\Entity\Subasta $subastum)
+    {
+        return $this->subasta->removeElement($subastum);
+    }
+
+    /**
+     * Get subasta.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSubasta()
+    {
+        return $this->subasta;
     }
 }

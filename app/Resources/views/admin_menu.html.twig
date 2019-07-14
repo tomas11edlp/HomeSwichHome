@@ -3,6 +3,7 @@
         <li><a href="{{path('propiedad_index')}}"><i class="fa fa-fw fa-home"></i>&nbsp; Propiedades </a></li>
         <li><a href="{{path('subasta_index')}}"><i class="fas fa-donate"></i>&nbsp; Subastas </a></li>
         <li><a href="{{path('usuario_index')}}"><i class="fas fa-user"></i>&nbsp; Clientes </a></li>
+        <li><a href="{{path('hotsale_index')}}"><i class="fas fa-hand-holding-usd"></i></i>&nbsp; Hot Sales </a></li>
         {% if is_granted('ROLE_SUPERADMINISTRADOR') %}
             <li><a href="{{path('administrador_index')}}"><i class="fas fa-users"></i>&nbsp; Administradores </a></li>
         {% endif %}

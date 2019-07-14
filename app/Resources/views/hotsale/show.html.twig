@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Hotsale</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ hotSale.id }}</td>
+            </tr>
+            <tr>
+                <th>Inicio</th>
+                <td>{% if hotSale.inicio %}{{ hotSale.inicio|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Fin</th>
+                <td>{% if hotSale.fin %}{{ hotSale.fin|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Precio</th>
+                <td>{{ hotSale.precio }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('hotsale_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('hotsale_edit', { 'id': hotSale.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

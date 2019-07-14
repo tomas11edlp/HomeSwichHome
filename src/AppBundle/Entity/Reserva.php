@@ -76,6 +76,12 @@ class Reserva
      */
      private $estado;
 
+     /**
+      * @ORM\ManyToOne(targetEntity="HotSale", inversedBy="reserva")
+      * @ORM\JoinColumn(name="hotsale_id", referencedColumnName="id")
+      */
+      private $hotSale;
+
 
     /**
      * Get id
@@ -249,5 +255,29 @@ class Reserva
     public function getEstado()
     {
         return $this->estado;
+    }
+
+    /**
+     * Set hotSale.
+     *
+     * @param \AppBundle\Entity\HotSale|null $hotSale
+     *
+     * @return Reserva
+     */
+    public function setHotSale(\AppBundle\Entity\HotSale $hotSale = null)
+    {
+        $this->hotSale = $hotSale;
+
+        return $this;
+    }
+
+    /**
+     * Get hotSale.
+     *
+     * @return \AppBundle\Entity\HotSale|null
+     */
+    public function getHotSale()
+    {
+        return $this->hotSale;
     }
 }

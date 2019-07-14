@@ -21,6 +21,8 @@ class SubastaRepository extends \Doctrine\ORM\EntityRepository
           
   	    return $query;
   	}
+
+
     public function publicoQuery($query, $pg)
     {
         $query->join('a.estado', 'e')
@@ -36,6 +38,33 @@ class SubastaRepository extends \Doctrine\ORM\EntityRepository
           
             $query->andWhere("a.ultimoValor <= ".$max);
         }
+        return $query;
+    }
+
+    
+    public function subastasPorUsuarioQuery($query, $pg)
+    {
+
+      $usuario = $pg->getFilterValue('usuario');
+
+      $query
+        ->leftJoin("a.pujas", "p")
+        ->join("p.usuario","u")
+        ->andWhere("u.id = :usuario")->setParameter('usuario', $usuario)
+        ->orderBy('a.semanaReserva', 'DESC');
+          
+          if ($titulo = $pg->getFilterValue('titulo')){
+              $query->join("a.propiedad","prop");
+              $query->andWhere("UPPER(prop.titulo) LIKE UPPER('%".$titulo."%')");
+          }
+          if ($min = $pg->getFilterValue('montoMin')){
+              $query->andWhere("a.ultimoValor >= ".$min);
+          }
+          if ($max = $pg->getFilterValue('montoMax')){
+            
+              $query->andWhere("a.ultimoValor <= ".$max);
+          }
+
         return $query;
     }
 }

@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Reserva;
 use AppBundle\Entity\Propiedad;
+use AppBundle\Entity\Credito;
 use AppBundle\Entity\Usuario;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -227,6 +228,43 @@ class ReservaController extends Controller
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
+    }
+
+    /**
+     * Displays a form to edit an existing reserva entity.
+     *
+     * @Route("/{id}/cancelar", name="cancelar_reserva")
+     * @Method({"GET", "POST"})
+     */
+    public function cancelarReservaAction(Request $request, Reserva $reserva)
+    {   
+        $fechaActual = new DateTime('now');
+        
+        if ( $fechaActual < $reserva->getFechaInicio() ) {
+            
+            $em = $this->getDoctrine()->getManager();
+
+            $credito = $$em->getRepository('AppBundle:Credito')->findOneByReserva( $reserva );
+            $credito->setReserva(null);
+            $estadoCredito = $em->getRepository('AppBundle:EstadoCredito')->find(1); 
+            $credito->setEstado($estadoCredito);
+
+            $em->persist($credito);
+            $em->remove($reserva);
+            $em->flush();
+            
+            $this->get('session')->getFlashBag()->add('success', 'La reserva fue cancelada exitosamente. Se recupero el crédito invertido.');
+            return $this->redirectToRoute('reservas_usuario_index');
+
+        }else{
+            $this->get('session')->getFlashBag()->add('danger', 'No se puede cancelar una reserva. La estadía ya comenzó.');
+            return $this->redirectToRoute('reservas_usuario_index');
+
+        } 
+
+        $this->get('session')->getFlashBag()->add('danger', 'Ocurrio un error, intentelo más tarde.');
+        return $this->redirectToRoute('reservas_usuario_index');
+    
     }
 
     /**

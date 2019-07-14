@@ -104,6 +104,12 @@ class Subasta
      */
     private $ultimoValor;
 
+     /**
+      * @ORM\ManyToOne(targetEntity="HotSale", inversedBy="subasta")
+      * @ORM\JoinColumn(name="hotsale_id", referencedColumnName="id")
+      */
+      private $hotSale;
+
     /**
     * Get ultimoValor
     * @return  
@@ -401,5 +407,29 @@ class Subasta
     public function getEstado()
     {
         return $this->estado;
+    }
+
+    /**
+     * Set hotSale.
+     *
+     * @param \AppBundle\Entity\HotSale|null $hotSale
+     *
+     * @return Subasta
+     */
+    public function setHotSale(\AppBundle\Entity\HotSale $hotSale = null)
+    {
+        $this->hotSale = $hotSale;
+
+        return $this;
+    }
+
+    /**
+     * Get hotSale.
+     *
+     * @return \AppBundle\Entity\HotSale|null
+     */
+    public function getHotSale()
+    {
+        return $this->hotSale;
     }
 }
