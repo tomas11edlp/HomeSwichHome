@@ -46,6 +46,25 @@ class HotSaleController extends Controller
     /**
      * Creates a new hotSale entity.
      *
+     * @Route("/prueba", name="sarasa")
+     * @Method({"GET", "POST"})
+     */
+    public function pruebaAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // $propiedades = $em->getRepository('AppBundle:Propiedad')->propiedadesDisponiblesHotSale();
+        $semanas = $em->getRepository('AppBundle:Propiedad')->semanasDisponiblesHotSale(2);
+
+        dump($semanas);die;
+        dump($propiedades);die;
+
+        return 'a';
+    }
+
+    /**
+     * Creates a new hotSale entity.
+     *
      * @Route("/new", name="hotsale_new")
      * @Method({"GET", "POST"})
      */
