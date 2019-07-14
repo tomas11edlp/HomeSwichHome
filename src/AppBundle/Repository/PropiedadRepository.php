@@ -97,14 +97,29 @@ class PropiedadRepository extends \Doctrine\ORM\EntityRepository
   }  
 
 
-  public function semanasDisponiblesHotSale($propiedad)
+  public function semanasSubastasDisponiblesHotSale($propiedad)
   {
     $query = $this->createQueryBuilder('p')
-                  ->select('s.semanaReserva', 'r.semana')
-                  ->leftJoin('p.reservas','r')
+                  ->select(
+                    's.semanaReserva as semanaSubasta', 
+                    's.anioReserva as anioSubasta')
                   ->leftJoin('p.subastas','s')
                   ->Where('s.pujas is empty')
-                  ->orWhere('r.estado = 3')
+                  ->andWhere('p.id = '.$propiedad)
+                  /*->groupBy()*/;
+
+    return $query->getQuery()->getResult();
+  } 
+
+
+  public function semanasReservasDisponiblesHotSale($propiedad)
+  {
+    $query = $this->createQueryBuilder('p')
+                  ->select(
+                    'r.semana as semanaReserva',
+                    'r.anio as anioReserva' )
+                  ->leftJoin('p.reservas','r')
+                  ->Where('r.estado = 3')
                   ->andWhere('p.id = '.$propiedad)
                   /*->groupBy()*/;
 

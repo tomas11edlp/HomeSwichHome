@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\Paginador\FilterHotSaleType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Hotsale controller.
@@ -53,11 +54,19 @@ class HotSaleController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        // $propiedades = $em->getRepository('AppBundle:Propiedad')->propiedadesDisponiblesHotSale();
-        $semanas = $em->getRepository('AppBundle:Propiedad')->semanasDisponiblesHotSale(2);
+        $form = 
 
-        dump($semanas);die;
-        dump($propiedades);die;
+        //Propiedades disponibles HotSales
+        // $propiedades = $em->getRepository('AppBundle:Propiedad')->propiedadesDisponiblesHotSale();
+        
+        //Semanas de subastas disponibles por propiedad para hot sale
+        $semanasSubastas = $em->getRepository('AppBundle:Propiedad')->semanasSubastasDisponiblesHotSale(2);
+        
+        //Semanas de reservas disponibles por propiedad para hot sale
+        $semanasReservas = $em->getRepository('AppBundle:Propiedad')->semanasReservasDisponiblesHotSale(2);
+
+        dump($semanasSubastas,$semanasReservas);die;
+        // dump($propiedades);die;
 
         return 'a';
     }
@@ -75,6 +84,7 @@ class HotSaleController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            dump($form->get('semana')->getData());die;
             $em = $this->getDoctrine()->getManager();
             $em->persist($hotSale);
             $em->flush();
@@ -163,5 +173,55 @@ class HotSaleController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+    /**
+     * Find Localidad by Partido entity.
+     *
+     * @Route("/obtener-semanas/disponibles", name="semanas_disponibles_hotsale")
+     * @Method({"GET", "POST"})
+     */
+    public function obtenerCatedrasAction(Request $request)
+    {
+        // if (!$request->isXmlHttpRequest()) {
+        //     throw new NotFoundHttpException();
+        // }
+        $em = $this->getDoctrine()->getManager();
+        // Get the province ID
+        $propiedad = $request->get('propiedadId');
+
+        $result = array();
+
+        //Semanas de subastas disponibles por propiedad para hot sale
+        $semanasSubastas = $em->getRepository('AppBundle:Propiedad')->semanasSubastasDisponiblesHotSale($propiedad);
+        
+        foreach ($semanasSubastas as $ss) {
+            
+            $key = $ss['semanaSubasta'].' - '.$ss['anioSubasta'];
+
+            if ( !array_key_exists($key, $result) ) {
+               
+                $result[$key] = $ss['semanaSubasta'].' - '.$ss['anioSubasta']; 
+            
+            }
+
+        }
+
+        //Semanas de reservas disponibles por propiedad para hot sale
+        $semanasReservas = $em->getRepository('AppBundle:Propiedad')->semanasReservasDisponiblesHotSale($propiedad);
+        
+        foreach ($semanasReservas as $sr) {
+            
+            $key = $sr['semanaReserva'].' - '.$sr['anioReserva'];
+
+            if ( !array_key_exists($key, $result) ) {
+               
+                $result[$key] = $sr['semanaReserva'].' - '.$sr['anioReserva']; 
+            
+            }
+            
+        }
+
+        return new JsonResponse($result);
     }
 }

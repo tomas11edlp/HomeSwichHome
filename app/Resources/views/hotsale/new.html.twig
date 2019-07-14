@@ -1,16 +1,119 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin_base.html.twig' %}
 
 {% block body %}
-    <h1>Hotsale creation</h1>
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+    <div class="mb-4 text-center">
+        <h2> Nuevo Hot Sale </h2>
+    </div>
+
+    <div class="card pt-5 pb-4">
+        <div class="col-12">
+        <div class="row">
+            <div class="col-8 mb-3">
+                {{ form_start(form) }}
+                <div class="row">
+                    <div class="col-4">
+                        {{form_label(form.propiedad)}}
+                        {{form_widget(form.propiedad)}}
+                        {{form_errors(form.propiedad)}}
+                    </div>
+
+                    <div class="col-4">
+                        {{form_label(form.semana)}}
+                        {{form_widget(form.semana)}}
+                        {{form_errors(form.semana)}}                   
+                    </div>
+
+                    <div class="col-4">
+                        {{form_label(form.precio)}}
+                        {{form_widget(form.precio)}}
+                        {{form_errors(form.precio)}}
+                    </div>
+
+                    <div class="col-4">
+                        {{form_label(form.inicio)}}
+                        {{form_widget(form.inicio)}}
+                        {{form_errors(form.inicio)}}
+                    </div>
+
+                    <div class="col-4">
+                        {{form_label(form.fin)}}
+                        {{form_widget(form.fin)}}
+                        {{form_errors(form.fin)}}
+                    </div>
+
+                </div>
+
+            </div>  
+
+        </div>
+    </div>
+    </div>  
+
+
+    <div class="row">
+        <div class="col-6 mt-5">
+            <a class="text-left btn btn-outline-secondary" href="{{ path('hotsale_index') }}"><i class="fas fa-arrow-left"></i>  Volver al listado</a>
+        </div>
+
+        <div class="col-6 mt-5 text-right">
+            <input class="btn btn-outline-success" type="submit" name="" value="Guardar">
+        </div>
+    </div>
+    
     {{ form_end(form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('hotsale_index') }}">Back to the list</a>
-        </li>
-    </ul>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            
+            $('#appbundle_hotsale_propiedad').on('change', function(event) {
+                event.preventDefault();
+                
+                var propiedadId = $(this).val(); 
+
+                $.ajax({
+                    url: "{{path('semanas_disponibles_hotsale')}}",
+                    data: {propiedadId: 'propiedadId'},
+                })
+                .done(function(data) {
+                    $('#appbundle_hotsale_semana')
+                        .find('option')
+                        .remove()
+                        .end()
+                        .val('')
+                    ;
+
+                    $('#appbundle_hotsale_semana').append('<option value="">Seleccione una semana </option>');
+
+                    var html1 = '';
+                    $.each(data, function(k, v) {
+                       html1 += '<option value="' + v + '">' + k + '</option>';
+                    });
+
+                    $('#appbundle_hotsale_semana').append(html1);
+
+                    $.fn.select2.defaults.set('language', 'es');   
+                    console.log( data );
+                });
+                
+
+
+            });
+
+
+        });
+    </script>
+    
+{% endblock %}
+
+{% block stylesheets %}
+   {{ parent() }}
+
+    <link rel="stylesheet" href="{{asset('css/jquery-ui.theme.css')}}">
+    <link rel="stylesheet" href="{{asset('css/jquery-ui.structure.css')}}">
+    
 {% endblock %}
