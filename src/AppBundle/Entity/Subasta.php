@@ -105,6 +105,11 @@ class Subasta
     private $ultimoValor;
 
     /**
+     * @ORM\OneToMany(targetEntity="Credito", mappedBy="subasta")
+     */
+     private $creditos;
+
+    /**
     * Get ultimoValor
     * @return  
     */
@@ -401,5 +406,41 @@ class Subasta
     public function getEstado()
     {
         return $this->estado;
+    }
+
+    /**
+     * Add credito.
+     *
+     * @param \AppBundle\Entity\Credito $credito
+     *
+     * @return Subasta
+     */
+    public function addCredito(\AppBundle\Entity\Credito $credito)
+    {
+        $this->creditos[] = $credito;
+
+        return $this;
+    }
+
+    /**
+     * Remove credito.
+     *
+     * @param \AppBundle\Entity\Credito $credito
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeCredito(\AppBundle\Entity\Credito $credito)
+    {
+        return $this->creditos->removeElement($credito);
+    }
+
+    /**
+     * Get creditos.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCreditos()
+    {
+        return $this->creditos;
     }
 }

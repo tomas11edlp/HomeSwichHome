@@ -76,6 +76,11 @@ class Reserva
      */
      private $estado;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Credito", mappedBy="reserva")
+     */
+     private $credito;
+
 
     /**
      * Get id
@@ -249,5 +254,29 @@ class Reserva
     public function getEstado()
     {
         return $this->estado;
+    }
+
+    /**
+     * Set credito.
+     *
+     * @param \AppBundle\Entity\Credito|null $credito
+     *
+     * @return Reserva
+     */
+    public function setCredito(\AppBundle\Entity\Credito $credito = null)
+    {
+        $this->credito = $credito;
+
+        return $this;
+    }
+
+    /**
+     * Get credito.
+     *
+     * @return \AppBundle\Entity\Credito|null
+     */
+    public function getCredito()
+    {
+        return $this->credito;
     }
 }

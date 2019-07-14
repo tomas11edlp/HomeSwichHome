@@ -294,6 +294,8 @@ class SubastaController extends Controller
             foreach ($subastas as $s) {
 
                 if (!$s->getPujas()->isEmpty()){
+
+
                     $reserva = new Reserva();
                     $reserva->setUsuario($s->getPujaGanadora()->getUsuario());
                     $reserva->setPropiedad($s->getPropiedad());
@@ -304,6 +306,17 @@ class SubastaController extends Controller
                     $fecha->setISODate($reserva->getSemana(), $reserva->getAnio());
                     $reserva->setFechaInicio(new \DateTime());
                     $reserva->setFechaFin($fecha->modify('+6 day'));
+
+                    foreach ($s->getCreditos() as $credito) {
+
+                        if ($credito->getUsuario() != $s->getPujaGanadora()->getUsuario()) {
+                            $credito->setEstado(1);
+                        }else{
+                            $credito->setReserva($reserva);
+                        }
+                        $em->persist($credito);
+                    }
+
                     $em->persist($reserva);
                 }
 
