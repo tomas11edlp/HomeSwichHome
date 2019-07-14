@@ -43,12 +43,14 @@ class HotSale
     private $precio;
 
     /**
-     * @ORM\OneToMany(targetEntity="Reserva", mappedBy="hotSale")
+     * @ORM\ManyToOne(targetEntity="Reserva", inversedBy="hotSale")
+     * @ORM\JoinColumn(name="reserva_id", referencedColumnName="id")
      */
      private $reserva;
 
     /**
-     * @ORM\OneToMany(targetEntity="Subasta", mappedBy="hotSale")
+     * @ORM\ManyToOne(targetEntity="Subasta", inversedBy="hotSale")
+     * @ORM\JoinColumn(name="subasta_id", referencedColumnName="id")
      */
      private $subasta;
 
@@ -140,7 +142,6 @@ class HotSale
     public function __construct()
     {
         $this->reserva = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->subasta = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -180,35 +181,23 @@ class HotSale
     }
 
     /**
-     * Add subastum.
+     * Set subasta.
      *
-     * @param \AppBundle\Entity\Subasta $subastum
+     * @param \AppBundle\Entity\Subasta|null $subasta
      *
      * @return HotSale
      */
-    public function addSubastum(\AppBundle\Entity\Subasta $subastum)
+    public function setSubasta(\AppBundle\Entity\Subasta $subasta = null)
     {
-        $this->subasta[] = $subastum;
+        $this->subasta = $subasta;
 
         return $this;
     }
 
     /**
-     * Remove subastum.
-     *
-     * @param \AppBundle\Entity\Subasta $subastum
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeSubastum(\AppBundle\Entity\Subasta $subastum)
-    {
-        return $this->subasta->removeElement($subastum);
-    }
-
-    /**
      * Get subasta.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \AppBundle\Entity\Subasta|null
      */
     public function getSubasta()
     {

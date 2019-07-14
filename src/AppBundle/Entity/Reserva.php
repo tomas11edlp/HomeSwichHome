@@ -77,8 +77,7 @@ class Reserva
      private $estado;
 
      /**
-      * @ORM\ManyToOne(targetEntity="HotSale", inversedBy="reserva")
-      * @ORM\JoinColumn(name="hotsale_id", referencedColumnName="id")
+      * @ORM\OneToMany(targetEntity="HotSale", mappedBy="reserva")
       */
       private $hotSale;
 
@@ -263,31 +262,6 @@ class Reserva
         return $this->estado;
     }
 
-
-    /**
-     * Set hotSale.
-     *
-     * @param \AppBundle\Entity\HotSale|null $hotSale
-     *
-     * @return Reserva
-     */
-    public function setHotSale(\AppBundle\Entity\HotSale $hotSale = null)
-    {
-        $this->hotSale = $hotSale;
-
-        return $this;
-    }
-
-    /**
-     * Get hotSale.
-     *
-     * @return \AppBundle\Entity\HotSale|null
-     */
-    public function getHotSale()
-    {
-        return $this->hotSale;
-    }
-
     /**
      * Set credito.
      *
@@ -310,5 +284,48 @@ class Reserva
     public function getCredito()
     {
         return $this->credito;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->hotSale = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add hotSale.
+     *
+     * @param \AppBundle\Entity\HotSale $hotSale
+     *
+     * @return Reserva
+     */
+    public function addHotSale(\AppBundle\Entity\HotSale $hotSale)
+    {
+        $this->hotSale[] = $hotSale;
+
+        return $this;
+    }
+
+    /**
+     * Remove hotSale.
+     *
+     * @param \AppBundle\Entity\HotSale $hotSale
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeHotSale(\AppBundle\Entity\HotSale $hotSale)
+    {
+        return $this->hotSale->removeElement($hotSale);
+    }
+
+    /**
+     * Get hotSale.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getHotSale()
+    {
+        return $this->hotSale;
     }
 }

@@ -105,8 +105,7 @@ class Subasta
     private $ultimoValor;
 
      /**
-      * @ORM\ManyToOne(targetEntity="HotSale", inversedBy="subasta")
-      * @ORM\JoinColumn(name="hotsale_id", referencedColumnName="id")
+      * @ORM\OneToMany(targetEntity="HotSale", mappedBy="subasta")
       */
       private $hotSale;
 
@@ -414,4 +413,64 @@ class Subasta
         return $this->estado;
     }
 
+
+    /**
+     * Set hotSale.
+     *
+     * @param \AppBundle\Entity\HotSale|null $hotSale
+     *
+     * @return Subasta
+     */
+    public function setHotSale(\AppBundle\Entity\HotSale $hotSale = null)
+    {
+        $this->hotSale = $hotSale;
+
+        return $this;
+    }
+
+    /**
+     * Get hotSale.
+     *
+     * @return \AppBundle\Entity\HotSale|null
+     */
+    public function getHotSale()
+    {
+        return $this->hotSale;
+    }
+
+    /**
+     * Add credito.
+     *
+     * @param \AppBundle\Entity\Credito $credito
+     *
+     * @return Subasta
+     */
+    public function addCredito(\AppBundle\Entity\Credito $credito)
+    {
+        $this->creditos[] = $credito;
+
+        return $this;
+    }
+
+    /**
+     * Remove credito.
+     *
+     * @param \AppBundle\Entity\Credito $credito
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeCredito(\AppBundle\Entity\Credito $credito)
+    {
+        return $this->creditos->removeElement($credito);
+    }
+
+    /**
+     * Get creditos.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCreditos()
+    {
+        return $this->creditos;
+    }
 }

@@ -5,7 +5,9 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\HotSale;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Form\Paginador\FilterHotSaleType;
 
 /**
  * Hotsale controller.
@@ -22,13 +24,23 @@ class HotSaleController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $hotSales = $em->getRepository('AppBundle:HotSale')->findAll();
-
-        return $this->render('hotsale/index.html.twig', array(
-            'hotSales' => $hotSales,
-        ));
+        return $this->get('pg.pg')
+            // ->setOrder(
+            //     array('Nombre' => 'nombre',
+            //         'Nivel' => 'nivel'
+            //     , 'Padre' => 'padre'),
+            //     'nivel',
+            //     'asc'
+            // )
+            ->noRemember(true)
+            ->setFilter(FilterHotSaleType::class)
+            ->setFiltersTheme('inline')
+            ->setRowsPerPage(15, array(15, 30, 45))
+            ->showRowsAtFirst()
+            ->setFiltersTheme('inline')
+            ->setBaseLayout('admin_base')
+            ->setView('hotsale/index.html.twig')
+            ->paginate('AppBundle:HotSale');
     }
 
     /**
