@@ -87,12 +87,16 @@ class PropiedadRepository extends \Doctrine\ORM\EntityRepository
 
   public function propiedadesDisponiblesHotSale()
   {
+    $hoy = new \Datetime('now');
     $query = $this->createQueryBuilder('p')
                   ->leftJoin('p.reservas','r')
                   ->leftJoin('p.subastas','s')
                   ->where('s.pujas is empty')
-                  ->orWhere('r.estado = 3');
-
+                  ->andWhere('s.fechaReservaInicio > :hoy')
+                  ->orWhere('r.estado = 3')
+                  ->andWhere('r.fechaInicio > :hoy')
+                  ->setParameter('hoy', $hoy);
+    dump($query->getQuery()->getSql());
     return $query->getQuery()->getResult();
   }  
 

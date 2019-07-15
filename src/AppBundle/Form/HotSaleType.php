@@ -22,16 +22,21 @@ class HotSaleType extends AbstractType
     {
         $em = $options['em'];
 
+        $hoy = new \Datetime('now');
+        
         $builder
 
             ->add('propiedad', EntityType::class, array(
                 'class' => 'AppBundle:Propiedad',
-                'query_builder' => function (EntityRepository $er) {
+                'query_builder' => function (EntityRepository $er) use($hoy) {
                     return $er->createQueryBuilder('p')
                         ->leftJoin('p.reservas','r')
                         ->leftJoin('p.subastas','s')
                         ->where('s.pujas is empty')
+                        ->andWhere('s.fechaReservaInicio > :hoy')
                         ->orWhere('r.estado = 3')
+                        ->andWhere('r.fechaInicio > :hoy')
+                        ->setParameter('hoy', $hoy)
                         ->orderBy('p.titulo', 'ASC');
                 },
                 // 'choice_label' => 'username',

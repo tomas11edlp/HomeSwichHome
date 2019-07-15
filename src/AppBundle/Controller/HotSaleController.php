@@ -43,6 +43,32 @@ class HotSaleController extends Controller
             ->setView('hotsale/index.html.twig')
             ->paginate('AppBundle:HotSale');
     }
+    /**
+     * Lists all hotSale entities.
+     *
+     * @Route("/listado/publico", name="hotsale_index_publico")
+     * @Method("GET")
+     */
+    public function indexPublicoAction()
+    {
+        return $this->get('pg.pg')
+            // ->setOrder(
+            //     array('Nombre' => 'nombre',
+            //         'Nivel' => 'nivel'
+            //     , 'Padre' => 'padre'),
+            //     'nivel',
+            //     'asc'
+            // )
+            ->noRemember(true)
+            ->setFilter(FilterHotSaleType::class)
+            ->setFiltersTheme('inline')
+            ->setRowsPerPage(15, array(15, 30, 45))
+            ->showRowsAtFirst()
+            ->setFiltersTheme('inline')
+            ->setBaseLayout('base')
+            ->setView('hotsale/indexPublico.html.twig')
+            ->paginate('AppBundle:HotSale', 'hotSalesPublico');
+    }
 
     /**
      * Creates a new hotSale entity.
@@ -98,13 +124,14 @@ class HotSaleController extends Controller
             $fin = new \Datetime('today');
             $fin->setISODate($anio, $semana);
             $hotSale->setFin( $fin );
-                    
+            
             $em = $this->getDoctrine()->getManager();
         
             $em->persist($hotSale);
         
             $em->flush();
 
+            $this->get('session')->getFlashBag()->add('success', 'Hot Sale creado exitosamente.');
             return $this->redirectToRoute('hotsale_show', array('id' => $hotSale->getId()));
         }
 
@@ -139,13 +166,14 @@ class HotSaleController extends Controller
     public function editAction(Request $request, HotSale $hotSale)
     {
         $deleteForm = $this->createDeleteForm($hotSale);
-        $editForm = $this->createForm('AppBundle\Form\HotSaleType', $hotSale);
+        $editForm = $this->createForm('AppBundle\Form\HotSaleEditType', $hotSale);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('hotsale_edit', array('id' => $hotSale->getId()));
+            $this->get('session')->getFlashBag()->add('success', 'Hot Sale modificado exitosamente.');
+            return $this->redirectToRoute('hotsale_index');
         }
 
         return $this->render('hotsale/edit.html.twig', array(
@@ -158,19 +186,23 @@ class HotSaleController extends Controller
     /**
      * Deletes a hotSale entity.
      *
-     * @Route("/{id}", name="hotsale_delete")
+     * @Route("/{id}/eliminar", name="hotsale_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, HotSale $hotSale)
     {
-        $form = $this->createDeleteForm($hotSale);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($hotSale);
-            $em->flush();
+        
+        if ( !empty($hotSale->getReserva()) ) {
+            // die('asd');
+            $this->get('session')->getFlashBag()->add('danger', 'El hotsale no puede elimnarse. Tiene una reserva en curso.');
+            return $this->redirectToRoute('hotsale_index');
         }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($hotSale);
+        $em->flush();
+        $this->get('session')->getFlashBag()->add('success', 'El hotsale se eliminó correctamente.');
+    
 
         return $this->redirectToRoute('hotsale_index');
     }

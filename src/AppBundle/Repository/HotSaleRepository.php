@@ -25,6 +25,25 @@ class HotSaleRepository extends \Doctrine\ORM\EntityRepository
         
 	    return $query;
 	}
+
+
+	public function hotSalesPublico($query, $pg)
+	{
+		
+		$query->leftJoin( 'a.propiedad', 'p' );
+
+		if ($nombre = $pg->getFilterValue('nombre')){
+            $query->andWhere("UPPER(p.nombre) LIKE UPPER('%".$nombre."%')");
+        }
+
+        if ($semana = $pg->getFilterValue('semana')){
+            $query->andWhere("a.semanaReserva = '".$semana."'");
+        }
+
+        $query->andWhere('a.reserva is null');
+        
+	    return $query;
+	}
 	
 	public function buscarReservasPropiedades($query, $pg)
 	{

@@ -1,40 +1,68 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin_base.html.twig' %}
 
 {% block body %}
-    <h1>Hotsale</h1>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ hotSale.id }}</td>
-            </tr>
-            <tr>
-                <th>Inicio</th>
-                <td>{% if hotSale.inicio %}{{ hotSale.inicio|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Fin</th>
-                <td>{% if hotSale.fin %}{{ hotSale.fin|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Precio</th>
-                <td>{{ hotSale.precio }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="mb-4 text-center">
+        <h2> Ver Hot Sale
+            {# <a class="btn btn-outline-success" href="{{ path('propiedad_edit', { 'id': propiedad.id }) }}">Modificar</a> #}
+            {# <a class="btn btn-outline-danger" href="{{ path('propiedad_delete', { 'id': propiedad.id }) }}">Eliminar</a> #}
+        </h2>
+    </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('hotsale_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('hotsale_edit', { 'id': hotSale.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+    <div class="card  pt-5 pb-4">
+        <div class="col-12">
+        <div class="row">
+            <div class="col-8 mb-3">
+                <div class="row">
+                    <div class="col-4">
+                        <h4> {{hotSale.propiedad.titulo}} </h4>
+                        <h5> T&iacute;tulo </h5>
+                    </div>
+
+                    <div class="col-8 mb-3">
+                        <h4> {{hotSale.propiedad.descripcion}} </h4>
+                        <h5> Descripci&oacute;n </h5>
+                    </div>
+
+                    <div class="col-4 mb-3">
+                        <h4> {{hotSale.semanaReserva}} - {{hotSale.anioReserva}} </h4>
+                        <h5> Semana y año</h5>
+                    </div>
+ 
+                    <div class="col-4 mb-3">
+                        <h4> {{hotSale.inicio|date('d/m/Y')}} </h4>
+                        <h5> Inicio de estadía </h5>
+                    </div>
+
+                    <div class="col-4 mb-3">
+                        <h4> {{hotSale.inicio|date('d/m/Y')}} </h4>
+                        <h5> Fin de estadía </h5>
+                    </div>
+
+                    <div class="col-4">
+                        <h4> {{hotSale.precio}} </h4>
+                        <h5> Precio </h5>
+                    </div>
+
+                </div>
+
+            </div>  
+
+            <div class="col-4 mb-3">
+
+                <div class="col-12">
+                    <img src="{{hotSale.propiedad.foto|default('https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fmoorestown-mall.com%2Fnoimage.gif&f=1')}}" width="100%" border="0">  
+                </div>
+            
+            </div>
+        </div>
+    </div>
+    </div>  
+
+    <div class="text-left mt-5">
+    
+        <a class="btn btn-outline-secondary" href="{{ path('hotsale_index') }}"><i class="fas fa-arrow-left"></i>  Volver al listado</a>
+
+    </div>
+
 {% endblock %}
