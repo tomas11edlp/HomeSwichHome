@@ -99,14 +99,20 @@ class PropiedadRepository extends \Doctrine\ORM\EntityRepository
 
   public function semanasSubastasDisponiblesHotSale($propiedad)
   {
+    $hoy = new \Datetime('now');
     $query = $this->createQueryBuilder('p')
                   ->select(
                     's.semanaReserva as semanaSubasta', 
                     's.anioReserva as anioSubasta')
                   ->leftJoin('p.subastas','s')
                   ->Where('s.pujas is empty')
-                  ->andWhere('p.id = '.$propiedad)
-                  /*->groupBy()*/;
+                  ->andWhere('s.fechaReservaInicio > :hoy')
+                  ->andWhere('s.estado = 2')
+                  ->setParameter('hoy', $hoy);
+
+                  if (!empty($propiedad)) {
+                    $query->andWhere('p.id = '.$propiedad);
+                  }
 
     return $query->getQuery()->getResult();
   } 
@@ -114,14 +120,19 @@ class PropiedadRepository extends \Doctrine\ORM\EntityRepository
 
   public function semanasReservasDisponiblesHotSale($propiedad)
   {
+    $hoy = new \Datetime('now');
     $query = $this->createQueryBuilder('p')
                   ->select(
                     'r.semana as semanaReserva',
                     'r.anio as anioReserva' )
                   ->leftJoin('p.reservas','r')
                   ->Where('r.estado = 3')
-                  ->andWhere('p.id = '.$propiedad)
-                  /*->groupBy()*/;
+                  ->andWhere('r.fechaInicio > :hoy')
+                  ->setParameter('hoy', $hoy);
+
+                  if (!empty($propiedad)) {
+                    $query->andWhere('p.id = '.$propiedad);
+                  }
 
     return $query->getQuery()->getResult();
   }

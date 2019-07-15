@@ -9,16 +9,18 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Doctrine\ORM\EntityManagerInterface;
+use AppBundle\Form\EventListener\AddSemanaFieldSubscriber;
 
 class HotSaleType extends AbstractType
 {
+
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
-        // $propiedad = $options['propiedad'];
+        $em = $options['em'];
 
         $builder
 
@@ -42,37 +44,17 @@ class HotSaleType extends AbstractType
                 'placeholder' => 'Seleccione una propiedad'
             ))
 
-            ->add('semana', ChoiceType::class, array(
-                'choices'  => array(),
-                'mapped' => false,
-                'placeholder' => 'Seleccione una semana',
-                'attr' => array(
-                    'autocomplete' => 'off',
-                    'class' => 'form-control select2'
-                ) 
-            ))
-
-            ->add('inicio', DateType::class, array(
-                'attr' => array(
-                    'class' => 'form-control'
-                ),
-                'widget' => 'single_text',
-                'format' => 'dd/MM/yyyy',
-            ))
-
-            ->add('fin', DateType::class, array(
-                'attr' => array(
-                    'class' => 'form-control'
-                ),
-                'widget' => 'single_text',
-                'format' => 'dd/MM/yyyy',
-            ))
-
             ->add('precio', null, array(
                 'attr' => array(
                     'class' => 'form-control'
                 ),
             ));
+
+            $factory = $builder->getFormFactory();
+            $semanaSubscriber = new AddSemanaFieldSubscriber($factory, $em);
+            $builder->addEventSubscriber($semanaSubscriber);
+
+            
 
     }
 
@@ -80,7 +62,8 @@ class HotSaleType extends AbstractType
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
-    {
+    {   
+        $resolver->setRequired('em');
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\HotSale'
         ));

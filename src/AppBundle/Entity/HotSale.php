@@ -43,16 +43,30 @@ class HotSale
     private $precio;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Reserva", inversedBy="hotSale")
+     * @ORM\ManyToOne(targetEntity="Propiedad")
+     * @ORM\JoinColumn(name="propiedad_id", referencedColumnName="id")
+     */
+     private $propiedad;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="semanaReserva", type="integer")
+     */
+    private $semanaReserva;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="anioReserva", type="integer")
+     */
+    private $anioReserva;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Reserva")
      * @ORM\JoinColumn(name="reserva_id", referencedColumnName="id")
      */
      private $reserva;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Subasta", inversedBy="hotSale")
-     * @ORM\JoinColumn(name="subasta_id", referencedColumnName="id")
-     */
-     private $subasta;
 
 
     /**
@@ -202,5 +216,91 @@ class HotSale
     public function getSubasta()
     {
         return $this->subasta;
+    }
+
+    /**
+     * Set semanaReserva.
+     *
+     * @param int $semanaReserva
+     *
+     * @return HotSale
+     */
+    public function setSemanaReserva($semanaReserva)
+    {
+        $this->semanaReserva = $semanaReserva;
+
+        return $this;
+    }
+
+    /**
+     * Get semanaReserva.
+     *
+     * @return int
+     */
+    public function getSemanaReserva()
+    {
+        return $this->semanaReserva;
+    }
+
+    /**
+     * Set anioReserva.
+     *
+     * @param int $anioReserva
+     *
+     * @return HotSale
+     */
+    public function setAnioReserva($anioReserva)
+    {
+        $this->anioReserva = $anioReserva;
+
+        return $this;
+    }
+
+    /**
+     * Get anioReserva.
+     *
+     * @return int
+     */
+    public function getAnioReserva()
+    {
+        return $this->anioReserva;
+    }
+
+    /**
+     * Set propiedad.
+     *
+     * @param \AppBundle\Entity\Propiedad|null $propiedad
+     *
+     * @return HotSale
+     */
+    public function setPropiedad(\AppBundle\Entity\Propiedad $propiedad = null)
+    {
+        $this->propiedad = $propiedad;
+
+        return $this;
+    }
+
+    /**
+     * Get propiedad.
+     *
+     * @return \AppBundle\Entity\Propiedad|null
+     */
+    public function getPropiedad()
+    {
+        return $this->propiedad;
+    }
+
+    /**
+     * Set reserva.
+     *
+     * @param \AppBundle\Entity\Reserva|null $reserva
+     *
+     * @return HotSale
+     */
+    public function setReserva(\AppBundle\Entity\Reserva $reserva = null)
+    {
+        $this->reserva = $reserva;
+
+        return $this;
     }
 }

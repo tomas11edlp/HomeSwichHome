@@ -12,6 +12,7 @@
             <div class="col-8 mb-3">
                 {{ form_start(form) }}
                 <div class="row">
+                    
                     <div class="col-4">
                         {{form_label(form.propiedad)}}
                         {{form_widget(form.propiedad)}}
@@ -28,18 +29,6 @@
                         {{form_label(form.precio)}}
                         {{form_widget(form.precio)}}
                         {{form_errors(form.precio)}}
-                    </div>
-
-                    <div class="col-4">
-                        {{form_label(form.inicio)}}
-                        {{form_widget(form.inicio)}}
-                        {{form_errors(form.inicio)}}
-                    </div>
-
-                    <div class="col-4">
-                        {{form_label(form.fin)}}
-                        {{form_widget(form.fin)}}
-                        {{form_errors(form.fin)}}
                     </div>
 
                 </div>
@@ -70,6 +59,15 @@
     <script type="text/javascript">
         $(document).ready(function(){
             
+            $('#appbundle_hotsale_semana')
+                .find('option')
+                .remove()
+                .end()
+                .val('')
+            ;
+            $('#appbundle_hotsale_semana').append('<option value="">Seleccione una semana </option>');
+
+
             $('#appbundle_hotsale_propiedad').on('change', function(event) {
                 event.preventDefault();
                 
@@ -77,7 +75,7 @@
 
                 $.ajax({
                     url: "{{path('semanas_disponibles_hotsale')}}",
-                    data: {propiedadId: 'propiedadId'},
+                    data: {propiedadId: propiedadId},
                 })
                 .done(function(data) {
                     $('#appbundle_hotsale_semana')

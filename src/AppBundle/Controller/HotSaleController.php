@@ -79,8 +79,9 @@ class HotSaleController extends Controller
      */
     public function newAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
         $hotSale = new Hotsale();
-        $form = $this->createForm('AppBundle\Form\HotSaleType', $hotSale);
+        $form = $this->createForm('AppBundle\Form\HotSaleType', $hotSale, ['em' => $em]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -183,11 +184,9 @@ class HotSaleController extends Controller
      */
     public function obtenerCatedrasAction(Request $request)
     {
-        // if (!$request->isXmlHttpRequest()) {
-        //     throw new NotFoundHttpException();
-        // }
+
         $em = $this->getDoctrine()->getManager();
-        // Get the province ID
+        
         $propiedad = $request->get('propiedadId');
 
         $result = array();
@@ -204,7 +203,6 @@ class HotSaleController extends Controller
                 $result[$key] = $ss['semanaSubasta'].' - '.$ss['anioSubasta']; 
             
             }
-
         }
 
         //Semanas de reservas disponibles por propiedad para hot sale
@@ -219,7 +217,6 @@ class HotSaleController extends Controller
                 $result[$key] = $sr['semanaReserva'].' - '.$sr['anioReserva']; 
             
             }
-            
         }
 
         return new JsonResponse($result);
