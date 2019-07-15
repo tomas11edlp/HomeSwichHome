@@ -76,11 +76,6 @@ class Reserva
      */
      private $estado;
 
-     /**
-      * @ORM\OneToMany(targetEntity="HotSale", mappedBy="reserva")
-      */
-      private $hotSale;
-
     /**
      * @ORM\OneToOne(targetEntity="Credito", mappedBy="reserva")
      */

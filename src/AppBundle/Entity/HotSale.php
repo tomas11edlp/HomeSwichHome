@@ -150,40 +150,7 @@ class HotSale
     {
         return $this->precio;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->reserva = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add reserva.
-     *
-     * @param \AppBundle\Entity\Reserva $reserva
-     *
-     * @return HotSale
-     */
-    public function addReserva(\AppBundle\Entity\Reserva $reserva)
-    {
-        $this->reserva[] = $reserva;
-
-        return $this;
-    }
-
-    /**
-     * Remove reserva.
-     *
-     * @param \AppBundle\Entity\Reserva $reserva
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeReserva(\AppBundle\Entity\Reserva $reserva)
-    {
-        return $this->reserva->removeElement($reserva);
-    }
-
+    
     /**
      * Get reserva.
      *

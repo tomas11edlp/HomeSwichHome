@@ -34,7 +34,6 @@ class HotSaleType extends AbstractType
                         ->orWhere('r.estado = 3')
                         ->orderBy('p.titulo', 'ASC');
                 },
-                'mapped' => false,
                 // 'choice_label' => 'username',
                 'attr' => array(
                     'placeholder' => 'Seleccione',

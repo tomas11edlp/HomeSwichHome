@@ -2,7 +2,7 @@
 
 {% block title %}
     <h2>Hot Sales
-        <a class="btn btn-outline-success ml-2" href="{{ path('propiedad_new') }}"> Nuevo </a>
+        <a class="btn btn-outline-success ml-2" href="{{ path('hotsale_new') }}"> Nuevo </a>
     </h2>
     <br>
 {% endblock %}
@@ -21,14 +21,9 @@
         <img src="{{entity.propiedad.foto|default('https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fmoorestown-mall.com%2Fnoimage.gif&f=1')}}" width="50%" border="0" style="max-width:100px; max-heigth:100px;">  
     </td>
 
-    {% if entity.reserva is not null %}
-        <td class="align-middle">{{ entity.reserva.propiedad }}</td>
-        <td class="align-middle">$ {{ entity.reserva.semana }}</td>
-    {% else %}
-        <td class="align-middle">{{ entity.subasta.propiedad }}</td>
-        <td class="align-middle">$ {{ entity.subasta.semanaReserva }}</td>
-    {% endif %}
-    
+    <td class="align-middle">{{ entity.propiedad }}</td>
+    <td class="align-middle"> {{ entity.semanaReserva }} - {{ entity.anioReserva }}</td>
+
     <td class="align-middle">$ {{ entity.precio }}</td>
 
     <td class="align-middle">

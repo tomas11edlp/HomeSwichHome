@@ -85,9 +85,24 @@ class HotSaleController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            dump($form->get('semana')->getData());die;
+
+            $semanaAnio = explode(' - ', $form->get('semana')->getData() );
+
+            $semana = $semanaAnio[0];
+            $anio = $semanaAnio[1];
+
+            $hotSale->setSemanaReserva( $semana );
+            $hotSale->setAnioReserva( $anio );
+            
+            $hotSale->setInicio( new \Datetime('today') );
+            $fin = new \Datetime('today');
+            $fin->setISODate($anio, $semana);
+            $hotSale->setFin( $fin );
+                    
             $em = $this->getDoctrine()->getManager();
+        
             $em->persist($hotSale);
+        
             $em->flush();
 
             return $this->redirectToRoute('hotsale_show', array('id' => $hotSale->getId()));
