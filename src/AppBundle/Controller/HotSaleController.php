@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\HotSale;
+use AppBundle\Entity\Reserva;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -91,7 +92,6 @@ class HotSaleController extends Controller
         //Semanas de reservas disponibles por propiedad para hot sale
         $semanasReservas = $em->getRepository('AppBundle:Propiedad')->semanasReservasDisponiblesHotSale(2);
 
-        dump($semanasSubastas,$semanasReservas);die;
         // dump($propiedades);die;
 
         return 'a';
@@ -155,6 +155,43 @@ class HotSaleController extends Controller
             'hotSale' => $hotSale,
             'delete_form' => $deleteForm->createView(),
         ));
+    }    /**
+     * Finds and displays a hotSale entity.
+     *
+     * @Route("/{id}/comprar", name="hotsale_comprar")
+     * @Method("GET")
+     */
+    public function comprarAction(HotSale $hotSale)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $reserva = new Reserva();
+
+        $reserva->setUsuario( $this->getUser() );
+        $reserva->setPropiedad( $hotSale->getPropiedad() );
+        $reserva->setSemana( $hotSale->getSemanaReserva() );
+        $reserva->setAnio( $hotSale->getAnioReserva() );
+        $estado = $em->getRepository('AppBundle:EstadoReserva')->find(1);
+        $reserva->setEstado( $estado );
+
+        $fecha = new \DateTime("now");
+        $fecha->setISODate($hotSale->getAnioReserva(), $hotSale->getSemanaReserva());
+        $reserva->setFechaInicio($fecha);
+        $fechaFin = clone $fecha;
+        $reserva->setFechaFin($fechaFin->modify('+6 days'));
+
+        $em->persist( $reserva );
+
+        $hotSale->setReserva( $reserva );
+
+        $em->persist( $hotSale );
+
+        $em->flush();
+
+        $this->get('session')->getFlashBag()->add('success', 'Gracias por su compra. Podrá ver su reserva en la seccion "Mis reservas". ');
+
+
+        return $this->redirectToRoute('hotsale_index_publico');
     }
 
     /**

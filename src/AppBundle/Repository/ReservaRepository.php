@@ -47,7 +47,9 @@ class ReservaRepository extends \Doctrine\ORM\EntityRepository
     $usuario = $pg->getFilterValue('usuario');
 
     $query->join("a.usuario","u")
-      ->andWhere("u.id = :usuario")->setParameter('usuario', $usuario);
+      ->andWhere("u.id = :usuario")
+      ->andWhere("a.estado != 3")
+      ->setParameter('usuario', $usuario);
         
       return $query;
   }

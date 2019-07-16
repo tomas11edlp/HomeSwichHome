@@ -70,6 +70,9 @@ class ReservaController extends Controller
                 $reserva->setFechaInicio($fecha);
                 $fechaFin = clone $fecha;
                 $reserva->setFechaFin($fechaFin->modify('+6 days'));
+
+                $estado = $em->getRepository('AppBundle:EstadoReserva')->find(1);
+                $reserva->setEstado( $estado );
             
                 $aux1 = new \DateTime();
                 $aux2 = new \DateTime();
@@ -177,6 +180,9 @@ class ReservaController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+
+
             $em->persist($reserva);
             $em->flush();
 
@@ -238,22 +244,38 @@ class ReservaController extends Controller
      */
     public function cancelarReservaAction(Request $request, Reserva $reserva)
     {   
-        $fechaActual = new DateTime('now');
+        $fechaActual = new \DateTime('now');
         
         if ( $fechaActual < $reserva->getFechaInicio() ) {
             
             $em = $this->getDoctrine()->getManager();
+            
+            if ( empty($reserva->getHotSale()) ) {
+                
+                $credito = $em->getRepository('AppBundle:Credito')->findOneByReserva( $reserva );
+                $credito->setReserva(null);
+                $estadoCredito = $em->getRepository('AppBundle:EstadoCredito')->find(1); 
+                $credito->setEstado($estadoCredito);
+                $em->persist($credito);
+            
+            }else{
 
-            $credito = $$em->getRepository('AppBundle:Credito')->findOneByReserva( $reserva );
-            $credito->setReserva(null);
-            $estadoCredito = $em->getRepository('AppBundle:EstadoCredito')->find(1); 
-            $credito->setEstado($estadoCredito);
+                $hotSale = $em->getRepository('AppBundle:HotSale')->findOneByReserva( $reserva );
+                if ( !empty($hotSale) ) {
+                    $hotSale->setReserva(null);
+                    $em->remove($hotSale);
+                }   
+                
+            }
 
-            $em->persist($credito);
-            $em->remove($reserva);
+            $estadoReserva = $em->getRepository('AppBundle:estadoReserva')->find(3);
+            $reserva->setEstado($estadoReserva); 
+
+            $em->persist($reserva);
             $em->flush();
             
-            $this->get('session')->getFlashBag()->add('success', 'La reserva fue cancelada exitosamente. Se recupero el crédito invertido.');
+            $this->get('session')->getFlashBag()->add('success', 'La reserva fue cancelada exitosamente.');
+
             return $this->redirectToRoute('reservas_usuario_index');
 
         }else{

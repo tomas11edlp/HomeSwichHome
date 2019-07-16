@@ -81,6 +81,10 @@ class Reserva
      */
      private $credito;
 
+    /**
+     * @ORM\OneToOne(targetEntity="HotSale", mappedBy="reserva")
+     */
+     private $hotSale;
 
 
     /**
@@ -322,5 +326,19 @@ class Reserva
     public function getHotSale()
     {
         return $this->hotSale;
+    }
+
+    /**
+     * Set hotSale.
+     *
+     * @param \AppBundle\Entity\HotSale|null $hotSale
+     *
+     * @return Reserva
+     */
+    public function setHotSale(\AppBundle\Entity\HotSale $hotSale = null)
+    {
+        $this->hotSale = $hotSale;
+
+        return $this;
     }
 }
