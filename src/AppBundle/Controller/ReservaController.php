@@ -249,6 +249,7 @@ class ReservaController extends Controller
         if ( $fechaActual < $reserva->getFechaInicio() ) {
             
             $em = $this->getDoctrine()->getManager();
+
             
             if ( empty($reserva->getHotSale()) ) {
                 
@@ -271,22 +272,33 @@ class ReservaController extends Controller
             $estadoReserva = $em->getRepository('AppBundle:estadoReserva')->find(3);
             $reserva->setEstado($estadoReserva); 
 
-            $em->persist($reserva);
+
+            $date1 = $reserva->getFechaInicio();
+            $date2 = $fechaActual;
+            $interval = $date1->diff($date2);
+            $diff = $interval->format('%m');
+
+            // if($diff > 6){
+            //     echo 'false';
+            // }else{
+            //     echo 'true';
+            // }
+            if ($diff > 6) {
+                $em->remove($reserva);
+            }else{
+                $em->persist($reserva);
+            }
+
             $em->flush();
             
             $this->get('session')->getFlashBag()->add('success', 'La reserva fue cancelada exitosamente.');
 
-            return $this->redirectToRoute('reservas_usuario_index');
-
         }else{
-            $this->get('session')->getFlashBag()->add('danger', 'No se puede cancelar una reserva. La estadía ya comenzó.');
-            return $this->redirectToRoute('reservas_usuario_index');
 
+            $this->get('session')->getFlashBag()->add('danger', 'No se puede cancelar una reserva. La estadía ya comenzó.');
         } 
 
-        $this->get('session')->getFlashBag()->add('danger', 'Ocurrio un error, intentelo más tarde.');
-        return $this->redirectToRoute('reservas_usuario_index');
-    
+        return $this->redirectToRoute('reservas_usuario_index');        
     }
 
     /**
