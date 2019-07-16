@@ -4,7 +4,7 @@
     <h2 class="mb-5">Subastas
         <a class="btn btn-outline-secondary ml-5" href="{{ path('subasta_new') }}">Crear subasta &uacute;nica</a>
         <a class="btn btn-outline-success ml-5" href="{{ path('subasta_multiple_new') }}">Crear todas las subastas</a>
-        <a class="btn btn-outline-danger ml-5" href="{{ path('subasta_cerrar_todas') }}">Cerrar todas las subastas</a>
+        <a class="btn btn-outline-danger ml-5" href="{{ path('subasta_cerrar_todas') }}" onclick="return confirm('Se cerrarán todas las subastas que esten abiertas, incluso las que no tienen pujas ¿Desea continuar?')">Cerrar todas las subastas</a>
     </h2>
 {% endblock %}
 

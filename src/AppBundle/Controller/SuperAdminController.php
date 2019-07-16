@@ -57,6 +57,9 @@ class SuperAdminController extends Controller
     {
         $usuario = new Usuario();
         $form = $this->createForm('AppBundle\Form\UsuarioAdministradorType', $usuario);
+        $fn = new \DateTime('today');
+        $fn->modify('-20 year');
+        $usuario->setFechaNacimiento($fn);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -81,10 +84,10 @@ class SuperAdminController extends Controller
                 $this->addFlash('danger', $e.'Ocurrio un ERROR. El registro no pudo ser creado.');
                 // $this->addFlash('danger', $e);
 
-                return $this->redirectToRoute('admnistrador_new');
+                return $this->redirectToRoute('administrador_new');
             }
 
-            return $this->redirectToRoute('admnistrador_index');
+            return $this->redirectToRoute('administrador_index');
         }
 
         return $this->render('usuario/administrador_new.html.twig', array(
