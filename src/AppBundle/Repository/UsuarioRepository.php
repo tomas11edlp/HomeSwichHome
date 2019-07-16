@@ -55,6 +55,7 @@ class UsuarioRepository extends \Doctrine\ORM\EntityRepository
       	}
 
       	$query->andWhere("a.rol != 'ADMINISTRADOR'");
+      	$query->andWhere("a.rol != 'SUPERADMINISTRADOR'");
 	        
       	return $query;
   	}
