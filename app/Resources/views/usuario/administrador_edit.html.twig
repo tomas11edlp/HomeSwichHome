@@ -2,6 +2,11 @@
 
 {% block javascripts %}
     {{parent()}}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#appbundle_usuarioadministrador_email').attr('readonly', 'readonly')
+        });
+    </script>
 {% endblock %}
 
 
