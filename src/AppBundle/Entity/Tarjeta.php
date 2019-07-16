@@ -152,6 +152,16 @@ class Tarjeta
     }
 
     /**
+     * Get numero
+     *
+     * @return string
+     */
+    public function getUltimosCuatro()
+    {
+        return substr($this->numero, -4); // returns "s"$this->numero;
+    }
+
+    /**
      * Set codigo
      *
      * @param string $codigo
