@@ -82,7 +82,7 @@ class Reserva
      private $credito;
 
     /**
-     * @ORM\OneToOne(targetEntity="HotSale", mappedBy="reserva")
+     * @ORM\OneToMany(targetEntity="HotSale", mappedBy="reserva", cascade={"all"})
      */
      private $hotSale;
 
@@ -292,31 +292,6 @@ class Reserva
         $this->hotSale = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    /**
-     * Add hotSale.
-     *
-     * @param \AppBundle\Entity\HotSale $hotSale
-     *
-     * @return Reserva
-     */
-    public function addHotSale(\AppBundle\Entity\HotSale $hotSale)
-    {
-        $this->hotSale[] = $hotSale;
-
-        return $this;
-    }
-
-    /**
-     * Remove hotSale.
-     *
-     * @param \AppBundle\Entity\HotSale $hotSale
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeHotSale(\AppBundle\Entity\HotSale $hotSale)
-    {
-        return $this->hotSale->removeElement($hotSale);
-    }
 
     /**
      * Get hotSale.
@@ -328,17 +303,4 @@ class Reserva
         return $this->hotSale;
     }
 
-    /**
-     * Set hotSale.
-     *
-     * @param \AppBundle\Entity\HotSale|null $hotSale
-     *
-     * @return Reserva
-     */
-    public function setHotSale(\AppBundle\Entity\HotSale $hotSale = null)
-    {
-        $this->hotSale = $hotSale;
-
-        return $this;
-    }
 }
