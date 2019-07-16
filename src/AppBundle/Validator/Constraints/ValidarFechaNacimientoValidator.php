@@ -12,7 +12,7 @@ class ValidarFechaNacimientoValidator extends ConstraintValidator
         
         $fechaNac = $usuario->getFechaNacimiento();
         
-        if ( $fechaNac ) {
+        if ( !empty($fechaNac) ) {
 
             // $d1 = new DateTime('2011-03-12');
             $d2 = new \DateTime('today');
