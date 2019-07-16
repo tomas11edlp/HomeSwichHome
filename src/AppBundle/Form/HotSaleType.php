@@ -32,10 +32,11 @@ class HotSaleType extends AbstractType
                     return $er->createQueryBuilder('p')
                         ->leftJoin('p.reservas','r')
                         ->leftJoin('p.subastas','s')
-                        ->where('s.pujas is empty')
-                        ->andWhere('s.fechaReservaInicio > :hoy')
-                        ->orWhere('r.estado = 3')
-                        ->andWhere('r.fechaInicio > :hoy')
+                        ->where("p.habilitada != 'N'")
+                        ->andWhere('s.pujas is empty and s.fechaReservaInicio > :hoy')
+                        ->orWhere('r.estado = 3 and r.fechaInicio > :hoy')
+                        // ->andWhere('s.fechaReservaInicio > :hoy')
+                        // ->andWhere('')
                         ->setParameter('hoy', $hoy)
                         ->orderBy('p.titulo', 'ASC');
                 },
