@@ -44,6 +44,8 @@ class HotSaleController extends Controller
             ->setView('hotsale/index.html.twig')
             ->paginate('AppBundle:HotSale');
     }
+
+
     /**
      * Lists all hotSale entities.
      *
@@ -69,6 +71,35 @@ class HotSaleController extends Controller
             ->setBaseLayout('base')
             ->setView('hotsale/indexPublico.html.twig')
             ->paginate('AppBundle:HotSale', 'hotSalesPublico');
+    }
+
+
+    /**
+     * Lists all hotSale entities.
+     *
+     * @Route("/listado/misHotSales", name="hotsale_index_usuario")
+     * @Method("GET")
+     */
+    public function indexMisHotSalesAction()
+    {
+        return $this->get('pg.pg')
+            // ->setOrder(
+            //     array('Nombre' => 'nombre',
+            //         'Nivel' => 'nivel'
+            //     , 'Padre' => 'padre'),
+            //     'nivel',
+            //     'asc'
+            // )
+            ->noRemember(true)
+            ->setFilter(FilterHotSaleType::class)
+            ->setFiltersTheme('inline')
+            ->setRowsPerPage(15, array(15, 30, 45))
+            ->showRowsAtFirst()
+            ->setFiltersTheme('inline')
+            ->setBaseLayout('base')
+            ->addQueryParams( ['usuario' => $this->getUser() ] )
+            ->setView('hotsale/indexUsuario.html.twig')
+            ->paginate('AppBundle:HotSale', 'hotSalesUsuario');
     }
 
     /**
@@ -155,7 +186,26 @@ class HotSaleController extends Controller
             'hotSale' => $hotSale,
             'delete_form' => $deleteForm->createView(),
         ));
-    }    /**
+    }    
+
+    /**
+     * Finds and displays a hotSale entity.
+     *
+     * @Route("/{id}/publico/show", name="hotsale_publico_show")
+     * @Method("GET")
+     */
+    public function showPublicoAction(HotSale $hotSale)
+    {
+        $deleteForm = $this->createDeleteForm($hotSale);
+
+        return $this->render('hotsale/showPublico.html.twig', array(
+            'hotSale' => $hotSale,
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }    
+
+
+    /**
      * Finds and displays a hotSale entity.
      *
      * @Route("/{id}/comprar", name="hotsale_comprar")
