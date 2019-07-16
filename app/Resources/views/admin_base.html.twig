@@ -82,6 +82,11 @@
 
                     $('.dropdown-toggle').dropdown()
 
+                    $('#btnVolver').on('click', function(e){
+                        e.preventDefault();
+                        window.history.back()
+                    });
+
                 });
             </script>
         {% endblock %}
