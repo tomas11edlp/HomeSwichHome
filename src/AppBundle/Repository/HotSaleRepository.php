@@ -15,8 +15,8 @@ class HotSaleRepository extends \Doctrine\ORM\EntityRepository
 		
 		$query->leftJoin( 'a.propiedad', 'p' );
 
-		if ($nombre = $pg->getFilterValue('nombre')){
-            $query->andWhere("UPPER(p.nombre) LIKE UPPER('%".$nombre."%')");
+		if ($nombre = $pg->getFilterValue('titulo')){
+            $query->andWhere("UPPER(p.titulo) LIKE UPPER('%".$nombre."%')");
         }
 
         if ($semana = $pg->getFilterValue('semana')){
@@ -32,8 +32,8 @@ class HotSaleRepository extends \Doctrine\ORM\EntityRepository
 		
 		$query->leftJoin( 'a.propiedad', 'p' );
 
-		if ($nombre = $pg->getFilterValue('nombre')){
-            $query->andWhere("UPPER(p.nombre) LIKE UPPER('%".$nombre."%')");
+		if ($nombre = $pg->getFilterValue('titulo')){
+            $query->andWhere("UPPER(p.titulo) LIKE UPPER('%".$nombre."%')");
         }
 
         if ($semana = $pg->getFilterValue('semana')){
@@ -51,8 +51,8 @@ class HotSaleRepository extends \Doctrine\ORM\EntityRepository
 		
 		$query->leftJoin( 'a.propiedad', 'p' );
 
-		if ($nombre = $pg->getFilterValue('nombre')){
-            $query->andWhere("UPPER(p.nombre) LIKE UPPER('%".$nombre."%')");
+		if ($nombre = $pg->getFilterValue('titulo')){
+            $query->andWhere("UPPER(p.titulo) LIKE UPPER('%".$nombre."%')");
         }
 
         if ($semana = $pg->getFilterValue('semana')){
