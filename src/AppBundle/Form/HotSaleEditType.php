@@ -24,6 +24,7 @@ class HotSaleEditType extends AbstractType
         $builder
 
             ->add('precio', null, array(
+                'required' => true,
                 'attr' => array(
                     'class' => 'form-control'
                 ),
