@@ -50,6 +50,7 @@ class HotSaleType extends AbstractType
             ))
 
             ->add('precio', null, array(
+                'required' => true,
                 'attr' => array(
                     'class' => 'form-control'
                 ),

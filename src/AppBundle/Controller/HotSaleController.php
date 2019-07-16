@@ -112,7 +112,8 @@ class HotSaleController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $form = 
+                $hotSales = $em->getRepository('AppBundle:HotSale')->buscarHotSalesPropiedad(1);
+        dump($hotSales);die;
 
         //Propiedades disponibles HotSales
         // $propiedades = $em->getRepository('AppBundle:Propiedad')->propiedadesDisponiblesHotSale();
@@ -140,17 +141,16 @@ class HotSaleController extends Controller
         $hotSale = new Hotsale();
         $form = $this->createForm('AppBundle\Form\HotSaleType', $hotSale, ['em' => $em]);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
 
             $semanaAnio = explode(' - ', $form->get('semana')->getData() );
-
             $semana = $semanaAnio[0];
             $anio = $semanaAnio[1];
 
             $hotSale->setSemanaReserva( $semana );
             $hotSale->setAnioReserva( $anio );
-            
+
             $hotSale->setInicio( new \Datetime('today') );
             $fin = new \Datetime('today');
             $fin->setISODate($anio, $semana);
@@ -352,6 +352,19 @@ class HotSaleController extends Controller
             
             }
         }
+
+
+        $hotSales = $em->getRepository('AppBundle:HotSale')->buscarHotSalesPropiedad($propiedad);
+        $resultHotSale = [];
+
+        foreach ($hotSales as $hs) {
+            $key = $hs['semanaReserva'].' - '.$hs['anioReserva'];       
+            $resultHotSale[$key] = $hs['semanaReserva'].' - '.$hs['anioReserva']; 
+        }
+
+        $result = array_diff($result, $resultHotSale);
+        
+
 
         return new JsonResponse($result);
     }

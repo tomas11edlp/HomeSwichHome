@@ -86,4 +86,23 @@ class HotSaleRepository extends \Doctrine\ORM\EntityRepository
         
 	    return $query;
 	}
+
+
+	public function buscarHotSalesPropiedad($propiedad){
+
+		$hoy = new \Datetime('today');
+
+		$query = $this->createQueryBuilder('a')
+				->select(
+					'a.semanaReserva',
+                    'a.anioReserva' )
+				->leftJoin('a.propiedad', 'p')
+				->where( 'p.id = :propiedad' )
+				->setParameter('propiedad', $propiedad)
+				->andWhere( 'a.fin > :hoy' )
+				->setParameter('hoy', $hoy)
+				->groupBy('a.semanaReserva', 'a.anioReserva');
+		        
+	    return $query->getQuery()->getResult();
+	}
 }

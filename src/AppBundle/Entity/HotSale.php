@@ -3,11 +3,18 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * HotSale
  *
- * @ORM\Table(name="hot_sale")
+ * @ORM\Table(name="hot_sale") 
+ * @UniqueEntity(
+ *     fields={"propiedad", "semanaReserva", "anioReserva"},
+ *     errorPath="propiedad",
+ *     message="Ya existe un hot sale para la propiedad en el periodo seleccionado."
+ * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\HotSaleRepository")
  */
 class HotSale
@@ -38,6 +45,7 @@ class HotSale
     /**
      * @var string
      *
+     * @Assert\NotBlank(message="Campo obligatorio.")
      * @ORM\Column(name="precio", type="decimal", precision=10, scale=2)
      */
     private $precio;
